@@ -1,0 +1,245 @@
+
+span.hoverUnderLine:hover {
+	border-bottom: 1px dotted #0087c3;
+}
+
+.transformed .defaultValue {
+	font-size: 15px;
+	margin-bottom: 1px;
+	display: inline-block;
+	color: #999;
+	font-style: italic;
+	font-weight: normal;
+}
+
+.transformed .defaultValue:hover {
+	border-bottom: none;
+}
+
+
+/* Page Styles */
+
+.MainInformation {
+	position: relative;
+	height: 295px;
+}
+
+.BronBlock {
+	float: left;
+	width: 100%;
+	position: relative;
+}
+
+.TripBlock {
+	float: left;
+	width: 100%;
+	position: relative;	
+}
+
+.FirstBlock {
+	position: relative;
+}
+
+.LeftBlock {
+	float: left;
+	position: relative;
+}
+
+.RightBlock {
+	display: inline-block;
+}
+
+.BlockCaption {
+	font-size: 17px;
+	font-weight: bold;
+	color: #6B6B6B;
+	margin: 0px 1px 5px 15px;
+}
+
+.RightBlockInfo {
+	width: 388px;
+	padding: 6px 11px;
+	border: 1px solid #C6D0DB;
+	background-color: #FFF;
+	border-radius: 5px;
+	margin-left: 15px;
+	margin-right: 15px;
+	margin-bottom: 13px;
+}
+
+.RightBlockInfo .OrganizationData {
+	width: 160px;
+	font-size: 13px;
+	margin-top: -4px;
+}
+
+.LeftBlockInfo {
+	padding: 6px 11px;
+	border: 1px solid #C6D0DB;
+	background-color: #FFF;
+	border-radius: 5px;
+	margin-left: 15px;
+	margin-right: 15px;
+	margin-bottom: 13px;
+	width: 500px;
+}
+
+.BronBlockInfo {
+	padding: 6px 11px;
+	border: 1px solid #C6D0DB;
+	background-color: #FFF;
+	border-radius: 5px;
+	margin-left: 15px;
+	margin-right: 15px;
+	margin-bottom: 13px;
+}
+
+.LeftBlockInfo .Addr {
+	font-size: 15px;
+	margin: 8px 0px 7px 7px;
+}
+
+dl.definitionsRight {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+dl.definitionsRight .cond{
+	width: 30%;
+}
+
+dl.definitionsRight .def{
+	width: 50%;
+}
+
+dl.definitionsLeft {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+dl .cond {
+	font-size: 15px;
+	margin: 0px 0px 7px 7px;
+	text-align: left;
+	display: inline-block;
+	vertical-align: top;
+	width: 25%;
+}
+
+dl .def {
+	font-weight: bold; 
+	color: #5d7891;
+	font-size: 15px;
+	margin: 0px 0px 7px 7px;
+	display: inline-block;
+	width: 55%;
+	margin-left: 5%;
+	vertical-align: top;
+}
+
+.NoBronsBlock {
+	margin: 18px auto;
+	position: relative;
+	text-align: center;
+}
+
+.NoBronsBlock .TextArea {
+	font-size: 17px;
+}
+
+.BronBlockInfo .ClientObjects {
+	width: 98.8%;
+}
+
+.ClientObjects .ObjectsList  {border-collapse:collapse;border-spacing:0;/*width: 570px;*/ font-weight: normal;margin: 8px 5px 10px 5px;}
+.ClientObjects .ObjectsList td{font-size:14px;border-width:1px;overflow:hidden;word-break:normal;vertical-align: middle;padding: 10px 5px;border-bottom: 1px solid #e5e5e5;padding-left: 15px;}
+.ClientObjects .ObjectsList th{font-size:14px;font-weight:bold;padding:10px 5px;overflow:hidden;word-break:normal;border-bottom: 2px solid #e5e5e5;border-top: 2px solid #e5e5e5;font-weight: normal;text-align: center;vertical-align: middle;background:url(/admin/images/backgrounds/bdr.png) no-repeat left center;}
+.ClientObjects .ObjectsList .additionalData { font-size: 11px;color: #9e9e9e;margin-top: 3px;}
+
+.ObjectsList .idcol {text-align: center;padding-left: 0px !important;}
+.ObjectsList .pricecol {text-align: center;}
+.ObjectsList .id_l {text-decoration: none;}
+.ObjectsList .Idth {width: 50px;}
+
+
+dl .def .telnum {
+	width: 220px;
+	font-size: 13px;
+	margin-top: -4px;
+}
+
+dl .email {
+	color: #555;
+}
+	
+
+dl .def .nameinput {
+	width: 105px;
+	font-size: 13px;
+	margin-top: -4px;
+}
+
+dl .def .dates {
+	margin-top: -4px;
+	width: 60px;
+}
+
+.Addr .addressinput {
+	margin-top: -4px;
+	width: 90px;
+	font-size: 13px;
+}
+
+.Addr .streetinput {
+	margin-top: -4px;
+	width: 120px;
+	font-size: 13px;
+}
+
+input.changepassbutton {
+	margin: 1px auto 6px;
+	display: block;
+}
+
+/* Page Styles */
+
+/* UI-Dialog */
+.ui-dialog {
+	box-shadow: 0 0 10px #000;
+	border-radius: 3px;
+	width: auto;
+	height: 100px;
+}
+
+.ui-dialog .deliveryFormAddSubmit {
+	display: none;
+}
+
+/* UI-Dialog */
+
+/* Delivery Block */
+
+.deliveryAddressContent {
+	width: auto;
+	margin-top: 10px;
+}
+
+#goodsOrder{
+	margin-right: 10px;
+}
+#goodsOrder .title{padding-bottom:15px; font-size:17px; font-weight: bold;}
+#goodsOrder input[type=text]{ padding:0 5px; height:25px; line-height:24px; border:1px solid #999999; width:490px;}
+#goodsOrder td{ padding-bottom:15px; line-height:24px; font-weight:bold;}
+#goodsOrder td.first{ text-align:right; padding-right:10px;}
+#goodsOrder select{ width:502px; height:25px; line-height:24px; border:1px solid #999999;}
+#goodsOrder textarea{width:490px; overflow: auto; max-width:490px; padding:5px; height:105px; font-family: Arial, Helvetica, sans-serif; line-height:125%; border:1px solid #999999;}
+
+#goodsOrder .deliveryAddressContent input[type=text].deliveryPrice {
+	width: 100px;
+}
+
+#goodsOrder .deliveryAddressContent input[type=text]{
+	width: 70px;
+}
+
+/* Delivery Block */

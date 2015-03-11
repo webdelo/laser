@@ -1,0 +1,1 @@
+<? include(DIR.'/modules/orders/tpl/mailTemplates/alertPartnerBase.tpl')?>

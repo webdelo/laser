@@ -1,0 +1,45 @@
+@charset "utf-8";
+
+/* CSS Document */
+.goodsList {
+	width: 500px;
+	border: solid 1px #DADADA;
+}
+.goodsList .top {
+	background-color: #EAEAEA;
+}
+.goodsList td {
+	padding: 10px 0px 0px 24px;
+	vertical-align:middle;
+}
+.goodsList .top td {
+	padding: 8px 0px;
+	text-align: center;
+	font-size: 12px;
+	color: #333;
+	font-weight: bold;
+}
+.goodsList .borderLeft {
+	border-left: solid 1px white;
+}
+.goodsList .line td{
+	width: auto;
+	text-align: center;
+	font-size: 12px;
+	font-weight: normal;
+	color: #333;
+	padding: 10px 0px 10px 0px;
+	border: solid 1px #E6E6E6;
+}
+
+.goodsList .line .comment {
+	font-weight: normal;
+	width: 275px;
+	line-height: 120%;
+	color:#999999;
+}
+
+.goodsList a{
+	float: left;
+	margin: 0px 0px 0px 15px;
+}

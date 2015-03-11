@@ -1,0 +1,1 @@
+<center><font color="red">Доступ к данной странице запрещён!</font></center>

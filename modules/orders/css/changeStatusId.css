@@ -1,0 +1,333 @@
+/* Modal window */
+/* Форимируем слой затемнения фона */
+.overlay, .overlay:hover {
+	background-color: rgba(0, 0, 0, 0.59);
+	bottom: 0;
+	cursor: default;
+	left: 0;
+	/*opacity: 0;*/
+	opacity: 1;
+	position: fixed;
+	right: 0;
+	top: 0;
+	/*visibility: hidden;*/
+	visibility: visible;
+	z-index: 1;
+	-webkit-transition: opacity .5s;
+	-moz-transition: opacity .5s;
+	-ms-transition: opacity .5s;
+	-o-transition: opacity .5s;
+	transition: opacity .5s;
+}
+/*.overlay:target {
+	visibility: visible;
+	opacity: 1;
+}*/
+
+/* Формируем и позиционируем всплывающее окно */
+.popup {
+	width: 640px;
+	height: auto;
+	margin: 40px auto;
+	background-color: #fff;
+	border: 5px solid #7b7b7b;
+	border-radius: 10px;
+	display: block;
+	left: 0; right: 0;
+	/*opacity: 0;*/
+	opacity: 1;
+	position: fixed;
+	font-size: 14px;
+	top: 0;
+	/*visibility: hidden;*/
+	visibility: visible;
+	z-index: 10;
+	padding-bottom: 20px;
+
+/* Устанавливаем эффект перехода появления окна */
+	-webkit-transition: opacity .5s, top .5s;
+	-moz-transition: opacity .5s, top .5s;
+	-ms-transition: opacity .5s, top .5s;
+	-o-transition: opacity .5s, top .5s;
+	transition: opacity .5s, top .5s;
+}
+/* Устанавливаем позицию появления окна */
+/*.overlay:target+.popup {
+	top: 5%;
+	opacity: 1;
+	visibility: visible;
+}*/
+/* Оформляем и позицонируем кнопку закрытия */
+.closeStatusIdModal {
+	background: #87e0fd; /* Old browsers */
+	background: -moz-linear-gradient(top,  #87e0fd 0%, #148ebb 50%, #05abe0 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#87e0fd), color-stop(50%,#148ebb), color-stop(100%,#05abe0)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #87e0fd 0%,#148ebb 50%,#05abe0 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #87e0fd 0%,#148ebb 50%,#05abe0 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #87e0fd 0%,#148ebb 50%,#05abe0 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #87e0fd 0%,#148ebb 50%,#05abe0 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#87e0fd', endColorstr='#05abe0',GradientType=0 ); /* IE6-9 */
+
+	border-radius: 3px;
+	box-shadow: 0 1px 2px rgba(0,0,0,0.6);
+	-moz-box-sizing: border-box;
+		 box-sizing: border-box;
+	clear: both;
+	color: #FFF;
+	height: 36px;
+	margin: 0 auto;
+	padding-top: 12px;
+	text-align: center;
+	text-decoration: none;
+	text-transform: uppercase;
+	width: 155px;
+	display: inline-block;
+}
+
+.closeStatusIdModal:hover, .sendStatusModalChanged:hover{
+	color: white;
+}
+.closeStatusIdModal:active, .sendStatusModalChanged:active{
+	top: 1px;
+}
+
+.sendStatusModalChanged{
+	background: #87e0fd; /* Old browsers */
+	background: -moz-linear-gradient(top,  #87e0fd 0%, #148ebb 50%, #05abe0 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#87e0fd), color-stop(50%,#148ebb), color-stop(100%,#05abe0)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #87e0fd 0%,#148ebb 50%,#05abe0 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #87e0fd 0%,#148ebb 50%,#05abe0 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #87e0fd 0%,#148ebb 50%,#05abe0 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #87e0fd 0%,#148ebb 50%,#05abe0 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#87e0fd', endColorstr='#05abe0',GradientType=0 ); /* IE6-9 */
+
+	border-radius: 3px;
+	box-shadow: 0 1px 2px rgba(0,0,0,0.6);
+	-moz-box-sizing: border-box;
+		 box-sizing: border-box;
+	clear: both;
+	color: #FFF;
+	height: 36px;
+	margin: 0 auto;
+	padding-top: 12px;
+	text-align: center;
+	text-decoration: none;
+	text-transform: uppercase;
+	width: 155px;
+	display: none;
+}
+
+.popup span.zag {
+	background-color: #e8e8e8;
+	border-radius: 7px 7px 0 0;
+	color: #656565;
+	display: block;
+	font-size: 18px;
+	padding: 10px
+}
+
+.popup .pop-text {
+	padding: 0 20px;
+}
+
+.popup .pop-text span.smena {
+	color: #717070;
+	display: block;
+	font-size: 21px;
+	margin: 21px 0;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.popup .pop-text span.sogl, span.proizv {
+	background-color: #5fc942;
+	color: #FFF;
+	float: left;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 13px 42px;
+	text-transform: uppercase;
+}
+
+.popup .pop-text span.na {
+	background: url(/modules/orders/images/modal.png) 10px 10px no-repeat;
+	display: block;
+	float: left;
+	font-weight: bold;
+	height: 35px;
+	margin: -4px 0 10px 130px;
+	padding: 20px 0 0 16px;
+	text-transform:uppercase;
+	width: 36px;
+}
+
+.popup .pop-text span.proizv {
+	background-color: #005e96;
+	float: right;
+}
+
+.popup .pop-text p {
+	clear: both;
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.box1, .box2, .box3 {
+	clear: both;
+	display: none;
+}
+
+.box1 { display: none; }
+
+.box1 img, .box2 img, .box3 img {
+	float: left;
+	margin: 0 20px;
+}
+
+.box1 span, .box2 span, .box3 span {
+	color: #333333;
+	display: block;
+}
+
+.box1 p, .box2 p, .box3 p {
+	color: #807d7d;
+	font-size: 12px;
+}
+
+.popup .pop-text a.modal1, a.modal2, a.modal3  {
+	background: #efeeee; /* Old browsers */
+	background: -moz-linear-gradient(top, #efeeee 0%, #e5e4e4 50%, #d5d4d4 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#efeeee), color-stop(50%,#e5e4e4), color-stop(100%,#d5d4d4)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #efeeee 0%,#e5e4e4 50%,#d5d4d4 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #efeeee 0%,#e5e4e4 50%,#d5d4d4 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #efeeee 0%,#e5e4e4 50%,#d5d4d4 100%); /* IE10+ */
+	background: linear-gradient(to bottom, #efeeee 0%,#e5e4e4 50%,#d5d4d4 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efeeee', endColorstr='#d5d4d4',GradientType=0 ); /* IE6-9 */
+
+	box-shadow: 0 1px 3px rgba(0,0,0,0.38);
+	border: 3px solid #cedce6;
+	border-radius: 5px;
+	-moz-box-sizing: border-box;
+		 box-sizing: border-box;
+	color: #434242;
+	display: block;
+	float: left;
+	font-size: 11px;
+	font-weight: bold;
+	height: 98px;
+	margin-bottom: 30px;
+	padding-top: 60px;
+	text-align: center;
+	text-decoration: none;
+	text-transform: uppercase;
+	width: 176px;
+}
+
+.popup .pop-text a.modal1:active, a.modal2:active, a.modal3:active{
+	color: black;
+}
+
+.popup .pop-text a.modal1 {
+	background: url(/modules/orders/images/modal-letter.png)63px 10px  no-repeat, linear-gradient(0deg, #d5d4d4 10%, #efeeee 80%);
+	display: block;
+}
+
+.popup .pop-text a.modal2 {
+	background: url(/modules/orders/images/modal-partner.png) 63px 10px no-repeat, linear-gradient(0deg, #d5d4d4 10%, #efeeee 80%);
+	display: block;
+}
+
+
+.popup .pop-text a.modal3 {
+	background: url(/modules/orders/images/modal-letter.png) 63px 10px no-repeat, linear-gradient(0deg, #d5d4d4 10%, #efeeee 80%);
+	display: block;
+}
+
+
+.popup .pop-text a.modal1, a.modal2 {
+	margin-right: 35px;
+}
+
+a.modal3  {
+	-moz-box-sizing: border-box;
+		 box-sizing: border-box;
+	padding: 0 30px;
+}
+
+.popup .pop-text a img {
+	display: block;
+	margin: 10px auto;
+}
+
+.popup .pop-text a.modal3 img.second {
+	margin-left: 30px;
+}
+/*
+.popup .pop-text a.modal1:active {
+	background: url(/modules/orders/images/modal-active.png) 67px 13px no-repeat, linear-gradient(0deg, #138fbd 10%, #01acec 80%);
+	color: #FFF;
+}
+
+.pop-text a.modal2:active {
+	background: url(/modules/orders/images/modal-partner2.png) 67px 10px no-repeat, linear-gradient(0deg, #138fbd 10%, #01acec 80%);
+	color: #FFF;
+}
+
+.pop-text a.modal3:active  {
+	background: url(/modules/orders/images/modal-active.png) 67px 13px no-repeat, linear-gradient(0deg, #138fbd 10%, #01acec 80%);
+	color: #FFF;
+}*/
+
+.box1 label, .box2 label, .box3 label {
+	display: block;
+	margin-bottom: 10px;
+	text-transform: uppercase;
+}
+
+.box1 textarea, .box2 textarea, .box3 textarea {
+	background-color: #fdf9e7;
+	border: none;
+	border-radius: 2px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.24) inset;
+	height: 83px;
+	margin-bottom: 30px;
+	resize: none;
+	width: 100%;
+}
+
+.box2 form { float: left; }
+.box2 form:first-child { margin-right: 45px; }
+
+.box2 textarea {
+	width: 273px;
+}
+
+.modal1 img{
+	margin-top: -40px !important;
+}
+
+.modal2 img{
+	margin-top: -50px !important;
+}
+
+.modalChangeStautsId .popup .buttons{
+	width: 325px;
+	margin: 0px auto 0px auto;
+	text-align: center;
+}
+
+.popup .buttons span {
+	background-color: #5fc942;
+	color: #FFF;
+	float: left;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 13px 42px;
+	text-transform: uppercase;
+	margin-left: 28px;
+}
+
+.statusIdLoader{
+	position: absolute;
+	margin: -8px 0px 0px -34px;
+}

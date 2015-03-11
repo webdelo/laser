@@ -1,0 +1,345 @@
+@font-face {
+    font-family: 'ALSRublRegular';
+    src: url('/images/fonts/rouble-webfont.eot');
+    src: url('/images/fonts/rouble-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/images/fonts/rouble-webfont.woff') format('woff'),
+         url('/images/fonts/rouble-webfont.ttf') format('truetype'),
+         url('/images/fonts/rouble-webfont.svg#ALSRublRegular') format('svg');
+
+}
+
+.main.single {
+	margin-left: 10px;
+}
+
+.action_buts {
+	float: right;
+	margin-bottom: 20px;
+}
+
+.formEdit .main_param .col_in input, .formEdit .main_param .col_in select {
+	border-radius: 4px;
+}
+
+
+.main_param td {
+	padding-bottom: 10px;
+}
+.main_param td.catalogGoods{
+	padding-bottom: 30px;
+}
+.catalogGoods .goodsList{
+	width: 817px;
+}
+.catalogGoods .goodsList .line td {
+	padding: 0;
+	padding-top: 10px;
+	padding-bottom: 5px;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 14px;
+}
+.catalogGoods .goodsList .line td input {
+
+	font-size: 14px;
+}
+
+.goodsList img {
+	margin: -5px 8px 0px 0px;
+	float: left;
+}
+.goodsList .editParametersIcon {
+	width: 30px;
+	position: absolute;
+}
+.goodsList .editParametersIcon:hover {
+	width: 32px;
+}
+.goodsList .editParametersIcon:active {
+	width: 31px;
+}
+.goodsList a {
+	display: block !important;
+	/*width: 80%;*/
+	font-size: 14px;
+	margin: 0px 0px 0px 10px;
+	float: left;
+	max-width: 340px;
+}
+.goodsList .line .goodLink {
+	display: block;
+	width: auto;
+	float: right;
+	margin: 13px 50px 0px 0px;
+	color: #005E99;
+	text-decoration: underline;
+	cursor: pointer;
+}
+.goodsList .line .goodLink:active{
+	/*margin-top: -1px;*/
+}
+.goodsList .line .goodLink:hover{
+	text-decoration: none;
+}
+.goodsList .delete {
+	margin: 0;
+	margin-left: 6px;
+}
+.goodsList .rowPrice span {
+	font-size: 16px;
+}
+.priceAdditionalInfo {
+	display: none;
+}
+.headerFirstLevel.first, .headerFirstLevel {
+	font-size: 25px; text-transform: uppercase; font-weight: normal;
+}
+
+.deliveryDetailsBlock {
+	display: block;
+	width: 300px;
+	margin: 10px;
+	margin-left: 30px;
+	margin-top: 0;
+}
+.main_param div.deliveryDetailsBlock input{
+	wdith: 200px;
+	padding: 0 5px;
+	height: 30px;
+	line-height: 30px;
+	border: 1px solid #999999;
+	font-size: 14px;
+}
+
+.catalogDelivery {
+	min-height: 260px;
+	height: 260px;
+}
+
+.catalogDelivery select {
+	width: 300px;
+	height: 30px;
+
+}
+td.deliveryList {
+	border-right: 1px solid #ccccff;
+	padding-right: 20px;
+	width: 300px;
+}
+td.deliveryList.description {
+	color: #333;
+	font-weight: normal;
+}
+td.deliveryList.description ul li{
+	list-style: disc;
+	margin-left: 20px;
+}
+.catalogResultPriceBlock table{
+	float: right;
+	margin-bottom: 20px;
+}
+
+.catalogResultPriceBlock table td{
+	padding: 5px 10px;
+}
+
+.catalogResultPriceBlock h2 span {
+	font-size: 25px;
+	color: #005e96;
+}
+.catalogResultPriceBlock h2 {
+	font-size: 20px;
+	text-align: right;
+	color: #333;
+}
+.rub {
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	font-family: 'ALSRublRegular'!important;
+	line-height: 1;
+	font-weight: normal !important;
+	ont-weight: normal !important;
+}
+
+a.proceedToCheckout, a.checkoutOrder, a.getSummary, a.removeOrder, a.cancelConfirmation {
+	border-radius: 4px;
+	color: #fff;
+	float: right;
+	display: block;
+	width: 385px;
+	font-size: 20px;
+	text-align: center;
+	text-transform: uppercase;
+	text-decoration: none;
+	font-weight: normal;
+	border: 1px solid #d6d9da;
+	background: #EEFFF2;
+	padding: 10px;
+	margin-top: 20px;
+}
+a.proceedToCheckout:hover {
+	background-color: #d5fadd;
+}
+a.proceedToCheckout:active {
+	background-color: #ebf5ee;
+}
+
+a.checkoutOrder {
+	background: #009b2e;
+}
+a.checkoutOrder:hover {
+	background-color: #0eb23c;
+}
+a.checkoutOrder:active {
+	background-color: #028928;
+	text-shadow: #000 0px -1px;
+}
+
+a.removeOrder, a.cancelConfirmation {
+	float: right;
+	margin-right: 20px;
+	margin-left: 20px;
+	width: 200px;
+	background: #dd4d4d;
+}
+a.removeOrder:hover, a.cancelConfirmation:hover {
+	background: #f76f6f;
+}
+a.removeOrder:active, a.cancelConfirmation:active {
+	background: #ce0808;
+	text-shadow: #000 0px -1px;
+}
+
+a.getSummary {
+	margin-top: 20px;
+	text-align: center;
+	color: #fff;
+	background: #0081e3;
+}
+a.getSummary:hover {
+	background-color: #0077cc;
+}
+a.getSummary:active {
+	background-color: #0077cc;
+	text-shadow: #000 0px -1px;
+}
+
+.main_param .catalogClientDataBlock h1{
+	padding: 10px 0px;
+}
+
+.main_param .catalogClientDataBlock td {
+	padding: 5px;
+}
+
+.main_param .catalogClientDataBlock input{
+	width: 250px;
+	height: 30px;
+}
+
+.main_param .catalogClientDataBlock select{
+	width: 261px;
+	height: 32px;
+}
+
+.main_param .catalogClientDataBlock input.address{
+	width: 327px;
+}
+.main_param .catalogClientDataBlock input.mini{
+	width: 100px;
+}
+
+h1 ul.as-selections {
+	display: inline-block;
+	margin: 11px -15px -8px 6px;
+}
+
+
+.rightMenu {
+	position: relative;
+	border: 1px solid #d5dadb;
+	background: #e7ebed;
+	padding-bottom: 10px;
+	border-radius: 4px;
+	margin-left: 10px;
+	width: 200px;
+}
+
+.rightMenu ul li a {
+	display: block;
+	padding: 10px;
+	padding-left: 20px;
+	font-size: 13px;
+	color: #333;
+	border-bottom: 1px dotted #999999;
+	background: #ebf2f5;
+}
+.rightMenu ul li a:hover {
+	background: #fff;
+}
+
+.rightMenu h4 {
+	padding: 10px;
+	border-bottom: 1px dotted #999999;
+}
+
+.rightMenu.fixed {
+	position: fixed;
+	top: 10px;
+}
+
+.orderSummary {
+	padding-top: 20px;
+}
+.orderSummary h1 {
+	margin-bottom: 10px;
+}
+.orderSummary table td {
+	padding: 10px;
+	font-weight: normal;
+}
+
+.orderSummary .goodsList .top td, .orderSummary .goodsList .top {
+	background: none;
+	text-transform: uppercase;
+}
+
+.orderSummary table.goodsList {
+	border: solid 1px #E6E6E6;
+}
+.orderSummary table.goodsList td {
+	border: solid 1px #E6E6E6;
+}
+
+.clientFound {
+	border: 1px solid #005e96;
+	background: rgba(0, 95, 150, 0.09);
+	color: #000;
+	padding: 3px 10px;
+}
+
+.clientFound div {
+	font-weight: normal;
+	line-height: 35px;
+	display: inline-block;
+}
+
+.clientFound a.deleteClient {
+	background: url(/admin/images/bg/edit_del.png) no-repeat 0px 0px;
+	width: 15px;
+	height: 15px;
+	display: inline-block;
+	margin: -2px 11px;
+	line-height: 35px;
+}
+
+.buttonInContent.addPromoSubmit {
+	width: 100px;
+	font-size: 10px;
+	position: relative;
+	float:right;
+	margin: 5px;
+	margin-right: 10px;
+	margin-top: -3px;
+	text-align: center;
+}

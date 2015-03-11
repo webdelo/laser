@@ -1,0 +1,25 @@
+AddType text/x-component .htc
+RewriteEngine On
+RewriteBase /
+
+RewriteCond %{HTTP_HOST} go-tehno.ru
+RewriteRule (.*) http://go-techno.ru/$1 [R=301,L]
+
+php_flag magic_quotes_gpc off
+
+RewriteCond %{REQUEST_FILENAME} /admin/(.*)
+RewriteCond %{REQUEST_FILENAME} !/admin/captcha.php
+
+RewriteRule !\.(js|ico|css|png)$ %{DOCUMENT_ROOT}/admin/index.php [L]
+
+RewriteCond %{REQUEST_FILENAME} !/admin/(.*)
+RewriteCond %{REQUEST_FILENAME} !/chat/(.*)
+RewriteCond %{REQUEST_FILENAME} !/cache/(.*)
+RewriteCond %{REQUEST_FILENAME} !/microtest.php
+RewriteCond %{REQUEST_FILENAME} !/adminer.php
+RewriteCond %{REQUEST_FILENAME} !/test.php
+RewriteCond %{REQUEST_FILENAME} !/sxd/(.*)
+RewriteCond %{REQUEST_FILENAME} !/images/fonts/(.*)
+RewriteCond %{REQUEST_FILENAME} !/PIE.htc
+
+RewriteRule !\.(js|ico|css)$ index.php [L]

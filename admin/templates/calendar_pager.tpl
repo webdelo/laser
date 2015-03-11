@@ -1,0 +1,1 @@
+<a href="<?php echo Calendar::linkChange($data['current'],$data['perv'],$mode)?>">&laquo; Prev</a> | <a href="<?php echo Calendar::linkChange($data['current'],$data['next'],$mode)?>">Next &raquo;</a>

@@ -1,0 +1,336 @@
+#map-canvas {
+	height: 500px;
+	width: 100%;
+}
+
+.parametersParts {
+	display: block;
+	position: relative;
+	margin: 10px;
+	padding: 10px;
+	padding-left: 20px;
+	min-height: 120px;
+	/*box-shadow:  0 0 10px rgba(150, 150, 150, 0.5);*/
+	border: 1px solid #f4f4f4;
+	border-bottom: 1px solid #e8e8e8;
+	background: #fff;
+	border-radius: 3px;
+}
+
+.parametersParts table {
+	margin: 5px 0;
+	position: relative;
+	display: inline-block;
+	word-wrap: normal;
+	height: 33px;
+	overflow: hidden;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+.parameterPlaceHolder {
+	display: inline-block;
+	width: 154px !important;
+	height: 31px !important;
+	border: 1px solid #96d3ff;
+	background: #f9fcff;
+	padding: 0;
+	margin: 0;
+}
+
+.parametersParts table td:last-child {
+	width: 137px;
+	height: 33px;
+}
+
+.parametersParts table.addParameterValue td .transformed:hover {
+	opacity: 1;
+}
+.parametersParts table td input {
+	width: 100px;
+	height: 20px;
+	line-height: 20px;
+}
+.parametersParts table.addParameterValue td .transformed {
+	background-color: #fcfcfc;
+	border: 1px solid #f7f7f7;
+	border-bottom-color: #f2f2f2;
+	color: #a8c9e0;
+	display: block;
+	height: 30px;
+	line-height: 30px;
+	font-size: 13px;
+	padding-left: 10px;
+	border-radius: 3px;
+	text-decoration: none;
+	text-align: center;
+}
+.parametersParts table.addParameterValue:hover td .transformed {
+	background-color: #fcfcfc;
+	border: 1px solid #e3eff7;
+	border-bottom-color: #dae8f2;
+	display: block;
+	height: 30px;
+	line-height: 30px;
+	color: #a8c9e0;
+	font-size: 13px;
+	padding-left: 10px;
+	border-radius: 3px;
+	text-decoration: none;
+	text-align: center;
+}
+
+.parametersParts table td .transformer {
+	margin-left: 6px;
+	width: 60px;
+	height: 20px;
+}
+.parametersParts table td {
+	vertical-align: middle;
+	text-align: left;
+}
+
+.parametersParts.editMode table:hover {
+	position: relative;
+	background: none;
+}
+
+.parametersParts.editMode table:active {
+	position: relative;
+	background: none;
+	height: 31px;
+	width: 156px;
+	border: none;
+}
+.additionalInfo {
+	height: 10px;
+}
+
+.parametersParts .additionalInfo.actions {
+	display: none;
+}
+
+.parametersParts .additionalInfo.actions a {
+	color: #005e99;
+	text-decoration: underline;
+	cursor: pointer;
+}
+.parametersParts .additionalInfo.actions a:hover {
+	text-decoration: none;
+}
+
+.parametersParts table input[type=checkbox], .parametersParts table input[type=radio] {
+	height: 20px;
+	width: 20px;
+	margin: 5px;
+}
+.parametersParts table label {
+	font-size: 1.09em;
+	display: block;
+	height: 33px;
+	line-height: 33px;
+}
+
+.parametersParts table.addParameterValue {
+	display: none;
+	background: none;
+	border: none;
+	width: auto;
+}
+
+.main.highlight {
+	background: #fffafa;
+}
+
+.newParameterForm input{
+	width: 100px;
+	height: 20px;
+}
+
+.newParameterFormSubmit {
+	float: right;
+	margin-right: 8px;
+}
+
+a.addInContent {
+	display: block;
+	width: 16px;
+	height: 16px;
+	background: url(/admin/images/buttons/save_object.png) no-repeat center top;
+}
+
+.parametersParts.addingMode input {
+	height: 30px;
+	font-size: 20px;
+	margin: 2px;
+}
+.parametersParts.addingMode {
+	min-height:10px;
+	line-height: 30px;
+	font-size: 14px;
+	padding-left: 10px;
+	border-radius: 3px;
+	text-shadow: 0 1px 0 #fff;
+	box-shadow: none;
+	border: none;
+
+	background-color: #fcfcfc;
+	border: 1px solid #f7f7f7;
+	border-bottom-color: #f2f2f2;
+	color: #a8c9e0;
+
+}
+.parametersParts.addingMode:hover {
+	background-color: #fcfcfc;
+	border: 1px solid #e3eff7;
+	border-bottom-color: #dae8f2;
+}
+
+.parametersParts.addingMode span.transformed {
+	font-size: 18px;
+	width: 100%;
+	display: block;
+}
+
+.parametersParts.hide{
+	display: none;
+}
+.parametersParts.removeMode {
+	position: fixed;
+	bottom: 30px;
+	width: 955px;
+	height: 120px;
+	min-height:10px;
+	line-height: 30px;
+	font-size: 14px;
+	border: 1px solid #ffdbdb;
+	background: #fff9f9;
+	color: #ffdbdb;
+	padding-left: 10px;
+	border-radius: 3px;
+	text-shadow: 0 1px 0 #fff;
+	box-shadow: none;
+}
+.parametersParts.removeMode.highlight {
+	border: 1px solid #ff9393;
+	background: #ffeded;
+	color: #ff6d6d;
+}
+
+.parametersParts h3 {
+	margin-bottom: 10px;
+	color: #005e99;
+}
+
+.parametersParts h3 input {
+	font-size: 14px;
+	height: 19px;
+	margin-top: -5px;
+}
+.parametersParts h3 span.additionalInfo span.preText {
+	color: #d3d3d3;
+	text-decoration: none;
+}
+
+.parametersParts h3 span.additionalInfo {
+	float: right;
+	color: #005e99;
+	font-size: 12px;
+}
+
+.parametersParts h3 span.additionalInfo .transformed {
+	text-decoration: underline;
+	cursor: pointer;
+}
+.parametersParts h3 span.additionalInfo .transformed:hover {
+	text-decoration: none;
+}
+
+.parametersParts h3:hover {
+	color: #004570;
+	text-decoration: underline;
+}
+
+.parameterPartPlaceHolder {
+	display: block;
+	min-height: 120px;
+	border: 1px solid #96d3ff;
+	background: #f9fcff;
+	margin: 10px;
+	padding: 10px;
+	padding-left: 20px;
+}
+
+.parametersParts .deleteParameterValue, .parametersParts .deleteParameterValue:active, .parametersParts .deleteParameterValue:hover {
+	border: 1px solid #ffdbdb;
+	background: #fff9f9;
+	color: #ffdbdb;
+	font-size: 10px;
+	text-align: center;
+	height: 31px;
+	width: auto;
+	display: inline-block;
+	line-height: 10px;
+}
+
+.parametersParts .hide {
+	display: none;
+}
+
+.parametersParts .deleteParameterValue td:last-child {
+	text-align: center;
+	height: 35px;
+	width: 130px;
+}
+
+.parametersParts .deleteParameterValue.highlight {
+	border: 1px solid #ff9393;
+	background: #ffeded;
+	color: #ff6d6d;
+}
+
+.parametersParts .editParameterValue, .parametersParts .editParameterValue:active, .parametersParts .editParameterValue:hover {
+	color: #000;
+	font-size: 12px;
+	height: 25px;
+	line-height: 20px;
+	width: 144px;
+	display: inline-block;
+	margin-right: 10px;
+	margin-left: 2px;
+	text-align: center;
+}
+
+.parametersParts .hide {
+	display: none;
+}
+
+.parametersParts .editParameterValue td:last-child {
+	text-align: center;
+	height: 35px;
+	width: 100px;
+}
+
+.parametersParts .editParameterValue.highlight {
+	border: 1px solid #50b7fc;
+	background: #eff8ff;
+	color: #50b7fc;
+}
+
+.parametersParts.highlight {
+	border: 1px solid #50b7fc;
+	box-shadow: 0 0 3px #8ed2ff;
+	-moz-box-shadow: 0 0 3px #8ed2ff;
+	-webkit-box-shadow: 0 0 3px #8ed2ff;
+}
+
+table td .hoverUnderLine:hover {
+	text-decoration: underline;
+}
+table.addParameterValue td .hoverUnderLine:hover {
+	text-decoration: none;
+}
+
+.parametersParts table td .transformed {
+	cursor: pointer;
+}

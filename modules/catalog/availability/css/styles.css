@@ -1,0 +1,72 @@
+.price .numbers-price .line-suppliers.editing .edit-s1 .save {
+     background: url(/admin/images/bg/save-price.png) no-repeat 0px 0px;
+    width: 16px;
+    height: 16px;
+    display: block;
+    margin: 1px 1px;
+}
+.price .numbers-price .line-suppliers.editing .edit-s1 .save:hover {
+    background: url(/admin/images/bg/save-price.png) no-repeat 0px -16px;
+}
+
+.price .numbers-price .line-suppliers .comments {
+    background-color: #e8e8e8;
+    margin-top: -5px;
+    float: left;
+    margin-left: 0px;
+    color: #666666;
+    font-style: italic;
+    line-height: 18px;
+    font-size: 12px;
+    padding: 3px 42px 5px 14px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+    height: 16px;
+width: 273px;
+    position: relative;
+}
+.price .numbers-price .line-suppliers .comments a {
+    display: block;
+    position: absolute;
+    background: url(/admin/images/bg/max.png) no-repeat 0px 0px;
+    width: 12px;
+    height: 12px;
+    right: 14px;
+    top: 50%;
+    margin-top: -6px;
+}
+.price .numbers-price .line-suppliers .comments.more {
+    height: auto;
+}
+.price .numbers-price .line-suppliers .comments.more a {
+    background: url(/admin/images/bg/min.png) no-repeat 0px 0px;
+}
+
+.price .numbers-price .line-suppliers .editing-comment {
+    margin-top: -2px;
+    float: left;
+    margin-left: -14px;
+    padding: 3px 42px 5px 14px;
+    margin-bottom: 5px;
+    
+}
+.price .numbers-price .line-suppliers .editing-comment textarea {
+    border-radius: 3px;
+    border: solid 1px #e3e3e4;
+    color: #666666;
+    line-height: 15px;
+    font-size: 11px;
+    width: 268px;
+    height: 59px;
+    padding: 5px 11px;
+    width: 321px;
+}
+
+.price .numbers-price .last-user {
+    font-size: 11px;
+    display: block;
+    padding-bottom: 9px;
+    color: #999999;
+    width: auto;
+}

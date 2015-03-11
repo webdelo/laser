@@ -1,0 +1,83 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+        font-family: 'SegoeUI', sans-serif, arial, helvetica;
+}
+ol, ul, li {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+a {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.clear {
+    clear: both;
+}
+
+@font-face {
+        font-family: SegoeUI;
+        src: url(/images/fonts/segoeui.ttf),
+             url(/images/fonts/segoeui.woff);
+}
+
+@font-face {
+        font-family: SegoeUIL;
+        src: url(/images/fonts/segoeuil.ttf),
+             url(/images/fonts/segoeuil.woff);
+}
+
+@font-face {
+        font-family: SegoeUISB;
+        src: url(/images/fonts/seguisb.ttf),
+             url(/images/fonts/seguisb.woff);
+}
+
+@font-face {
+        font-family: SegoeUIB;
+        src: url(/images/fonts/segoeuib.ttf),
+             url(/images/fonts/segoeuib.woff);
+}
+
+@font-face {
+        font-family: SegoeUIBL;
+        src: url(/images/fonts/seguibl.ttf),
+             url(/images/fonts/seguibl.woff);
+}

@@ -1,0 +1,1 @@
+<?$this->getController('prices')->getPricesTemplate($object->id)?>

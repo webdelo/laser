@@ -1,0 +1,38 @@
+<!--<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="/files/uploadify/uploadify.css" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+		<script type="text/javascript" src="/files/uploadify/jquery.uploadify-3.1.js"></script>
+
+		<script>
+			$(function() {
+			    $('#file_upload').uploadify({
+			        'swf'      : '/files/uploadify/uploadify.swf',
+			        'uploader' : '/files/uploadify/uploadify.php',
+					'removeCompleted' : false,
+					'onDialogOpen' : function() {
+						$('.log').html('').html('The file dialog box was opened...');
+					},
+					'onUploadSuccess' : function(file, data, response) {
+						$('.log').append(
+							$('<p>').text('The file ' + file.name + ' was successfully uploaded with a response of :' + data)
+						);
+						$('#'+file.id).append('<img src="/files/'+file.name+'" width="100px">');
+					},
+					'onUploadComplete' : function(file) {
+						$('.log').append(
+							$('<p>').text('The file ' + file.name + ' finished processing.')
+						);
+					}
+			    });
+			});
+		</script>
+	</head>
+	<body>
+		<input type="file" name="file_upload" id="file_upload" />
+		<div class="log"></div>
+	</body>
+</html>-->
