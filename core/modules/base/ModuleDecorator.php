@@ -1,6 +1,6 @@
 <?php
 namespace core\modules\base;
-abstract class ModuleDecorator implements \Iterator, \ArrayAccess
+abstract class ModuleDecorator implements \Iterator, \ArrayAccess, \Serializable
 {
 	use \core\traits\ObjectPool;
 
@@ -84,7 +84,7 @@ abstract class ModuleDecorator implements \Iterator, \ArrayAccess
 		return $this->_object;
 	}
 
-	/* Start: Iterator Methods */
+	/* Start: Iterator interface Methods */
 	function rewind()
 	{
 		$this->getParentObject()->rewind();
@@ -109,8 +109,9 @@ abstract class ModuleDecorator implements \Iterator, \ArrayAccess
 	{
 		return $this->getParentObject()->valid();
 	}
-	/* End: Iterator Methods */
+	/* End: Iterator interface Methods */
 
+	/* Start: ArrayAccess interface Methods */
 	public function offsetExists($offset)
     {
         return $this->getParentObject()->offsetExists($offset);
@@ -130,5 +131,23 @@ abstract class ModuleDecorator implements \Iterator, \ArrayAccess
     {
 		$this->getParentObject()->offsetUnset($offset);
     }
+	/* End: ArrayAccess interface Methods */
 
+	/* Start: Serializable interface Methods */
+	public function serialize()
+    {
+		$data['object'] = $this->_object;
+		$data['objectId'] = $this->objectId;
+		$data['objectConfig'] = $this->objectConfig;
+		return serialize($data);
+    }
+
+	public function unserialize($data)
+    {
+		$data = unserialize($data);
+		$this->_object = $data['object'];
+		$this->objectId = $data['objectId'];
+		$this->objectConfig = $data['objectConfig'];
+    }
+	/* End: Serializable interface Methods */
 }

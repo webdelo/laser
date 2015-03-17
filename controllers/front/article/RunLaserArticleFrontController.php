@@ -7,7 +7,9 @@ class RunLaserArticleFrontController extends \controllers\base\Controller
 		\core\traits\controllers\Templates,
 		\core\traits\controllers\ControllersHandler,
 		\core\traits\controllers\RequestLevels,
-		\core\traits\controllers\Breadcrumbs;
+		\core\traits\controllers\Breadcrumbs,
+		\core\traits\RequestHandler,
+		\core\traits\ObjectPool;
 
 	private $articleObject;
 
@@ -18,8 +20,6 @@ class RunLaserArticleFrontController extends \controllers\base\Controller
 
 	public function __call($name, $arguments)
 	{
-		if ($this->redirectToCatalogController())
-			return;
 		$this->defaultAction();
 	}
 
@@ -41,6 +41,12 @@ class RunLaserArticleFrontController extends \controllers\base\Controller
 			$this->action = 'viewIndex';
 		if(isset ($this->getREQUEST()[0]))
 			$this->action = $this->getREQUEST()[0];
+		if (stripos($this->getSERVER()['REQUEST_URI'], "?lang=") > 0) {
+			$articles = new \modules\articles\lib\Articles();
+			$article = $articles->getObjectByAlias('index');
+			header("Location: " . "http://" . $this->getSERVER()['HTTP_HOST']);
+			die();
+		}
 		if ($this->actionExists($this->action)) {
 			$action = $this->action;
 			$this->$action();
@@ -58,6 +64,15 @@ class RunLaserArticleFrontController extends \controllers\base\Controller
 			 ->includeTemplate('articles/contacts');
 	}
 
+	public function getMainArticleName()
+	{
+		//$articles = new \modules\articles\lib\Articles();
+		//$article = $articles->getObjectByAlias('index');
+		
+		$article = $this->getArticle('index');
+		return $article->getName();
+	}
+	
 	public function viewArticle($alias)
 	{
 		if ($this->checkArticleAlias($alias)) {
@@ -86,9 +101,7 @@ class RunLaserArticleFrontController extends \controllers\base\Controller
 
 	public function viewIndex()
 	{
-		$this->setContent('article', $this->getArticle('index'))
-			->setContent('wrGet', new \core\ArrayWrapper($this->getGET()))
-			->includeTemplate('index');
+		$this->includeTemplate('index');
 	}
 
 	public function getArticle ($alias) {

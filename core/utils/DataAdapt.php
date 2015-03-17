@@ -15,13 +15,13 @@ class DataAdapt
 	{
 		if (isset($data)) return mysql_escape_string(self::textValid($data));
 	}
-	
+
 	public static function mailTest($email)
 	{
 		if (empty($email) || !preg_match("/^[a-z0-9\._-]+@[a-z0-9\._-]+\.[a-z]{2,4}$/i",$email)) return false;
 		return true;
 	}
-	
+
 	public static function textEditorValidMysql($data)
 	{
 		$allowable_tags = '<EM><U><STRONG><STRIKE><SUP><SUB><DIV><UL><OL><LI><BLOCKQUOTE><A><H1><H2><H3><H4><H5><H6><P><PRE><FONT><SPAN><BR>';
@@ -30,6 +30,5 @@ class DataAdapt
 		if (get_magic_quotes_gpc() == 0) $data = mysql_escape_string($data);
 		return $data;
 	}
-	
+
 }
-?>

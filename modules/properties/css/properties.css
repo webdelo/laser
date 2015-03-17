@@ -48,14 +48,14 @@
 }
 
 .propertyValuesBlock {
-	width: 400px;
+	width: 400px; 
 }
 
 .property .propertyValues .newPropertyForm input[type=text] {
 	height: 25px;
 	width: 220px;
 	font-size: 12px;
-
+	
 }
 .property .propertyValues select {
 	height: 27px;
@@ -95,6 +95,7 @@ a.deleteInContent:hover {
 	font-size: 14px;
 	margin: 0;
 	padding: 0;
+	height: 30px;
 }
 .measurementsTransformed {
 	margin: 0;

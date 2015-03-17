@@ -79,7 +79,7 @@ class Watermark
 		return empty($this->text) ? \core\url\UrlDecoder::getInstance()->getDomainAlias() : $this->text;
 	}
 
-	public function watermarkSimple($img)
+	public function watermark($img)
 	{
 		$x = imagesx($img);
 		$y = imagesy($img);
@@ -119,7 +119,7 @@ class Watermark
 		$mark_col = imagecolorallocate($newWatermark, $this->r, $this->g, $this->b);
 		imagefill($newWatermark, 0, 0, $mark_bg);
 		imagecolortransparent($newWatermark, $mark_bg);
-		imagecopyresampled($newWatermark, $watermark, 0, 0, 0, 0, imagesx($img), imagesy($img), imagesx($watermark), imagesy($watermark));
+		imagecopyresampled($newWatermark, $watermark, 0, 0, -20, -350, imagesx($img), imagesy($img), imagesx($watermark)+600, imagesy($watermark)+500);
 
 		return $this->mergeImages($img, $newWatermark);
 	}

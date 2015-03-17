@@ -12,11 +12,11 @@
 					<td>
 						<select name="categoryId" style="width:250px;">
 							<?if ($mainCategories->count()): foreach($mainCategories as $categoryObject):?>
-							<option value="<?=$categoryObject->id?>" <?= $categoryObject->id==$moduleDomain->categoryId ? 'selected' : ''; ?>><?=$categoryObject->name?></option>
+							<option value="<?=$categoryObject->id?>" <?= $categoryObject->id==$moduleDomain->categoryId ? 'selected' : ''; ?>><?=$categoryObject->getName()?></option>
 								<?if ($categoryObject->getChildren() != NULL): foreach($categoryObject->getChildren() as $children):?>
-								<option value="<?=$children->id?>" <?= $children->id==$moduleDomain->categoryId ? 'selected' : ''; ?>>&nbsp;&nbsp;|-&nbsp;<?=$children->name?></option>
+								<option value="<?=$children->id?>" <?= $children->id==$moduleDomain->categoryId ? 'selected' : ''; ?>>&nbsp;&nbsp;|-&nbsp;<?=$children->getName()?></option>
 									<? if ($children->getChildren() != NULL): foreach($children->getChildren() as $children2):?>
-									<option value="<?=$children2->id?>" <?= $children2->id==$moduleDomain->categoryId ? 'selected' : ''; ?>>&nbsp;&nbsp;&nbsp;&nbsp;|-&nbsp;<?=$children2->name?></option>
+									<option value="<?=$children2->id?>" <?= $children2->id==$moduleDomain->categoryId ? 'selected' : ''; ?>>&nbsp;&nbsp;&nbsp;&nbsp;|-&nbsp;<?=$children2->getName()?></option>
 									<?endforeach; endif?>
 								<?endforeach; endif?>
 							<?endforeach; endif?>

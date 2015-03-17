@@ -4,6 +4,7 @@ class RelationsDecorator extends \core\modules\base\ModuleDecorator
 {
 	private $propertiesValues;
 	private $propertyValue = array();
+	private $property;
 	
 	function __construct($object)
 	{
@@ -26,7 +27,7 @@ class RelationsDecorator extends \core\modules\base\ModuleDecorator
 	function getPropertyValueById($id)
 	{
 		if ( !$id ) {
-			throw new Exception('Don\' transmited argument in method '.__METHOD__, 1024);
+			throw new \Exception('Don\' transmited argument in method '.__METHOD__, 1024);
 		}
 		
 		if (isset($this->propertyValue[$id])) 
@@ -38,6 +39,38 @@ class RelationsDecorator extends \core\modules\base\ModuleDecorator
 		$this->propertyValue[$id] = $properties->count()==1 ? $properties->current() : $this->getNoop();
 
 		return $this->propertyValue[$id];
+
+	}
+	
+	function getPropertyById($id)
+	{
+		if ( !$id ) {
+			throw new \Exception('Don\' transmited argument in method '.__METHOD__, 1024);
+		}
+		
+		if (isset($this->property[$id])) 
+			return $this->property[$id];
+		
+		$this->property[$id] = new \modules\properties\lib\Property($this->id);
+
+		return $this->property[$id];
+
+	}
+	
+	function getPropertyByAlias($alias)
+	{
+		if ( !$alias ) {
+			throw new \Exception('Don\' transmited argument in method '.__METHOD__, 1024);
+		}
+		
+		if (isset($this->property[$id])) 
+			return $this->property[$id];
+		
+		$properties = new \modules\properties\lib\Properties();
+		
+		$this->property[$id] = $properties->getObjectByAlias($alias);
+
+		return $this->property[$id];
 
 	}
 }

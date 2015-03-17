@@ -2,18 +2,33 @@
 namespace core\traits;
 trait Errors
 {
+	private $currentLang;
 	protected $errors = array();
 	protected $errorsList;
 
 	public function setError($key, $text=null)
-	{
-		$text = $text ? $text : $this->getErrorsList()['defaultError'];
-		$text = (empty($this->getErrorsList()[$key])) ? $text : $this->getErrorsList()[$key];
-		$this->addError($key, $text);
+	{	
+		$text = $text ? $text : $this->getErrorsList()['defaultError'][\core\i18n\LangHandler::getInstance()->getLang()];
+		$text = (empty($this->getErrorsList()[$key][\core\i18n\LangHandler::getInstance()->getLang()])) ? $text : $this->getErrorsList()[$key][\core\i18n\LangHandler::getInstance()->getLang()];
+		$this->addError($key, $text);		
 		return $this;
 	}
 
-	private function getErrorsList()
+	protected function getLang()
+	{
+		if(isset($this->currentLang))
+			return $this->currentLang;
+
+		$this->setCurrentLang();
+		return $this->currentLang;
+	}
+
+	private function setCurrentLang()
+	{
+		$this->currentLang = \core\i18n\LangHandler::getInstance()->getLang();
+	}
+
+	public function getErrorsList()
 	{
 		if (empty($this->errorsList)) {
 			include(DIR.'includes/errorsList.php');
@@ -45,7 +60,7 @@ trait Errors
 
 	public function getError($key)
 	{
-		return isset($this->errors[$key]) ? $this->errors[$key] : false;
+		return isset($this->errors[$key][$this->getLang()]) ? $this->errors[$key][$this->getLang()] : false;
 	}
 
 	public function resetErrors()

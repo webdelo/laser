@@ -20,10 +20,13 @@ class ClientsBaseController extends Controller
 
 	protected function add()
 	{
-		$objectId =  $this->setObject($this->_config->getObjectsClass())->modelObject
-						->setLogin($this->getPOST()['login'])
-						->setPassword($this->getPOST()['password'], $this->getPOST()['passwordConfirm'])
-						->add($this->getPOST(), $this->modelObject->getConfig()->getObjectFields());
+		$objectId = $this->setObject($this->_config->getObjectsClass())->modelObject
+						 ->setLogin($this->getPOST()['login'])
+						 ->setPassword($this->getPOST()['password'], $this->getPOST()['passwordConfirm'])
+						 ->add($this->getPOST(), $this->modelObject->getConfig()->getObjectFields());
+		$new_client = new \modules\clients\lib\Client($objectId);
+		$subscr = ($this->getPost()['subscribe'] == 'on') ? 1 : 0;
+		$new_client->editField($subscr, 'newsSubscribed');
 		$this->ajax($objectId, 'ajax', true);
 	}
 

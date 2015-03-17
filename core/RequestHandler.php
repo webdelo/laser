@@ -99,8 +99,8 @@ class RequestHandler
 	
 	public function getCurrentLang()
 	{
-		if (\core\url\UrlDecoder::getInstance()->lang && empty($this->lang)) {
-			$this->lang = \core\url\UrlDecoder::getInstance()->lang;
+		if (i18n\LangHandler::getInstance()->getLang() && empty($this->lang)) {
+			$this->lang = i18n\LangHandler::getInstance()->getLang();
 		}
 		return $this->lang;
 	}
@@ -145,7 +145,7 @@ class RequestHandler
 	
 	public function updateREQUEST()
 	{
-		$this->request = $_REQUEST;
+		$this->request = new ArrayWrapper($_REQUEST);
 	}
 	
 	public function updateSERVER()
@@ -202,12 +202,12 @@ class RequestHandler
 	
 	public function isIndex()
 	{
-		return $this->getSERVER()['REQUEST_URI'] == '/';
+		return \core\url\UrlDecoder::getInstance()->getCurrenPageWithoutQueryString() == '/';
 	}
 	
 	public function isNotIndex()
 	{
-		return $this->getSERVER()['REQUEST_URI'] != '/';
+		return !$this->isIndex();
 	}
 	
 	public function isDeveloperDomain()
@@ -224,5 +224,10 @@ class RequestHandler
 	{
 		$domainAlias = empty($domainAlias) ? $this->getCurrentDomainAlias() : $domainAlias;
 		return \core\Configurator::getInstance()->url->domainsDevelopersAliases->$domainAlias;
+	}
+	
+	public function moveRequestLevel()
+	{
+		return \core\url\UrlDecoder::getInstance()->moveRequestLevel();
 	}
 }

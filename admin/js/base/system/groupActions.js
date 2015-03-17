@@ -2,8 +2,7 @@ $(function () {
 	$('.filterGroupActionByCategory').change(function(){
 		location.href = '?form_in_use=true&categoryId='+$(this).val()+'&groupAction=setParameters';
 	});
-	
-	
+
 	checkUncheckAll();
 	shiftKeyInit();
 	onElementSelected();
@@ -95,7 +94,7 @@ var getAction = function(){
 };
 
 var onOkPressed = function(){
-	$('.ok').live('click', okPressedFunc); 
+	$('.ok').live('click', okPressedFunc);
 };
 
 var okPressedFunc = function(){

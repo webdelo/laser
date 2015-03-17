@@ -1,11 +1,7 @@
 <?php
 namespace core;
-
-//ini_set('xdebug.max_nesting_level', 300);
-
 try {
 	define('TYPE','front');
-
 	session_start();
 	include('includes/config.php');
 	$configurator = Configurator::getInstance();
@@ -25,14 +21,13 @@ try {
 		->setConfig($urlRedirectorConfig)
 		->loadCsvData()
 		->redirectCurrentPage();
-
+	
 	$controllerFactoryConfig = $configurator->getArrayByKey('controllers');
 	$controller = \controllers\base\ControllerFactory::getInstance()
 		->setConfig($controllerFactoryConfig)
 		->$_REQUEST['controller'];
-	$controller->$_REQUEST['action']();
 
-	\core\debug\Debug::getInstance(__FILE__, __LINE__,__FUNCTION__,__CLASS__,__METHOD__)->setResult();
+	$controller->$_REQUEST['action']();
 } catch (\Exception $e) {
 	$shell = new debug\DeveloperShell(new debug\ErrorHandler());
 	$shell->exceptionHandler($e);

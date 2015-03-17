@@ -40,22 +40,22 @@
                 <ul class="type">
                     <li>
                         <div class="alphaBeta">S</div>
-                        <img src="/images/bg/s.png" alt="">
+                        <a href="/s-small/"><img src="/images/bg/s.png" alt=""></a>
                         <p class="moreTypeInfo">Аттракцион "Лазерный лабиринт" сейчас только набирает популярность и встречается достаточно редко</p>
                     </li>
                     <li>
                         <div class="alphaBeta">M</div>
-                        <img src="/images/bg/m.png" alt="">
+                        <a href="/m-medium/"><img src="/images/bg/m.png" alt=""></a>
                         <p class="moreTypeInfo">Аттракцион "Лазерный лабиринт" сейчас только набирает популярность и встречается достаточно редко</p>
                     </li>
                     <li>
                         <div class="alphaBeta">L</div>
-                        <img src="/images/bg/l.png" alt="">
+                        <a href="/l-large/"><img src="/images/bg/l.png" alt=""></a>
                         <p class="moreTypeInfo">Аттракцион "Лазерный лабиринт" сейчас только набирает популярность и встречается достаточно редко</p>
                     </li>
                     <li>
                         <div class="alphaBeta">XL</div>
-                        <img src="/images/bg/xl.png" alt="">
+                        <a href="/xl-extra-large/"><img src="/images/bg/xl.png" alt=""></a>
                         <p class="moreTypeInfo">Аттракцион "Лазерный лабиринт" сейчас только набирает популярность и встречается достаточно редко</p>
                     </li>
                 </ul>

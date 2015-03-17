@@ -22,7 +22,14 @@ class ArrayWrapper implements \Iterator, \Countable, \Serializable, \ArrayAccess
 				return new ArrayWrapper($this->_array[$name]);
 			else
 				return $this->_array[$name];
+		} else {
+			return new Noop();
 		}
+	}
+	
+	public function getAsArray()
+	{
+		return $this->_array;
 	}
 
 	/* Start: Iterator Methods */
@@ -94,5 +101,41 @@ class ArrayWrapper implements \Iterator, \Countable, \Serializable, \ArrayAccess
 	public function getArray () 
 	{
 		return $this->_array;
+	}
+	
+	public function last()
+	{
+		if ($this->_array[$this->length()-1])  
+			return $this->_array[$this->length()-1];
+		
+		throw new \Exception("In associative elements can\'t find last element");
+	}
+	
+	public function pop()
+	{	
+		return array_pop($this->_array);
+	}
+	
+	public function size()
+	{
+		return sizeof($this->_array);
+	}
+	
+	public function length()
+	{
+		return $this->size();
+	}
+	
+	public function first()
+	{
+		if ($this->_array[0])  
+			return $this->_array[0];
+		
+//		TODO: 
+//			Можно разбивать даже ассоциативный массив на массив с ключами и их значениями, 
+//			и в последствии оперировать как и с массивами с числовыми ключами
+//			array( 'name' => 'Clark', 'job' => 'Reporter' ) => array( 0 => 'name', 1 => 'job' ) & array( 0 => 'Clark', 1 => 'Reporter' )
+			
+		throw new \Exception("In associative elements can\'t find first element");
 	}
 }

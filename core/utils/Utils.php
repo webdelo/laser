@@ -55,12 +55,12 @@ class Utils
 	public static function translit($str)
 	{
 		$tr = array(
-			"А"=>"A", "Б"=>"B", "В"=>"V", "Г"=>"G", "Д"=>"D", "Е"=>"E", "Ж"=>"J", "З"=>"Z",
+			"А"=>"A", "Б"=>"B", "В"=>"V", "Г"=>"G", "Д"=>"D", "Е"=>"E", "Ё"=>"E", "Ж"=>"J", "З"=>"Z",
 			"И"=>"I", "Й"=>"Y", "К"=>"K", "Л"=>"L", "М"=>"M", "Н"=>"N",	"О"=>"O", "П"=>"P",
 			"Р"=>"R", "С"=>"S", "Т"=>"T", "У"=>"U", "Ф"=>"F", "Х"=>"H", "Ц"=>"TS","Ч"=>"CH",
 			"Ш"=>"SH","Щ"=>"SCH","Ъ"=>"","Ы"=>"YI","Ь"=>"","Э"=>"E",
 			"Ю"=>"YU","Я"=>"YA",
-			"а"=>"a", "б"=>"b", "в"=>"v", "г"=>"g", "д"=>"d", "е"=>"e", "ж"=>"j", "з"=>"z",
+			"а"=>"a", "б"=>"b", "в"=>"v", "г"=>"g", "д"=>"d", "е"=>"e", "ё"=>"e", "ж"=>"j", "з"=>"z",
 			"и"=>"i", "й"=>"y", "к"=>"k", "л"=>"l", "м"=>"m", "н"=>"n",	"о"=>"o", "п"=>"p",
 			"р"=>"r", "с"=>"s", "т"=>"t", "у"=>"u", "ф"=>"f", "х"=>"h", "ц"=>"ts","ч"=>"ch",
 			"ш"=>"sh","щ"=>"sch","ъ"=>"y","ы"=>"yi","ь"=>"","э"=>"e",
@@ -81,7 +81,7 @@ class Utils
 		return round ($fileSize, 2).' '.$arr[$step];
 	}
 
-	public static function declension($int, $expr){
+	public static function declension($int, $expr = array()){
 		settype($int, "integer");
 		$count = $int % 100;
 		if ($count >= 5 && $count <= 20) {
@@ -97,10 +97,32 @@ class Utils
 				}
 		}
 		return $result;
-	  }
+	}
 
-	  public function textSlice($smallerText, $biggerText){
-		  return substr($biggerText, sizeof($smallerText), sizeof($biggerText));
-	  }
+	public static function filterTextByEmail($text)
+	{
+		return preg_match('/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/si', $text);
+	}
+
+	public static function filterTextByPhone($text)
+	{
+		return preg_match('/[+]?[\(]?([\d]{0,1})?[\)]?[\(]?([\d]{0,1})?[\)]?[\(]?([\d]{0,1})?[\)]?\d{7,13}/', $text);
+	}
+
+	public static function filterTextByUrl($text)
+	{
+		return preg_match('#(www\.|https?://)?[a-z0-9]+\.[a-z0-9]{2,4}\S*#i', $text);
+	}
+
+	public static function textToInt( $text )
+	{
+		$textArray = str_split($text);
+		$int       = 0;
+		foreach ($textArray as $symbol) {
+			$int +=	ord($symbol);
+		}
+		return $int;
+	}
+
 }
 ?>

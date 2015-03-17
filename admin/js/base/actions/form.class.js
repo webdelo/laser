@@ -5,6 +5,7 @@ var form = function (settings) {
 		'submit'  : '.submit',
 		'message' : '.message',
 		'showError' : true,
+		'disabled' : '.disabled',
 		'onBeforeSend' : function () {},
 		'onSuccess' : function () {},
 		'onComplete' : function () {}
@@ -31,10 +32,12 @@ var form = function (settings) {
 		this.loader.init($(this.settings.form));
 		var that = this;
 		$(this.settings.form + 'Submit').on("click", function () {
-			that.setObject($(this));
-			that.submit$ = $(this);
-			that.setActive($(this))
-				.start();
+			if ( !$(this).hasClass(that.settings.disabled.replace('.', '')) ) {
+				that.setObject($(this));
+				that.submit$ = $(this);
+				that.setActive($(this))
+					.start();
+			}
 			return false;
 		});
 		$(this.settings.form  + ' input, ' + this.settings.form  + ' textarea').on("keypress", function(e){
@@ -43,14 +46,16 @@ var form = function (settings) {
 				if (submit$.length === 0)
 					submit$ = $(that.settings.form + 'Submit');
 				submit$.click();
+				return false;
 			}
-		})
+		});
 		$(this.settings.form + ' input').on("keypress", function(e){
 			if (e.keyCode===13) {
 				var submit$ = $(this).parents(that.settings.form).find(that.settings.form + 'Submit');
 				if (submit$.length === 0)
 					submit$ = $(that.settings.form + 'Submit');
 				submit$.click();
+				return false;
 			}
 		});
 		$(this.settings.form + ' textarea').live("keypress", function(e){
@@ -59,7 +64,7 @@ var form = function (settings) {
 				if (submit$.length === 0)
 					submit$ = $(that.settings.form + 'Submit');
 				submit$.click();
-				
+				return false;
 			}
 		});
 	};
@@ -87,14 +92,31 @@ var form = function (settings) {
 			this.errors.reset();
 			if ($.isFunction(this.settings.onBeforeSend))
 				this.settings.onBeforeSend(this);
+			
+			this.useElementBeforeSend();
 			this.setCallback(callback)
 				.setData()
 				.setDataFromPost()
 				.setDataFromSubmit()
 				.setMethod()
 				.setAction()
-				.startAction();
+				.startAction(); 
 		return this;
+	};
+	
+	this.useElementBeforeSend = function(){
+		if (this.hasElementCallback()) {
+			var callback = window[this.getObject().data('callback')];
+			if ( $.isFunction(callback) ) {
+				callback.call(this);
+			} else {
+				alert('BeforeSend-функция указанная к форме - "'+this.getObject().selector+'" не найдена, либо определена не правильно.');
+			}
+		}
+	};
+	
+	this.hasElementBeforeSend = function () {
+		return ( typeof this.getObject().data('callback') != "undefined" );
 	};
 	
 	this.addDataToPost = function (newPost) {
@@ -203,6 +225,10 @@ var form = function (settings) {
 	this.before = function () {
 		this.loader.title('Send to server...');
 		$(this.settings.message).hide().html($(this.loading)).fadeIn();
+		if ( $.isFunction(this.settings.onBeforeSend) ) {
+			this.settings.onBeforeSend();
+		}
+		
 	};
 
 	this.error = function () {
@@ -213,7 +239,7 @@ var form = function (settings) {
 		$(this.settings.message).hide();
 		
 		if (typeof(response) === 'object'  && this.settings.showError === true) {
-			this.errors.show(response, this.getActiveForm());
+			this.errors.show(response, this.getObject());
 		} else if (response == 1) {
 			$(this.settings.message).text('Данные были обновлены!').fadeIn();
 		}
@@ -232,6 +258,23 @@ var form = function (settings) {
 		this.resetActive();
 		if ($.isFunction(this.settings.onComplete))
 			this.settings.onComplete(response, this);
+	
+		this.useElementCallback();
+	};
+	
+	this.useElementCallback = function(){
+		if (this.hasElementCallback()) {
+			var callback = window[this.getObject().data('callback')];
+			if ( $.isFunction(callback) ) {
+				callback.call(this);
+			} else {
+				alert('Callback-функция указанная к форме - "'+this.getObject().selector+'" не найдена, либо определена не правильно.');
+			}
+		}
+	};
+	
+	this.hasElementCallback = function () {
+		return ( typeof this.getObject().data('callback') != "undefined" );
 	};
 
 	this.resetActive = function () {
@@ -240,7 +283,7 @@ var form = function (settings) {
 
 	this.isDiv = function (element) {
 		var el = $(element);
-		return $(element).is('div');
+		return $(element).is('div') || $(element).is('span');
 	};
 	
 	this.isForm = function (element) {
@@ -259,6 +302,7 @@ var form = function (settings) {
 			else
 				$(this).val('');
 		});
+		return this;
 	};
 	
 	this.getObject = function () {

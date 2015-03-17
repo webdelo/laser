@@ -4,7 +4,6 @@
 <table class="parameterValuesTable" data-sortUrlAction="/admin/parameters/changeParametersValuesPriority/?">
 		<tr>
 			<td>
-				
 			</td>
 			<td colspan="2">
 				<div
@@ -13,7 +12,9 @@
 					data-method="post"
 				>
 					<input type="hidden" name="parameterId" value="<?=$parameter->id?>" />
+					
 					<input name="value" type="text" value=""/>
+					
 					<a class="newParameterFormSubmit addInContent"></a>
 					<div class="additionalInfo">
 						<textarea class="transformer" data-default="добавить описание" name="description"></textarea>

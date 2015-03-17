@@ -7,7 +7,7 @@ var loaderBlock = function (image) {
 	this.image        = image || '/admin/images/loaders/ajax-loader.gif';
 	
 	this.img$        = $('<div id="ajax_block_img"><img src="'+this.image+'"/></div>');
-	this.title$      = $('<span class="'+this.title.replace('.', '')+'">Загрузка данных...</span>');
+	this.title$      = $('<span class="'+this.title.replace('.', '')+'">Data execute...</span>');
 	this.bg$         = $('<div class="'+this.loadingBlock.replace('.', '')+'">&nbsp;</div>').css('position', 'absolute');
 	this.destination = 'body';
 
@@ -52,10 +52,33 @@ var loaderBlock = function (image) {
 		return this.target$;
 	};
 
-	this.start = function (object$) {
-		this.setTarget(object$).getTarget().fadeTo('0.2');
+	this.start = function () {
 		this.copy$ = $(this.loadingBlock).first().clone();
-		this.copy$.appendTo(this.destination).css(this.getParameters()).fadeIn();
+		this.copy$
+			.appendTo(this.destination)
+			.css(this.getParameters())
+			.stop(true, true)
+			.css({
+				'opacity':0,
+				'display':'block'
+			}).animate({ 'opacity': 1}, 100);
+		
+		this.getTarget().stop(true, true).animate({ 'opacity': .3 }, 200);
+		this.getTarget().find('select').attr('disabled', 'disabled');
+		
+		return this;
+	};
+	
+	this.stop = function () {
+		var that = this;
+		if ( this.copy$ != undefined ) {
+			this.copy$
+				.stop(true, true)
+				.animate({ 'opacity': 0}, 100, function(){ $(that.loadingBlock).not(':first').remove(); });
+		}
+		
+		this.getTarget().stop(true, true).animate({ 'opacity': 1 }, 500);
+		this.getTarget().find('select, input, textarea').removeAttr('disabled');
 		
 		return this;
 	};
@@ -73,13 +96,6 @@ var loaderBlock = function (image) {
 	
 	this.title = function (title) {
 		$(this.loadingBlock+' '+this.title).text(title);
-		
-		return this;
-	};
-	
-	this.stop = function (object$) {
-		this.setTarget(object$).getTarget().fadeTo('slow','1');
-		this.copy$.fadeOut().remove();
 		
 		return this;
 	};

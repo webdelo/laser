@@ -22,7 +22,7 @@ namespace core\traits\controllers;
 trait Images
 {
 	protected $imagesArrayKey = 'imagesData' ;
-
+	
 	protected function uploadImage()
 	{
 		$imagesFilesUploader = new \core\modules\images\ImagesFileUploader();
@@ -73,7 +73,7 @@ trait Images
 	{
 		$this->ajaxResponse($this->getImageObject()->edit($this->getPOST()));
 	}
-
+	
 	protected function getImageObject()
 	{
 		return (new $this->objectsClass)->getImages()->getObjectById((int)$this->getREQUEST()[0]);
@@ -97,7 +97,7 @@ trait Images
 	{
 	    return $this->getImagesBlock($this->getPOST()['objectId']);
 	}
-
+	
 	protected function getImagesBlock($objectId)
 	{
 	    $object = new \core\Noop();
@@ -110,7 +110,7 @@ trait Images
 		     ->setContent('objects', $objects) // Need for images template
 		     ->includeTemplate('newImagesForm');
 	}
-
+	
 	protected function ajaxGetImagesListBlock()
 	{
 	    $this->getImagesListBlock($this->getPOST()['objectId']);
@@ -126,7 +126,7 @@ trait Images
 	    $this->setContent('object', $object) // Need for images template
 		     ->includeTemplate('imagesList');
 	}
-
+	
 	public function setPriority()
 	{
 		$object = $this->getObject($this->objectClass, $this->getGET()->objectId);

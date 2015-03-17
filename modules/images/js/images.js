@@ -1,72 +1,58 @@
-$(function () {
-
-	(new imagesHandler())
-	    .initImageControll()
-	    .initImage()
-	    .InitImageAddForm()
-	    .InitImageEditForm()
-	    .InitImageRemoveForm()
-	    .InitPrimaryButton()
-	    .InitResetPrimaryButton()
-	    .InitBlockButton()
-	    .InitResetBlockButton()
-	    .InitImageRemoveFromDetails()
-	    .InitAjaxModal()
-		.InitImagesSortable();
-
-});
-
 var imagesUpload = function (settings) {
 	this.settings = $.extend({
-		'container'	: '.newImages',
-		'controller'	: '.mainController',
-		'uploadButton'	: '#file_upload',
-		'bgColor'	: 'ECF5FC'
+		'container'	   : '.newImages',
+		'controller'   : '.mainController',
+		'uploadButton' : '#file_upload',
+		'bgColor'	   : 'ECF5FC'
 	}, settings||{});
 
 	this.reloadForm = function()
 	{
 	    this.getNewImageForm();
+		return this;
 	};
-
+	
 	this.getNewImageForm = function()
 	{
 	    var id = $('.objectId').val();
 	    var that = this;
-
-	    $.ajax({
-		    url: '/admin/'+$(that.settings.controller).val()+'/ajaxGetImagesBlock/',
-		    type: 'POST',
-			cache: "false",
-		    data: {'objectId': id},
-		    success: function(data){
-			    $('.newImages').html(data);
-			    that.getImagesListBlock(id);
-		    }
-	    });
+		var exampleForm$ = $('.newImages').find('.imagesForm:first').clone();
+		$('.newImages').find('.imagesForm').remove();
+		
+		exampleForm$.addClass('example')
+					.addClass('hide')
+					.find('input,select,textarea').attr('name', '').val('');
+		$('#placeForQueue').html('');
+		$('.imagesAddFormSubmitBlock').fadeOut();
+		
+		$('.newImages').append(exampleForm$);
+//	    $.ajax({
+//		    url: $('.newImages').data('source') || '/admin/'+$(that.settings.controller).val()+'/ajaxGetImagesBlock/',
+//		    type: 'POST',
+//		    data: {'objectId': id}, 
+//		    success: function(data){
+//			    $('.newImages').html(data);
+//		    }
+//	    });
 	};
-
-	this.getImagesListBlock = function(id)
+	
+	this.getImagesListBlock = function()
 	{
+		var id = $('.objectId').val();
 	    var that = this;
-
+	    
 	    $.ajax({
-		    url: '/admin/'+$(that.settings.controller).val()+'/ajaxGetImagesListBlock/',
+		    url: $('.imagesList').data('source') || '/admin/'+$(that.settings.controller).val()+'/ajaxGetImagesListBlock/',
 		    type: 'POST',
-			cache: "false",
-			headers: { 
-				'Pragma': 'no-cache',
-				'Cache-Control': 'no-cache'
-			},
 		    data: {'objectId' : id},
 		    success: function(data){
 			    $('.imagesList').html(data);
-			    (new image()).toggleInlineLayer();
+			    (new image()).toggleInlineLayer(); 
 			    (new imagesHandler()).InitAll();
 		    }
-	    });
+	    });	    
 	};
-
+	
 	this.setSettings = function (sources) {
 		this.settings = $.extend(this.settings, sources||{});
 		return this;
@@ -123,9 +109,6 @@ var imagesUpload = function (settings) {
 				.find('.title input[type=text]').attr('name', 'imagesData['+name+'][title]').end()
 				.find('.status select').attr('name', 'imagesData['+name+'][statusId]').end()
 				.find('.category select').attr('name', 'imagesData['+name+'][categoryId]').end()
-				.find('.resizetype select').attr('name', 'imagesData['+name+'][focus]').end()
-				.find('.sharp select').attr('name', 'imagesData['+name+'][sharpen]').end()
-				.find('.bg_fill input[type=text]').attr('name', 'imagesData['+name+'][rgbBgColor]').end()
 				.find('.description textarea').attr('name', 'imagesData['+name+'][description]');
 
 		this.imgForm$ = imgForm$;
@@ -171,7 +154,7 @@ var imagesUpload = function (settings) {
 				that.cancelUploadedFile(file);
 			} else {
 				var example$ = $('.uploadifive-queue-item').clone();
-				example$.addClass('example').addClass('hide');
+				example$.addClass('example').addClass('hide').removeClass('uploadifive-queue-item');
 				$('body').append(example$);
 				if ( $('.imagesAddFormSubmitBlock').length > 0)
 					$('.imagesAddFormSubmitBlock').hide();
@@ -207,7 +190,7 @@ var imagesUpload = function (settings) {
 			return imageUrl;
 		}
 	};
-};
+}
 
 var image = function (settings) {
 	this.settings = $.extend({
@@ -222,7 +205,7 @@ var image = function (settings) {
 	this.setSettings = function (sources) {
 		this.settings = $.extend(this.settings, sources||{});
 		return this;
-	};
+	}
 
 	this.handlers = {
 		init  : function () {
@@ -232,7 +215,7 @@ var image = function (settings) {
 		hover : function () {
 			this.toggleInlineLayer();
 		}
-	};
+	}
 
 	this.toggleInlineLayer = function () {
 		var image$ = $(this.settings.element);
@@ -249,7 +232,7 @@ var image = function (settings) {
 			$(this).find(header$).fadeOut('fast');
 		});
 		return this;
-	};
+	}
 
 	this.save = function (element$) {
 		element$.loaderMini({
@@ -258,10 +241,10 @@ var image = function (settings) {
 		}).delay(3000).loaderMini('stop');
 
 		this.images.deSelectBlock();
-	};
+	}
 
 	this.remove = function () {
 
-	};
+	}
 
 }

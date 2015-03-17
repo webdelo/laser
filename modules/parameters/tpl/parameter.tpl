@@ -5,6 +5,7 @@
 				<div class="action_buts">
 					<a class="form<?= $parameter->id ? 'Edit' : 'Add'?>Submit pointer" ><img src="/admin/images/buttons/save_object.png" alt="" /> Сохранить</a>
 					<? if ($parameter->id):?>
+						<a href="/admin/parameters/translateParameterValues/<?=$parameter->id?>/"><img src="/admin/images/buttons/but_edit.png" alt="" /> Перевести значения</a>
 						<a class="button confirm pointer" data-confirm= "Remove the parameter?" data-action="/admin/parameters/remove/<?=$parameter->id?>/"
 							data-callback="postRemoveFromDetails" data-post-action="/admin/parameters/parameters/" >
 							<img src="/admin/images/buttons/delete.png" alt="" /> Удалить
@@ -14,7 +15,7 @@
 				</div>
 				<p class="speedbar"><a href="/admin/">Главная</a>     <span>></span>
 					<a href="/admin/parameters/">Характеристики</a>    <span>></span>
-					<?= $parameter->id ? $parameter->name : 'Добавление'?>
+					<?= $parameter->id ? $parameter->getName() : 'Добавление'?>
 				</p>
 				<div class="clear"></div>
 				<form class="form<?= $parameter->id ? 'Edit' : 'Add'?>" action="/admin/parameters/<?= $parameter->id ? 'edit' : 'add'?>/" method="post" data-post-action="<?= $parameter->id ? 'none' : '/admin/parameters/parameters/'?>">

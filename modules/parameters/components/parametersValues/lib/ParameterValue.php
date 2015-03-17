@@ -1,13 +1,17 @@
 <?php
 namespace modules\parameters\components\parametersValues\lib;
-class ParameterValue extends \core\modules\base\ModuleDecorator
+class ParameterValue extends \core\modules\base\ModuleObject
 {
+	use \core\traits\RequestHandler,
+		\core\i18n\TextLangParserTraitDecorator;
+	
+	protected $configClass = '\modules\parameters\components\parametersValues\lib\ParameterValueConfig';
+
 	function __construct($objectId)
 	{
-		$object = new ParameterValueObject($objectId);
-		parent::__construct($object);
+		parent::__construct($objectId, new $this->configClass);
 	}
-	
+
 	public function getParameter()
 	{
 		if(empty($this->parameter))
@@ -18,15 +22,18 @@ class ParameterValue extends \core\modules\base\ModuleDecorator
 	/* Start: Main Data Methods */
 	public function getName()
 	{
-		return $this->getParameter()->name;
+		return $this->getParameter()->getName();
 	}
+	
 	public function getImagePath()
 	{
 		return $this->getParameter()->imagePath;
 	}
-	public function getValue()
+	
+	public function getValue( $lang = null )
 	{
-		return $this->value;
+//				var_dump($this->loadObjectInfo()->objectInfo['value']);
+		return $this->getTextFromLangParser($this->loadObjectInfo()->objectInfo['value'], $lang);
 	}
 	/*   End: Main Data Methods */
 
@@ -34,10 +41,16 @@ class ParameterValue extends \core\modules\base\ModuleDecorator
 		return $this->delete();
 	}
 	
-	public function delete () {
-		return ( $this->deleteRelations() ) ? $this->getParentObject()->delete() : false ;
+	public function edit($data = null, $fields = array(), $rules = array()) 
+	{
+		$compacter = new \core\i18n\TextLangCompacter($this, $data);
+		return parent::edit($compacter->getPost(), $fields, $rules);
 	}
-	
+
+	public function delete () {
+		return ( $this->deleteRelations() ) ? parent::delete() : false ;
+	}
+
 	private function deleteRelations ()
 	{
 		foreach ($this->getConfig()->relations() as $table=>$field) {

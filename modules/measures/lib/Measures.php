@@ -1,12 +1,14 @@
 <?php
 namespace modules\measures\lib;
-class Measures extends \core\modules\base\ModuleDecorator
+class Measures extends \core\modules\base\ModuleObjects
 {
+	use \core\modules\statuses\StatusesTraitDecorator,
+		\core\modules\categories\CategoriesTraitDecorator;
+
+	protected $configClass     = '\modules\measures\lib\MeasureConfig';
+
 	function __construct()
 	{
-		$object = new MeasuresObject();
-		$object = new \core\modules\statuses\StatusesDecorator($object);
-		$object = new \core\modules\categories\CategoriesDecorator($object);
-		parent::__construct($object);
+		parent::__construct(new $this->configClass);
 	}
 }

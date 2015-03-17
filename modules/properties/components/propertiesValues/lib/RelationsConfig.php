@@ -4,10 +4,10 @@ class RelationsConfig extends \core\modules\base\ModuleConfig
 {
 	use \core\traits\validators\Base,
 		\core\traits\adapters\Base;
-
+	
 	protected $objectClass  = '\core\modules\relations\Relation';
 	protected $objectsClass = '\modules\properties\components\propertiesValues\lib\Relations';
-
+	
 	public $objectDecorators = array(
 		'\modules\properties\components\propertiesValues\lib\PropertyValueDecorator',
 		'\modules\measures\lib\MeasureDecorator'
@@ -22,7 +22,7 @@ class RelationsConfig extends \core\modules\base\ModuleConfig
 		'value',
 		'measureId',
 	);
-
+	
 	public function rules()
 	{
 		return array(
@@ -32,11 +32,9 @@ class RelationsConfig extends \core\modules\base\ModuleConfig
 			)
 		);
 	}
-
-	public function _deleteIfEmpty($data)
+	
+	public function _deleteIfEmpty($data) 
 	{
-		if($data === 0)
-			return false;
 		return empty($data) ? !\core\db\Db::getMysql()->query(' DELETE FROM `'.$this->mainTable().'` WHERE `id` = ?d ', array($this->data['id'])) : true;
 	}
 

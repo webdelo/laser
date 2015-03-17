@@ -1,4 +1,6 @@
 <div class="main_edit">
+	<script type="text/javascript" src="/core/i18n/js/langFieldWrapper.js"></script>
+	
 	<div class="main_param">
 		<div class="col_in">
 			<table width="100%">
@@ -7,11 +9,15 @@
 				</tr>
 				<tr>
 					<td class="first">Имя:</td>
-					<td><input type="text" name="name" value="<?=$object->name?>" /></td>
+					<td>
+						<? \core\i18n\LangFieldWrapper::printInputs($object, 'getName', 'name') ?>
+					</td>
 				</tr>
 				<tr>
 					<td class="first">H1:</td>
-					<td><input type="text" name="h1" value="<?=$object->h1?>" /></td>
+					<td>
+						<? \core\i18n\LangFieldWrapper::printInputs($object, 'getH1', 'h1') ?>
+					</td>
 				</tr>
 				<tr>
 					<td class="first">Родительская категория:</td>
@@ -19,11 +25,11 @@
 						<select name="parentId" style="width:150px;">
 							<option></option>
 							<?php if ($mainCategories->count()): foreach($mainCategories as $categoryObject):?>
-							<option value="<?=$categoryObject->id?>" <?=($categoryObject->id==$object->parentId) ? 'selected' : ''; ?>><?=$categoryObject->name?></option>
+							<option value="<?=$categoryObject->id?>" <?=($categoryObject->id==$object->parentId) ? 'selected' : ''; ?>><?=$categoryObject->getName()?></option>
 								<?php if ($categoryObject->getChildren() != NULL): foreach($categoryObject->getChildren() as $children):?>
-								<option value="<?=$children->id?>" <?=($children->id==$object->parentId) ? 'selected' : ''; ?>>&nbsp;&nbsp;|-&nbsp;<?=$children->name?></option>
+								<option value="<?=$children->id?>" <?=($children->id==$object->parentId) ? 'selected' : ''; ?>>&nbsp;&nbsp;|-&nbsp;<?=$children->getName()?></option>
 									<?php if ($children->getChildren() != NULL): foreach($children->getChildren() as $children2):?>
-									<option value="<?=$children2->id?>" <?=($children2->id==$object->parentId) ? 'selected' : ''; ?>>&nbsp;&nbsp;&nbsp;&nbsp;|-&nbsp;<?=$children2->name?></option>
+									<option value="<?=$children2->id?>" <?=($children2->id==$object->parentId) ? 'selected' : ''; ?>>&nbsp;&nbsp;&nbsp;&nbsp;|-&nbsp;<?=$children2->getName()?></option>
 									<?php endforeach; endif;?>
 								<?php endforeach; endif;?>
 							<?php endforeach; endif;?>
@@ -32,11 +38,15 @@
 				</tr>
 				<tr>
 					<td class="first">Описание:</td>
-					<td><textarea name="description" cols="95" rows="10"><?=$object->description?></textarea>
+					<td>
+						<? \core\i18n\LangFieldWrapper::printTextarea($object, 'getDescription', 'description') ?>
+					</td>
 				</tr>
 				<tr>
 					<td class="first">Текст:</td>
-					<td><textarea name="text" cols="95" rows="20"><?=$object->text?></textarea></td>
+					<td>
+						<? \core\i18n\LangFieldWrapper::printTextarea($object, 'getText', 'text') ?>
+					</td>
 				</tr>
 				<tr>
 					<td class="first">Путь к изображению:</td>
@@ -51,19 +61,27 @@
 				</tr>
 				<tr>
 					<td class="first">Meta Title:</td>
-					<td><input name="metaTitle" value="<?=$object->metaTitle?>" type="text"/></td>
+					<td>
+						<? \core\i18n\LangFieldWrapper::printInputs($object, 'getMetaTitle', 'metaTitle') ?>
+					</td>
 				</tr>
 				<tr>
 					<td class="first">Meta Keywords:</td>
-					<td><input name="metaKeywords" value="<?=$object->metaKeywords?>" type="text"/></td>
+					<td>
+						<? \core\i18n\LangFieldWrapper::printInputs($object, 'getMetaKeywords', 'metaKeywords') ?>
+					</td>
 				</tr>
 				<tr>
 					<td class="first">Meta Description:</td>
-					<td><input name="metaDescription" value="<?=$object->metaDescription?>" type="text"/></td>
+					<td>
+						<? \core\i18n\LangFieldWrapper::printInputs($object, 'getMetaDescription', 'metaDescription') ?>
+					</td>
 				</tr>
 				<tr>
 					<td class="first">Текст для шапки сайта:</td>
-					<td><input name="headerText" value="<?=$object->headerText?>" type="text"/></td>
+					<td>
+						<? \core\i18n\LangFieldWrapper::printInputs($object, 'getHeaderText', 'headerText') ?>
+					</td>
 				</tr>
 			</table>
 		</div>

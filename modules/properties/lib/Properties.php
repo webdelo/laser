@@ -1,19 +1,20 @@
 <?php
 namespace modules\properties\lib;
-class Properties extends \core\modules\base\ModuleDecorator
+class Properties extends \core\modules\base\ModuleObjects
 {
+	use \core\modules\statuses\StatusesTraitDecorator,
+		\core\modules\categories\CategoriesTraitDecorator;
+
+	protected $configClass     = '\modules\properties\lib\PropertyConfig';
+	protected $objectClassName = '\modules\properties\lib\Property';
+
 	function __construct()
 	{
-		$object = new PropertiesObject();
-		$object = new \core\modules\statuses\StatusesDecorator($object);
-		$object = new \core\modules\categories\CategoriesDecorator($object);
-		parent::__construct($object);
+		parent::__construct(new $this->configClass);
 	}
-	
-	public function getPropertiesById($id)
+
+	public function checkAlias($alias)
 	{
-		if(!is_array($id))
-			$id = array($id);
-		return $this->setSubquery('AND `id` IN (?s)',  implode(',', $id));
+		return \core\db\Db::getMySql()->isExist($this->mainTable,'alias',$alias);
 	}
 }

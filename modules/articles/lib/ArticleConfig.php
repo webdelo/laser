@@ -7,6 +7,7 @@ class ArticleConfig extends \core\modules\base\ModuleConfig
 		\core\traits\adapters\Alias,
 		\core\traits\adapters\Base,
 		\core\traits\outAdapters\OutDate,
+		\core\traits\outAdapters\OutBase,
 		\core\traits\validators\Sitemap,
 		\core\traits\adapters\Sitemap;
 
@@ -20,9 +21,6 @@ class ArticleConfig extends \core\modules\base\ModuleConfig
 	const RECOMMENDATIONS_CATEGORY_ID = 90;
 	const REVIEWS_CATEGORY_ID = 87;
 	const INFORMATOR_ARTICLES_CATEGORY_ID = 95;
-	const INFORMATOR_ARTICLES_TEPLIYSY_CATEGORY_ID = 99;
-	const INFORMATOR_ARTICLES_TEPLIYSY_BOTTOM_CATEGORY_ID = 100;
-	const DELIVERY_TERMS_CONSTRUCTION_ARTICLE_ALIAS = 'deliverytermsconstruction';
 
 	protected $objectClass  = '\modules\articles\lib\Article';
 	protected $objectsClass = '\modules\articles\lib\Articles';
@@ -32,6 +30,8 @@ class ArticleConfig extends \core\modules\base\ModuleConfig
 	public $imagesUrl  = 'data/images/articles/';
 	public $filesPath = 'files/articles/files/';
 	public $filesUrl  = 'data/files/articles/';
+
+	public $blockedStatus = self::BLOCKED_STATUS_ID;
 
 	public $notShowTitleArticlesId = array(413, 416, 415, 530, 414);
 
@@ -64,6 +64,16 @@ class ArticleConfig extends \core\modules\base\ModuleConfig
 		return array(
 			'name' => array(
 				'validation' => array('_validNotEmpty'),
+				'adapt' => '_adaptHtml',
+			),
+			'h1' => array(
+				'adapt' => '_adaptHtml',
+			),
+			'description' => array(
+				'adapt' => '_adaptHtml',
+			),
+			'text' => array(
+				'adapt' => '_adaptHtml',
 			),
 			'alias' => array(
 				'adapt' => '_adaptAlias',
@@ -102,6 +112,13 @@ class ArticleConfig extends \core\modules\base\ModuleConfig
 	{
 		return array(
 			'date' => array('_outDate'),
+			'h1' => array('_outHtml'),
+			'metaTitle' => array('_outHtml'),
+			'metaKeywords' => array('_outHtml'),
+			'metaDescription' => array('_outHtml'),
+			'headerText' => array('_outHtml'),
+			'description' => array('_outHtml'),
+			'text' => array('_outHtml'),
 			//'lastUpdateTime' => array('_outDateTime'),
 		);
 	}

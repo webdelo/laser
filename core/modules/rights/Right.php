@@ -1,11 +1,14 @@
 <?php
 namespace core\modules\rights;
-class Right extends \core\modules\base\ModuleDecorator
+class Right extends \core\modules\base\ModuleObject
 {
+	use \core\modules\base\ParentTraitDecorator;
+
+	protected $configClass = '\core\modules\rights\RightConfig';
+
 	function __construct($objectId)
 	{
-		$object = new RightObject($objectId);
-		$object = new \core\modules\base\ParentDecorator($object);
-		parent::__construct($object);
+		parent::__construct($objectId, new $this->configClass());
 	}
+
 }

@@ -2,6 +2,7 @@
 namespace core\pager;
 class Pager implements \Iterator
 {
+
 	use	\core\traits\RequestHandler,
 		\core\traits\controllers\ControllersHandler,
 		\core\traits\controllers\ServiceRequests;
@@ -16,7 +17,8 @@ class Pager implements \Iterator
 		"total" => false
 	);
 
-	public function __construct($config = array()) {
+	public function __construct($config = array())
+	{
 		if(is_array($config) && !empty($config))
 		$this->config = $config;
 	}

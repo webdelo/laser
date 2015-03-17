@@ -62,7 +62,7 @@ h6 { font-size:12px;}
 	.content .f_right img, .content img.f_right { margin:0 0 0 30px;}
 
 .content p { padding-bottom:15px; font-size:13px;}
-.content .center, #goodSales .center{ text-align:center;}z
+.content .center{ text-align:center;}
 .content a, .content a:hover{color:#a10003; text-decoration: underline;}
 .content a:hover{ text-decoration: none;}
 
@@ -142,7 +142,7 @@ a:active{ top:2px;}
 .logout a{ display:inline-block; height:32px; line-height:32px; font-size:13px; color:#fff; font-weight:bold; text-decoration: none; padding-right:22px; margin-left:20px; background-repeat: no-repeat; background-position: right center;}
 .logout a:hover, .menu a:hover{ opacity:0.7; filter:progid:DXImageTransform.Microsoft.Alpha(opacity=70);}
 .menu a{ display:inline-block; height:32px; line-height:32px; color:#fff; text-decoration: none; font-weight:bold; font-size:13px; margin-right:18px;}
-.head_line{ background:#e7ebed; padding:5px 0; border-bottom:1px solid #d5dadb; height: 42px;}
+.head_line{ background:#e7ebed; padding:12px 0; border-bottom:1px solid #d5dadb;}
 .head_line .logo{ float:left;}
 .user{ float:right; height:43px;line-height:42px; width:auto; opacity:0.7; filter:progid:DXImageTransform.Microsoft.Alpha(opacity=70);}
 .avauser{ float:right; width:41px; height:41px; padding:1px 1px 1px 6px; background:url(/admin/images/buttons/avauser.png) no-repeat left top; margin-left:5px;}
@@ -150,8 +150,8 @@ a:active{ top:2px;}
 .user_name{ float:right; line-height:42px; font-size:14px;}
 .user_name a{ color:#4d4d4d; text-decoration: none; display:inline-block; padding-left:24px; background:url(/admin/images/buttons/user.png) no-repeat left center;}
 .user:hover{ opacity:1; filter:progid:DXImageTransform.Microsoft.Alpha(opacity=100);}
-.update_info{ width: 590px;
-margin: 0 120px;
+.update_info{ width: 530px;
+margin: 0 200px;
 font-size: 11px;
 position: relative;
 }
@@ -197,16 +197,11 @@ position: relative;
 .action_buts a img{ vertical-align: middle;}
 .action_buts a:hover{ background-position: center;}
 .action_buts a:active{ background-position: bottom;}
-.falseButton:hover{ background:url(/admin/images/buttons/action_but.png) repeat-x left top !important; cursor: text;}
-.falseButton:active{ background:url(/admin/images/buttons/action_but.png) repeat-x left top !important; cursor: text;}
 .table_edit{ padding-bottom:10px; }
 .table_edit .additionalData{font-size: 11px; color: #9e9e9e; margin-top: 3px;}
 .table_edit th{ border-bottom:2px solid #e5e5e5; border-top:2px solid #e5e5e5; font-weight: normal; text-align:center; vertical-align: middle; height:40px; padding:0 10px; background:url(/admin/images/backgrounds/bdr.png) no-repeat left center; }
 .table_edit th.first{ text-align:right; background: none;}
 .table_edit th.last{ text-align:center;}
-.table_edit th.salequantity{ padding: 0;width: 110px;}
-.table_edit th.idcol{ width: 50px;}
-.table_edit th.clientAddress{ width: 280px;}
 .table_edit td{ vertical-align: middle; padding:10px 5px; border-bottom:1px solid #e5e5e5; padding-left: 15px; }
 .table_edit input[type=checkbox]{ top:0;}
 .table_edit .status.on, .table_edit .status.Active{ color:#009900;}
@@ -220,14 +215,11 @@ position: relative;
 .table_edit tr:hover td a.arr{ background-position: center bottom;}
 .table_edit a.pen{ display:block; width:17px; height:17px; background:url(/admin/images/buttons/edit_pen.png) no-repeat center top;}
 .table_edit tr:hover td a.pen{ background-position: center bottom;}
-a.pen{ text-decoration: none; display:inline-block; width:17px; height:17px; background:url(/admin/images/buttons/edit_pen.png) no-repeat center top;}
-a.pen:hover{ background-position: center bottom;}
 .table_edit a.lens{ display:block; width:17px; height:17px; background:url(/admin/images/buttons/edit_pen.png) no-repeat center top;}
 .table_edit tr:hover td a.lens{ background-position: center bottom;}
 .table_edit a.del{ display:block; width:15px; height:15px; background:url(/admin/images/buttons/edit_del.png) no-repeat center top;}
 .table_edit tr:hover td a.del{ background-position: center bottom;}
 .table_edit tr.highlight td { background: #ddeefe;}
-/*.table_edit ul { list-style-type:decimal; margin-left: 20px; }*/
 .page_num{ float:right; line-height:24px; font-size:14px;}
 .page_num a, .page_num span{ margin-left:10px; color:#303030;}
 .page_num span{ color:#9a9a9a;}
@@ -246,9 +238,6 @@ a.pen:hover{ background-position: center bottom;}
 .action_edit button span{ position:relative; top:-2px;}
 .action_edit .status a{ display:inline-block; height:21px;line-height:20px; border-radius:10px; behavior:url(PIE.htc); margin:0 5px; padding:0 10px 0 30px; background:url(/admin/images/bg/status.png) no-repeat left bottom; text-decoration: none; color:#666666; font-size:14px;}
 .action_edit .status a.on{ background-position: left top; background-color:#d5ecb7;}
-.action_edit .psevdoButton{ width:50px; color:#fff; height:27px; border: none; line-height:26px; font-family: Arial, Helvetica, sans-serif; background:url(/admin/images/bg/but2.png) no-repeat center top; float:right; text-align: center; cursor: pointer;}
-.action_edit .psevdoButton:hover{ background-position: center;}
-.action_edit .psevdoButton:active{ background-position: center bottom;}
 
 .download_images{float: left;}
 .download_images .title{ font-size:17px; font-weight:bold; padding-bottom:14px;}
@@ -297,7 +286,9 @@ a.pen:hover{ background-position: center bottom;}
 .save_files button:active{ box-shadow:inset 0 2px 5px  #333;}
 .filesAddForm{float: left;}
 
-.main_edit{}
+.main_edit{
+	margin-top: 20px;
+}
 .dop_param{
 	float: right;
 }
@@ -309,12 +300,30 @@ a.pen:hover{ background-position: center bottom;}
 .dop_param input[type=text].prioritet{ width:46px; float:left;}
 .dop_param input{ width:140px;}
 .dop_param input.checkbox{ width:20px;}
+
+.client_objects {
+	margin-left : 15px;
+	margin-top: 10px;
+}
+
+.client_objects .title {
+	padding-bottom: 15px;
+	font-size: 17px;
+	font-weight: bold;
+}
+
+.client_objects .tg  {border-collapse:collapse;border-spacing:0;width: 570px; font-weight: normal;}
+.client_objects .tg td{font-size:12px;border-width:1px;overflow:hidden;word-break:normal;vertical-align: middle;padding: 10px 5px;border-bottom: 1px solid #e5e5e5;padding-left: 15px;}
+.client_objects .tg th{font-size:12px;font-weight:bold;padding:10px 5px;overflow:hidden;word-break:normal;border-bottom: 2px solid #e5e5e5;border-top: 2px solid #e5e5e5;font-weight: normal;text-align: center;vertical-align: middle;background:url(/admin/images/backgrounds/bdr.png) no-repeat left center;}
+.client_objects .tg .additionalData { font-size: 11px;color: #9e9e9e;margin-top: 3px;}
+
 .drop_window{
 	border:3px dashed #b8b8b8;
 	padding:20px;
 	text-align:center;
-	float: left;
+	float: right;
 	width: 240px;
+	position: relative;
 }
 .drop_window .add a{ color:#fff; text-decoration: none; display:inline-block; height:53px; font-size:16px; font-weight:bold; line-height:52px; width:244px; text-align:center; background:url(/admin/images/buttons/add_bg.png) no-repeat center top; top:0;}
 .drop_window .add a img{ vertical-align: middle;}
@@ -326,10 +335,7 @@ a.pen:hover{ background-position: center bottom;}
 	border:3px dashed #b8b8b8;
 	padding:20px;
 	text-align:center;
-	float: left;
 	width: 240px;
-	left: 35px;
-	position: relative;
 }
 .drop_window_files .add a{ color:#fff; text-decoration: none; display:inline-block; height:53px; font-size:16px; font-weight:bold; line-height:52px; width:244px; text-align:center; background:url(/admin/images/buttons/add_bg.png) no-repeat center top; top:0;}
 .drop_window_files .add a img{ vertical-align: middle;}
@@ -349,7 +355,6 @@ a.pen:hover{ background-position: center bottom;}
 .main_param{
 	float: left;
 	margin-right: 10px;
-	width: 625px;
 }
 .main_param .title{padding-bottom:15px; font-size:17px; font-weight: bold;}
 .main_param input[type=text]{ padding:0 5px; height:25px; line-height:24px; border:1px solid #999999; width:490px;}
@@ -357,6 +362,7 @@ a.pen:hover{ background-position: center bottom;}
 .main_param input[type=text].medium { padding:0 5px; height:25px; line-height:24px; border:1px solid #999999; width:290px;}
 .main_param td{ padding-bottom:15px; line-height:24px; font-weight:bold;}
 .main_param td.first{ text-align:right; padding-right:10px;}
+.main_param td input{padding-left: 5px;}
 .main_param select{ width:502px; height:25px; line-height:24px; border:1px solid #999999;}
 .main_param textarea{
 	width:490px;
@@ -371,43 +377,6 @@ a.pen:hover{ background-position: center bottom;}
 	z-index: 1;
 }
 
-.parameter .main_param {
-	float: left;
-	margin-right: 5px;
-}
-.parameter .main_param .title {padding-bottom:15px; font-size:17px; font-weight: bold;}
-.parameter .main_param input[type=text] { padding:0 5px; height:25px; line-height:24px; border:1px solid #999999; width:250px;}
-.parameter .main_param td { padding-bottom:15px; line-height:24px; font-weight:bold;}
-.parameter .main_param td.first { text-align:right; padding-right:10px;}
-.parameter .main_param select, .parameter .dop_param select { width:239px; height:25px; line-height:24px; border:1px solid #999999;}
-.parameter .main_param textarea, .parameter .dop_param textarea{width:226px; overflow: auto; max-width:400px; padding:5px; height:50px; font-family: Arial, Helvetica, sans-serif; line-height:125%; border:1px solid #999999;}
-
-.parameter .parameterValues {
-	float: left;
-	margin-right: 5px;
-}
-.parameter .parameterValues .title {padding-bottom:15px; font-size:17px; font-weight: bold;}
-.parameter .parameterValues input[type=text] { padding:0 5px; height:25px; line-height:24px; border:1px solid #999999; width:65px;}
-.parameter .parameterValues td {  font-weight:normal; padding: 5px 10px;}
-.parameter .parameterValues td.first { text-align:right; padding-right:10px; }
-.parameter .parameterValues select { width:502px; height:25px; line-height:24px; border:1px solid #999999;}
-.parameter .parameterValues textarea {max-width:136px; overflow: auto; padding:5px; height:50px; font-family: Arial, Helvetica, sans-serif; line-height:125%; border:1px solid #999999;}
-/*.parameter .parameterValuesBlock { margin-left: 10px; }*/
-
-
-a.deleteInContent {
-	display: block;
-	width: 15px;
-	height: 15px;
-	background: url(/admin/images/buttons/edit_del.png) no-repeat center top;
-}
-a.deleteInContent:hover {
-	background-position: center bottom;
-}
-
-.parameter .parameterValues ul {
-	margin-bottom: 10px;
-}
 
 .tab_page{
 	border-bottom:1px solid #009aff;
@@ -467,7 +436,6 @@ a.deleteInContent:hover {
 
 .pointer {cursor: pointer;}
 .hide, .main_param .hide {display: none;}
-.action_buts .hide{display: none;}
 
 /*css for - sitebar*/
 .sitebar a {
@@ -1199,7 +1167,7 @@ a.deleteInContent:hover {
 }
 
 #search table td {
-    padding: 2px 3px;
+    padding: 2px 5px;
     vertical-align: middle;
     width: auto;
 }
@@ -1230,7 +1198,7 @@ a.deleteInContent:hover {
 /*Доработки в верхнем меню*/
 .menu {
     float: left;
-    width: 800px;
+    width: 780px;
     overflow: hidden;
     height: 28px;
 }
@@ -1283,6 +1251,19 @@ a.deleteInContent:hover {
     opacity: 0.7;
     filter:
         progid:DXImageTransform.Microsoft.Alpha(opacity=70);
+}
+
+.deliveryAddressContent {
+	width: 200px;
+	margin-top: 10px;
+}
+
+#goodsOrder .deliveryAddressContent input[type=text].deliveryPrice {
+	width: 200px;
+}
+
+#goodsOrder .deliveryAddressContent input[type=text]{
+	width: 30px;
 }
 
 a.showDescription, a.hideDescription {
@@ -1480,7 +1461,6 @@ a.buttonInContent img {
 }
 
 .incompleteOrders .goodsList .line .comment {
-	display: block;
 	font-weight: normal;
 	width: 275px;
 	line-height: 120%;
@@ -1501,26 +1481,10 @@ a.buttonInContent img {
 	border-left: hidden;
 }
 
-.incompleteOrders .goodsList a{
-	float: left;
-}
 
-.incompleteOrders .goodsList .lightbox{
-	margin: 0px 8px 0px -16px;
-}
-
-.incompleteOrders .table_edit a.del {
-	padding: 0;
-}
-
-.deliveryOverDue {
-	color: red;
-}
-.deliveryToday {
-	color: red;
-}
-.deliveryTwoDays {
-	color: red;
+.additionals {
+	color: #666;
+	font-size: 10px;
 }
 
 .additionalInfo {
@@ -1528,44 +1492,187 @@ a.buttonInContent img {
 	font-size: 10px;
 }
 
-.download_file{
-	opacity: 0.7;
-	/*border: 1px white solid;*/
-}
-.download_file:hover{
-	opacity: 1;
-	/*border: 1px Gainsboro solid;*/
-}
-.download_file:active{
-	opacity: 1;
-	margin-top: 1px;
-	/*border: 1px white solid;*/
+
+.goodsList {
+	width: 800px;
+	border: solid 1px #DADADA;
+	margin-top: 10px;
 }
 
-.graybutton {
-	display:inline-block;
+.goodsList .additionalData{font-size: 11px; color: #9e9e9e; margin-top: 3px;}
+
+.goodsList .top {
+	background-color: #EAEAEA;
+}
+#goodsOrder .goodsList td {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	vertical-align:middle;
+}
+.goodsList .top td {
+	padding: 8px 0px;
 	text-align: center;
-	border-radius: 4px;
-	/* background: -webkit-linear-gradient(top, #f4f5f7 0%,#e1e2e6 90%,#cfd1d4 100%); */
-	background: url(/admin/images/buttons/action_but.png) repeat-x left top;
-	border: 1px solid #d6d9da;
-	/*border: 1px solid #949494;*/
-	/*box-shadow: inset 0px 1px 0px #fff, 0px 1px 1px rgba(0,0,0,.15);*/
-	color: #555454;
-	text-shadow: 0px 1px 0px #fff;
-	width: 70px!important;
-	height: 30px;
-	line-height: 30px;
-	text-decoration: none;
-	font-size: 12px!important;
+	font-size: 12px;
+	color: #333;
+	font-weight: bold;
+}
+.goodsList .borderLeft {
+	border-left: solid 1px white;
+}
+.goodsList .line td{
+	width: auto;
+	text-align: center;
+	font-size: 12px;
+	font-weight: normal;
+	color: #333;
+	padding: 10px;
+	border: solid 1px #E6E6E6;
+}
+.goodsList .line:hover {
+	background-color: #EEFFF2;
+}
+.goodsList .delete {
+	background: url(/admin/images/bg/edit_del.png) no-repeat 0px 0px;
+	width: 15px;
+	height: 15px;
+	display: block;
+	margin: 3px 11px;
+}
+.goodsList .line .editOrderGood {
+	background: url(/admin/images/buttons/edit_pen.png) no-repeat 0px 0px;
+	width: 17px;
+	height: 17px;
+	display: block;
+	float: right;
+	margin: 3px 5px 3px 0px;
 }
 
-.graybutton:hover {
-	background-position: center;
+.goodsList .line .editOrderGoodAction {
+	background: url(/admin/images/bg/save-price.png) no-repeat 0px 0px;
+	width: 17px;
+	height: 17px;
+	display: block;
+	float: right;
+	margin: 3px 5px 3px 0px;
 }
 
-.graybutton span {
-	width:31px;
-	height:21px;
+.goodsList .line input {
+	height: 25px;
+	width: 60px;
+	margin-top: 0px;
+	text-align: center;
+	font-size: 13px;
+	color: #666;
+	border-radius: 5px;
+	behavior: url(PIE.htc);
+}
+
+.goodsList .line .comment {
+	font-weight: normal;
+	width: 275px;
+	line-height: 120%;
+	color:#999999;
+}
+
+#goodsOrder .goodsList .line textarea {
+	width: 275px;
+	overflow: auto;
+	min-height: 70px;
+	padding: 5px;
+	height: auto;
+	font-family: Arial, Helvetica, sans-serif;
+	line-height: 125%;
+	border: 1px solid #999;
+}
+#goodsOrder .goodsList .noBorderLeft {
+	border-left: hidden;
+}
+
+.goodsList a{
 	float: left;
+}
+
+.goodsList .lightbox {
+	margin: 0px 8px 0px -16px;
+}
+
+.noContent {
+	color: #999;
+	padding: 10px;
+}
+
+input.highlightSuccess, select.highlightSuccess, textarea.highlightSuccess {
+	box-shadow: 0 0 3px rgba(0,154,0,.6), inset 0 0 4px rgba(0,154,0,.2);
+	-webkit-box-shadow: 0 0 3px rgba(0,154,0,.6), inset 0 0 4px rgba(0,154,0,.2);
+	-moz-box-shadow:0 0 3px rgba(0,154,0,.6), inset 0 0 4px rgba(0,154,0,.2);
+}
+
+.i18n {
+	display: none;
+}
+.i18n.activator {
+	display: inline-block;
+}
+.wrapI18n {
+	background: #ffffff;
+	padding: 10px;
+	border-radius: 3px;
+}
+.wrapI18n span {
+	display: none;
+	margin-right: 10px;
+	width: 18px;
+	position: absolute;
+}
+.wrapI18n input {
+	display: inline-block;
+}
+.i18nBlock.active .wrapI18n input {
+	display: inline-block;
+	margin-left: 20px;
+}
+
+.i18nBlock {
+	top: -10px;
+	left: -10px;
+	position: absolute;
+	height: 45px;
+	overflow: hidden;
+	background: #fff;
+	border-radius: 3px;
+	z-index: 80;
+}
+.i18nBlock.active {
+	height: auto !important;
+	left: -40px;
+	z-index: 90;
+	box-shadow: 0px 0px 7px -2px;
+	-moz-box-shadow: 0px 0px 7px -2px;
+	-webkit-box-shadow: 0px 0px 7px -2px;
+}
+
+.parameterValuesTable {
+	margin: 0 auto;
+}
+
+.parameterValuesTable input, .propertyValuesTable input {
+	font-size: 16px;
+	padding: 5px;
+	margin: 5px;
+	text-align: center;
+}
+
+.parameterValuesTable .header td, .propertyValuesTable .header td{
+	padding-top: 40px;
+	padding-bottom: 10px;
+	font-size: 20px;
+	text-align: center;
+}
+
+.parameterValuesTable span, .propertyValuesTable span {
+	font-size: 16px;
+	padding: 5px;
+	margin: 5px;
+	margin-right: 0px;
+	padding-right: 0px;
 }

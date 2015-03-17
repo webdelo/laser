@@ -9,7 +9,17 @@ trait OutDate
 
 	public function _outDateTime($data)
 	{
-		return \core\utils\Dates::toDatetime($data);
+		return \core\utils\Dates::toFullSimpleDate($data);
+	}
+	
+	public function _outMonth($data)
+	{
+		return \core\utils\Months::getMonth($data);
+	}
+	
+	public function _outMonthDeclensionUse($data)
+	{
+		return \core\utils\Months::getMonthDeclensionUse($data);
 	}
 
 }

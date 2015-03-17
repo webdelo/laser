@@ -1,16 +1,33 @@
 <?php
 namespace core\modules\categories;
-class Category extends \core\modules\base\ModuleDecorator implements \interfaces\IObjectToFrontend
+class Category extends \core\modules\base\ModuleObject implements \interfaces\IObjectToFrontend
 {
+	use \core\traits\ObjectPool,
+		\core\modules\base\ParentTraitDecorator,
+		\core\modules\statuses\StatusTraitDecorator;
+
+	protected $configClass = '\core\modules\categories\CategoryConfig';
+
 	function __construct($objectId, $configObject)
 	{
-		$object = new CategoryObject($objectId, $configObject);
-		$object = new \core\modules\base\ParentDecorator($object, $configObject);
-		$object = new \core\modules\statuses\StatusDecorator($object);
-		parent::__construct($object);
+		parent::__construct($objectId, new $this->configClass($configObject));
 	}
 
-	/* Start: Meta Methods */
+	private function getAliases()
+	{
+	    $parentId = $this->parentId;
+	    $categoryId = $this->id;
+	    $alias = $this->alias.'/';
+	    while($parentId != 0){
+			$result = \core\db\Db::getMysql()->rowAssoc('SELECT * FROM `'.$this->mainTable().'` WHERE `id` = ?d', array($parentId));
+			$parentId = $result['parentId'];
+			$categoryId = $result['id'];
+			$alias = $result['alias'].'/'.$alias;
+	    }
+	    return $alias;
+	}
+
+		/* Start: Meta Methods */
 	public function getMetaTitle()
 	{
 		return $this->metaTitle;
@@ -35,7 +52,7 @@ class Category extends \core\modules\base\ModuleDecorator implements \interfaces
 	/* Start: Main Data Methods */
 	public function getName()
 	{
-		return $this->name;
+		return $this->loadObjectInfo()->objectInfo['name'];
 	}
 	/*   End: Main Data Methods */
 
@@ -43,7 +60,7 @@ class Category extends \core\modules\base\ModuleDecorator implements \interfaces
 	public function getPath()
 	{
 		$categoryRules = new CategoriesAliasesRules;
-		return $categoryRules->useRules($this->getParentObject()->getPath());
+		return $categoryRules->useRules('/'.$this->getAliases());
 	}
 	/*   End: URL Methods */
 
@@ -63,9 +80,4 @@ class Category extends \core\modules\base\ModuleDecorator implements \interfaces
 		return 'daily';
 	}
 	/*   End: Sitemap Methods */
-
-	public function getH1()
-	{
-		return empty($this->h1) ? $this->name : $this->h1;
-	}
 }

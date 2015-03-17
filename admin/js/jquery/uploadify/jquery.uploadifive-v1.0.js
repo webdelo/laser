@@ -1,5 +1,5 @@
 /*
-UploadiFive 1.0.2
+UploadiFive 1.2.2
 Copyright (c) 2012 Reactive Apps, Ronnie Garcia
 Released under the UploadiFive Standard License <http://www.uploadify.com/uploadifive-standard-license>
 */
@@ -8,7 +8,7 @@ Released under the UploadiFive Standard License <http://www.uploadify.com/upload
     var methods = {
 
         init : function(options) {
-
+            
             return this.each(function() {
 
                 // Create a reference to the jQuery DOM object
@@ -40,14 +40,15 @@ Released under the UploadiFive Standard License <http://www.uploadify.com/upload
                     'auto'            : true,               // Automatically upload a file when it's added to the queue
                     'buttonClass'     : false,              // A class to add to the UploadiFive button
                     'buttonText'      : 'Select Files',     // The text that appears on the UploadiFive button
-                    'checkScript'     : false,              // Path to the script that checks for existing file names
+                    'checkScript'     : false,              // Path to the script that checks for existing file names 
                     'dnd'             : true,               // Allow drag and drop into the queue
-//		'dropTarget'      : false,              // Selector for the drop target
-			'dropTarget'      : '#placeForDrugAndDrop',              // Selector for the drop target
+                    'dropTarget'      : false,              // Selector for the drop target
+                    'fileObjName'     : 'Filedata',         // The name of the file object to use in your server-side script
                     'fileSizeLimit'   : 0,                  // Maximum allowed size of files to upload
-                    'fileType'        : false,              // Type of files allowed (image, etc)
+                    'fileType'        : false,              // Type of files allowed (image, etc), separate with a pipe character |
                     'formData'        : {},                 // Additional data to send to the upload script
                     'height'          : 30,                 // The height of the button
+                    'itemTemplate'    : false,              // The HTML markup for the item in the queue
                     'method'          : 'post',             // The method to use when submitting the upload
                     'multi'           : true,               // Set to true to allow multiple file selections
                     'overrideEvents'  : [],                 // An array of events to override
@@ -59,7 +60,7 @@ Released under the UploadiFive Standard License <http://www.uploadify.com/upload
                     'truncateLength'  : 0,                  // The length to truncate the file names to
                     'uploadLimit'     : 0,                  // The maximum number of files you can upload
                     'uploadScript'    : 'uploadifive.php',  // The path to the upload script
-                    'width'           : 100,                // The width of the button
+                    'width'           : 100                 // The width of the button
 
                     /*
                     // Events
@@ -86,11 +87,9 @@ Released under the UploadiFive Standard License <http://www.uploadify.com/upload
                     var fileSizeLimitBytes = parseInt(settings.fileSizeLimit) * 1.024
                     if (settings.fileSizeLimit.indexOf('KB') > -1) {
                         settings.fileSizeLimit = fileSizeLimitBytes * 1000;
-                    }
-                    if (settings.fileSizeLimit.indexOf('MB') > -1) {
+                    } else if (settings.fileSizeLimit.indexOf('MB') > -1) {
                         settings.fileSizeLimit = fileSizeLimitBytes * 1000000;
-                    }
-                    if (settings.fileSizeLimit.indexOf('GB') > -1) {
+                    } else if (settings.fileSizeLimit.indexOf('GB') > -1) {
                         settings.fileSizeLimit = fileSizeLimitBytes * 1000000000;
                     }
                 } else {
@@ -100,9 +99,12 @@ Released under the UploadiFive Standard License <http://www.uploadify.com/upload
                 // Create a template for a file input
                 $data.inputTemplate = $('<input type="file">')
                 .css({
-                   'opacity'  : 0,
-                   'position' : 'absolute',
-                   'z-index'  : 20
+                    'font-size' : settings.height + 'px',
+                    'opacity'   : 0,
+                    'position'  : 'absolute',
+                    'right'     : '-3px',
+                    'top'       : '-3px',
+                    'z-index'   : 999 
                 });
 
                 // Create a new input
@@ -115,6 +117,10 @@ Released under the UploadiFive Standard License <http://www.uploadify.com/upload
                     // Set the multiple attribute
                     if (settings.multi) {
                         input.attr('multiple', true);
+                    }
+                    // Set the accept attribute on the input
+                    if (settings.fileType) {
+                        input.attr('accept', settings.fileType);
                     }
                     // Set the onchange event for the input
                     input.bind('change', function() {
@@ -147,7 +153,7 @@ Released under the UploadiFive Standard License <http://www.uploadify.com/upload
                         }
                         // Trigger the select event
                         if (typeof settings.onSelect === 'function') {
-                            settings.onSelect.apply($this, $data.queue);
+                            settings.onSelect.call($this, $data.queue);
                         }
                     });
                     // Hide the existing current item and add the new one
@@ -244,13 +250,18 @@ Released under the UploadiFive Standard License <http://www.uploadify.com/upload
                     }
                 }
 
-                // Queue item template
-                $data.queueItem = $('<div class="uploadifive-queue-item">\
-                    <div class="fileHeader"><span class="fileinfo"></span><span class="filename"></span></div>\
-                    <div class="progress">\
-                        <div class="progress-bar"></div>\
-                    </div>\
-                </div>');
+                // Create the file item template
+                if (settings.itemTemplate == false) {
+                    $data.queueItem = $('<div class="uploadifive-queue-item">\
+                        <a class="close" href="#">X</a>\
+                        <div><span class="filename"></span><span class="fileinfo"></span></div>\
+                        <div class="progress">\
+                            <div class="progress-bar"></div>\
+                        </div>\
+                    </div>');
+                } else {
+                    $data.queueItem = $(settings.itemTemplate);
+                }
 
                 // Add an item to the queue
                 $data.addQueueItem = function(file) {
@@ -279,24 +290,6 @@ Released under the UploadiFive Standard License <http://www.uploadify.com/upload
                     if (typeof settings.onAddQueueItem === 'function') {
                         settings.onAddQueueItem.call($this, file);
                     }
-                    // Check the filetype
-                    if (settings.fileType) {
-                        if ($.isArray(settings.fileType)) {
-                            var isvalidFileType = false;
-                            for (var n = 0; n < settings.fileType.length; n++) {
-                                if (file.type.indexOf(settings.fileType[n]) > -1) {
-                                    isValidFileType = true;
-                                }
-                            }
-                            if (!isValidFileType) {
-                                $data.error('FORBIDDEN_FILE_TYPE', file);
-                            }
-                        } else {
-                            if (file.type.indexOf(settings.fileType) < 0) {
-                                $data.error('FORBIDDEN_FILE_TYPE', file);
-                            }
-                        }
-                    }
                     // Check the filesize
                     if (file.size > settings.fileSizeLimit && settings.fileSizeLimit != 0) {
                         $data.error('FILE_SIZE_LIMIT_EXCEEDED', file);
@@ -312,8 +305,8 @@ Released under the UploadiFive Standard License <http://www.uploadify.com/upload
                     if (!delay) delay = 0;
                     var fadeTime = instant ? 0 : 500;
                     if (file.queueItem) {
-                        if (file.queueItem.find('.fileinfo').html() != ' Completed ') {
-                            file.queueItem.find('.fileinfo').html(' Cancelled ');
+                        if (file.queueItem.find('.fileinfo').html() != ' - Completed') {
+                            file.queueItem.find('.fileinfo').html(' - Cancelled');
                         }
                         file.queueItem.find('.progress-bar').width(0);
                         file.queueItem.delay(delay).fadeOut(fadeTime, function() {
@@ -348,7 +341,8 @@ Released under the UploadiFive Standard License <http://www.uploadify.com/upload
                             'async' : false
                         });
                         // Send the filename to the check script
-                        $.post(settings.checkScript, {filename: file.name}, function(fileExists) {
+                        var checkData = $.extend(settings.formData, {filename: file.name});
+                        $.post(settings.checkScript, checkData, function(fileExists) {
                             file.exists = parseInt(fileExists);
                         });
                         if (file.exists) {
@@ -372,70 +366,129 @@ Released under the UploadiFive Standard License <http://www.uploadify.com/upload
                         file.uploading = true;
                         $data.uploads.current++;
                         $data.uploads.attempted++;
-                        var reader = new FileReader();
-                        reader.onload = function(e) {
 
-                            // Set some file builder variables
-                            var boundary = '-------------------------' + (new Date).getTime(),
-                                dashes   = '--',
-                                eol      = '\r\n',
-                                binFile  = '';
+                        // Create a new AJAX request
+                        xhr = file.xhr = new XMLHttpRequest();
 
-                            // Build an RFC2388 String
-                            binFile += dashes + boundary + eol;
-                            // Generate the headers
-                            binFile += 'Content-Disposition: form-data; name="Filedata[]"';
-                            if (file.name) {
-                                binFile += '; filename="' + encodeURIComponent(file.name) + '"';
-                            }
-                            binFile += eol;
-                            binFile += 'Content-Type: application/octet-stream' + eol + eol;
-                            binFile += e.target.result + eol;
+                        // Start the upload
+                        // Use the faster FormData if it exists
+                        if (typeof FormData === 'function' || typeof FormData === 'object') {
 
-                            for (key in settings.formData) {
-                                binFile += dashes + boundary + eol;
-                                binFile += 'Content-Disposition: form-data; name="' + key + '"' + eol + eol;
-                                binFile += settings.formData[key] + eol;
+                            // Create a new FormData object
+                            var formData = new FormData();
+
+                            // Add the form data
+                            formData.append(settings.fileObjName, file);
+
+                            // Add the rest of the formData
+                            for (i in settings.formData) {
+                                formData.append(i, settings.formData[i]);
                             }
 
-                            binFile += dashes + boundary + dashes + eol;
+                            // Open the AJAX call
+                            xhr.open(settings.method, settings.uploadScript, true);
 
-                            // Create a new ajax request
-                            xhr = file.xhr = new XMLHttpRequest();
                             // On progress function
                             xhr.upload.addEventListener('progress', function(e) {
-                                $data.progress(e, file);
+                                if (e.lengthComputable) {
+                                    $data.progress(e, file);
+                                }
                             }, false);
 
                             // On complete function
                             xhr.addEventListener('load', function(e) {
-                                file.uploading = false;
-                                var status = this.status;
-                                if (status == 404) {
-                                    $data.error('404_FILE_NOT_FOUND', file, uploadAll);
-                                } else {
-                                    $data.uploadComplete(e, file, uploadAll);
+                                if (this.readyState == 4) {
+                                    file.uploading = false;
+                                    if (this.status == 200) {
+                                        if (file.xhr.responseText !== 'Invalid file type.') {
+                                            $data.uploadComplete(e, file, uploadAll);
+                                        } else {
+                                            $data.error(file.xhr.responseText, file, uploadAll);
+                                        }
+                                    } else if (this.status == 404) {
+                                        $data.error('404_FILE_NOT_FOUND', file, uploadAll);
+                                    } else if (this.status == 403) {
+                                        $data.error('403_FORBIDDEN', file, uploadAll);
+                                    } else {
+                                        $data.error('Unknown Error', file, uploadAll);
+                                    }
                                 }
-                            }, false);
+                            });
 
-                            // Open the ajax request
-                            var url = settings.uploadScript;
-                            if (settings.method == 'get') {
-                                var params = $(settings.formData).param();
-                                url += params;
+                            // Send the form data (multipart/form-data)
+                            xhr.send(formData);
+
+                        } else {
+
+                            // Send as binary
+                            var reader = new FileReader();
+                            reader.onload = function(e) {
+
+                                // Set some file builder variables
+                                var boundary = '-------------------------' + (new Date).getTime(),
+                                    dashes   = '--',
+                                    eol      = '\r\n',
+                                    binFile  = '';
+
+                                // Build an RFC2388 String 
+                                binFile += dashes + boundary + eol;
+                                // Generate the headers
+                                binFile += 'Content-Disposition: form-data; name="' + settings.fileObjName + '"';
+                                if (file.name) {
+                                    binFile += '; filename="' + file.name + '"';
+                                }
+                                binFile += eol;
+                                binFile += 'Content-Type: application/octet-stream' + eol + eol;
+                                binFile += e.target.result + eol;
+
+                                for (key in settings.formData) {
+                                    binFile += dashes + boundary + eol;
+                                    binFile += 'Content-Disposition: form-data; name="' + key + '"' + eol + eol;
+                                    binFile += settings.formData[key] + eol;
+                                }
+
+                                binFile += dashes + boundary + dashes + eol;
+
+                                // On progress function
+                                xhr.upload.addEventListener('progress', function(e) {
+                                    $data.progress(e, file);
+                                }, false);
+
+                                // On complete function
+                                xhr.addEventListener('load', function(e) {
+                                    file.uploading = false;
+                                    var status = this.status;
+                                    if (status == 404) {
+                                        $data.error('404_FILE_NOT_FOUND', file, uploadAll);
+                                    } else {
+                                        if (file.xhr.responseText != 'Invalid file type.') {    
+                                            $data.uploadComplete(e, file, uploadAll);
+                                        } else {
+                                            $data.error(file.xhr.responseText, file, uploadAll);
+                                        } 
+                                    }
+                                }, false);
+
+                                // Open the ajax request
+                                var url = settings.uploadScript;
+                                if (settings.method == 'get') {
+                                    var params = $(settings.formData).param();
+                                    url += params;
+                                }
+                                xhr.open(settings.method, settings.uploadScript, true);
+                                xhr.setRequestHeader("Content-Type", "multipart/form-data; boundary=" + boundary);
+
+                                // Trigger the uploadFile event
+                                if (typeof settings.onUploadFile === 'function') {
+                                    settings.onUploadFile.call($this, file);
+                                }
+
+                                // Send the file for upload
+                                xhr.sendAsBinary(binFile);
                             }
-                            xhr.open(settings.method, settings.uploadScript, true);
-                            xhr.setRequestHeader("Content-Type", "multipart/form-data; boundary=" + boundary);
+                            reader.readAsBinaryString(file);
 
-                            // Trigger the uploadFile event
-                            if (typeof settings.onUploadFile === 'function') {
-                                settings.onUploadFile.call($this, file);
-                            }
-
-                            // Send the file for upload
-                            xhr.sendAsBinary(binFile);
                         }
-                        reader.readAsBinaryString(file);
                     }
                 }
 
@@ -445,7 +498,7 @@ Released under the UploadiFive Standard License <http://www.uploadify.com/upload
                         if (e.lengthComputable) {
                             var percent = Math.round((e.loaded / e.total) * 100);
                         }
-                        file.queueItem.find('.fileinfo').html('' + percent + '% ');
+                        file.queueItem.find('.fileinfo').html(' - ' + percent + '%');
                         file.queueItem.find('.progress-bar').css('width', percent + '%');
                     }
                     // Trigger the progress event
@@ -462,6 +515,9 @@ Released under the UploadiFive Standard License <http://www.uploadify.com/upload
                             case '404_FILE_NOT_FOUND':
                                 errorMsg = '404 Error';
                                 break;
+                            case '403_FORBIDDEN':
+                                errorMsg = '403 Forbidden';
+                                break;
                             case 'FORBIDDEN_FILE_TYPE':
                                 errorMsg = 'Forbidden File Type';
                                 break;
@@ -477,7 +533,7 @@ Released under the UploadiFive Standard License <http://www.uploadify.com/upload
                         file.queueItem.addClass('error')
                         // Output the error in the queue item
                         .find('.fileinfo').html(' - ' + errorMsg);
-                        // Hide the
+                        // Hide the 
                         file.queueItem.find('.progress').remove();
                     }
                     // Trigger the error event
@@ -499,16 +555,16 @@ Released under the UploadiFive Standard License <http://www.uploadify.com/upload
                 $data.uploadComplete = function(e, file, uploadAll) {
                     if ($.inArray('onUploadComplete', settings.overrideEvents) < 0) {
                         file.queueItem.find('.progress-bar').css('width', '100%');
-                        file.queueItem.find('.fileinfo').css({'color':'#919191'}).html(' Completed ');
-                        file.queueItem.addClass('complete').fadeIn('fast');
-						file.queueItem.find('.progress').slideUp(250);
+                        file.queueItem.find('.fileinfo').html(' - Completed');
+                        file.queueItem.find('.progress').slideUp(250);
+                        file.queueItem.addClass('complete');
                     }
                     // Trigger the complete event
                     if (typeof settings.onUploadComplete === 'function') {
                         settings.onUploadComplete.call($this, file, JSON.parse(file.xhr.responseText));
                     }
                     if (settings.removeCompleted) {
-                        setTimeout(function() {methods.cancel.call($this, file);}, 3000);
+                        setTimeout(function() { methods.cancel.call($this, file); }, 3000);
                     }
                     file.complete = true;
                     $data.uploads.successful++;
@@ -533,19 +589,18 @@ Released under the UploadiFive Standard License <http://www.uploadify.com/upload
                 // ----------------------
 
                 // Check if HTML5 is available
-                if (window.File && window.FileList && window.FileReader && window.Blob) {
+                if (window.File && window.FileList && window.Blob && (window.FileReader || window.FormData)) {
                     // Assign an ID to the object
                     settings.id = 'uploadifive-' + $this.attr('id');
 
                     // Wrap the file input in a div with overflow set to hidden
-                    $data.button = $('<div id="' + settings.id + '" class="uploadifive-button"><span class="textButton">' + settings.buttonText + '</span></div>');
+                    $data.button = $('<div id="' + settings.id + '" class="uploadifive-button">' + settings.buttonText + '</div>');
                     if (settings.buttonClass) $data.button.addClass(settings.buttonClass);
 
                     // Style the button wrapper
                     $data.button.css({
                         'overflow'    : 'hidden',
-                        'position'    : 'relative',
-                        'text-align'  : 'center'
+                        'position'    : 'relative'
                     });
 
                     // Insert the button above the file input
@@ -558,15 +613,6 @@ Released under the UploadiFive Standard License <http://www.uploadify.com/upload
                     // Create a new input
                     $data.createInput.call($this);
 
-                    // Position the browse files button under the cursor
-                    $data.button.mousemove(function(e) {
-                        var offset = $data.button.offset();
-                        $data.currentInput.css({
-                           'left' : e.pageX - offset.left - $this.width() + 10,
-                           'top'  : e.pageY - offset.top - $this.height() + 10
-                        });
-                    });
-
                     // Create the queue container
                     if (!settings.queueID) {
                         settings.queueID = settings.id + '-queue';
@@ -578,7 +624,7 @@ Released under the UploadiFive Standard License <http://www.uploadify.com/upload
 
                     // Add drag and drop functionality
                     if (settings.dnd) {
-                        var $dropTarget = settings.dropTarget ? $(settings.dropTarget).get(0) : $data.queueEl.get(0);
+                        var $dropTarget = settings.dropTarget ? $(settings.dropTarget) : $data.queueEl.get(0);
                         $dropTarget.addEventListener('dragleave', function(e) {
                             // Stop FireFox from opening the dropped file(s)
                             e.preventDefault();
@@ -642,7 +688,7 @@ Released under the UploadiFive Standard License <http://www.uploadify.com/upload
 
         // Clear all the items from the queue
         clearQueue : function() {
-	    console.info($(this));
+
             this.each(function() {
 
                 var $this    = $(this),
@@ -659,7 +705,7 @@ Released under the UploadiFive Standard License <http://www.uploadify.com/upload
                 }
                 // Trigger the onClearQueue event
                 if (typeof settings.onClearQueue === 'function') {
-                    settings.onClearQueue.call($this, $('#' + $data.options.queueID));
+                    settings.onClearQueue.call($this, $('#' + $data.settings.queueID));
                 }
 
             });
@@ -700,13 +746,14 @@ Released under the UploadiFive Standard License <http://www.uploadify.com/upload
                 if (typeof settings.onCancel === 'function') {
                     settings.onCancel.call($this, file);
                 }
-
+                
             });
-
+            
         },
 
         // Upload the files in the queue
         upload : function(file, keepVars) {
+
             this.each(function() {
 
                 var $this    = $(this),
@@ -782,7 +829,7 @@ Released under the UploadiFive Standard License <http://www.uploadify.com/upload
                 var $this    = $(this),
                     $data    = $this.data('uploadifive'),
                     settings = $data.settings;
-
+            
                 // Clear the queue
                 methods.clearQueue.call($this);
                 // Destroy the queue if it was created
@@ -819,5 +866,3 @@ Released under the UploadiFive Standard License <http://www.uploadify.com/upload
     }
 
 })(jQuery);
-
-/* I gave the queueItems IDs and they each have a reference to the file held in the 'data' obj. */

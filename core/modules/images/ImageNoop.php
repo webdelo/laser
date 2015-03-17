@@ -2,6 +2,11 @@
 namespace core\modules\images;
 class ImageNoop extends \core\Noop
 {
+	public function getFocusImage($resize = null)
+	{
+		return $this->getImage($resize);
+	}
+	
 	public function getImage($resize = null)
 	{
 		if (!$this->validResizeString($resize)) {
@@ -15,7 +20,7 @@ class ImageNoop extends \core\Noop
 		$height = $sizes[1];
 
 		if (!file_exists(DIR.'cache/images/noimage/'.$resolution.'/noimage.png')) { // если файла нет в кеше - создаем его
-			if (!(file_exists(DIR.'cache/images/noimage/'.$resolution.'/') && is_dir(DIR.'cache/images/noimage/'.$resolution.'/'))) {
+			if (!(file_exists(DIR.'cache/images/noimage/'.$resolution.'/') && is_dir(DIR.'cache/images/noimage/'.$resolution.'/'))) {                   
 				$this->makeDirs('/cache/images/noimage/'.$resolution);
 			}
 			$resizer = new \core\images\resize\ImageResizer();

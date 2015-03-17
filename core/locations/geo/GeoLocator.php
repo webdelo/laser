@@ -27,22 +27,20 @@ class GeoLocator
 	
 	public function __get($name)
 	{
-		$this->loadIpInfo();
-		if (isset($this->data[$name]))
-			return $this->data[$name];
-		return NULL;
+		return ( isset($this->data[$name]) ) ? $this->data[$name] : $this->getDataFromOnlineService($name);
 	}
 	
-	private function loadIpInfo()
+	public function setOnlineService($url)
 	{
-		if (!$this->data)
-			$this->getInfoFromOnlineService();
+		$this->onlineServiceUrl = $url;
 		return $this;
 	}
 	
-	private function getInfoFromOnlineService()
+	private function getDataFromOnlineService($name)
 	{
 		$xml = simplexml_load_file($this->onlineServiceUrl.$this->ip);
-		$this->data['country'] = $xml->ip->country;
+		$this->data[$name] = $xml->ip->$name;
+		
+		return $this->data[$name];
 	}
 }

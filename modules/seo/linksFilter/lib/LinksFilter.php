@@ -75,7 +75,7 @@ class LinksFilter
 			$this->truncateHeapTableIfExists($table);
 			return $this;		
 		}
-		throw new Exception('Can\'t create temporary MySQL Table in Memory in class '.get_class($this).'!');
+		throw new \Exception('Can\'t create temporary MySQL Table in Memory in class '.get_class($this).'!');
 	}
 	
 	protected function getDb()

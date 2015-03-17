@@ -27,20 +27,20 @@ class UserRegistrator extends \core\modules\base\ModuleObjects
 		$login = (string)$login;
 		if ($this->_moduleConfig->validLogin($login)) {
 			if (UserFactory::getInstance()->loginExists($login))
-				$this->setError('login', 'Логин  "'.$login.'" уже существует!');
+				$this->setError('login');
 			else
 				$this->newUserLogin = $login;
 		} else
-			$this->setError('login', 'Логин не является E-mail');
+			$this->setError('login');
 		return $this;
 	}
 
 	public function setPassword($password, $passwordConfirmation)
 	{
 		if(empty($password))
-			$this->setError('password', 'Укажите пароль!');
+			$this->setError('password');
 		if ($password !== $passwordConfirmation)
-			$this->setError('passwordConfirm', 'Пароли не совпадают!');
+			$this->setError('passwordConfirm');
 		else
 			$this->newUserPassword = $password;
 		return $this;
@@ -50,7 +50,7 @@ class UserRegistrator extends \core\modules\base\ModuleObjects
 	{
 		$group = (string)$group;
 		if (!UserFactory::getInstance()->checkGroup($group))
-			$this->setError('group_id', 'Несуществующая группа пользователей!');
+			$this->setError('group_id');
 		else
 			$this->newUserGroup = $group;
 		return $this;
@@ -59,13 +59,34 @@ class UserRegistrator extends \core\modules\base\ModuleObjects
 	public function add($data, $fields = NULL)
 	{
 		$this->setGroup($this->getConfig()->getObjectClass());
-		$this->_beforeChangeWithoutAdapt($data, $this->_moduleConfig->getObjectFields());
+		$fields = is_array($fields) ? $fields : $this->_moduleConfig->getObjectFields();
+		$this->_beforeChangeWithoutAdapt($data, $fields);
 		if ($this->getErrors()) {
 			return false;
 		} else {
 			$data['id'] = $this->addLogin();
-			parent::add($data);
+			$fields = $this->clearFields($fields);
+			$res = parent::add($data, $fields);
+			if (!$res) {
+				throw new \Exception ('Warning: ' . serialize($this->getErrors()));
+			}
 			return $data['id'];
 		}
+	}
+
+	private function clearFields($fields)
+	{
+		if (isset($fields['login']))
+			unset($fields['login']);
+		if (isset($fields['password']))
+			unset($fields['password']);
+		return $this;
+	}
+	
+	public function filterByLogin($login)
+	{
+		$this->setSubquery(' AND `id` IN ( SELECT `id` FROM `tbl_user_logins` WHERE `login` = \'?s\' ) ', (string)$login);
+		
+		return $this;
 	}
 }

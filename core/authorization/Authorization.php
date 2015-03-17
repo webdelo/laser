@@ -1,41 +1,41 @@
-<?php 
+<?php
 namespace core\authorization;
 class Authorization extends \core\Model
 {
 	use \core\traits\RequestHandler;
-	
+
 	private $timeout;
 	private $captchaFlag;
 	private $tryInfo = array();
 	private $capthcaFlag;
 	private $ip;
 	private $statusBlocked = 2;
-	
+
 	private $countTriesBeforeCaptcha = 3;
 	private $countTriesBeforeBan     = 6;
 	private $defaultTimeoutSeconds   = 600;
-	
+
 	private $login;
 	private $password;
 	private $captcha;
-	
+
 	public function __construct($config)
 	{
 		parent::__construct();
-		$this->setConfig($config);	
+		$this->setConfig($config);
 	}
-	
+
 	private function setConfig($config)
 	{
 		$this->timeout = ($config['timeout']) ? $config['timeout'] : $this->defaultTimeoutSeconds;
 		return $this;
 	}
-	
+
 	public function mainTable()
 	{
 		return TABLE_PREFIX.'authorization';
 	}
-	
+
 	public function login($login, $password, $captcha = null)
 	{
 		return $this->setLogin($login)
@@ -46,31 +46,31 @@ class Authorization extends \core\Model
 					->checkTry()
 					->getUser();
 	}
-	
+
 	private function setLogin($login)
 	{
 		$this->login = (string)$login;
 		return $this;
 	}
-	
+
 	private function setPassword($password)
 	{
 		$this->password = (string)$password;
 		return $this;
 	}
-	
+
 	private function setCaptcha($captcha)
 	{
 		$this->captcha = (string)$captcha;
 		return $this;
 	}
-	
+
 	private function setIp()
 	{
 		$this->ip = $this->getSERVER()['REMOTE_ADDR'];
 		return $this;
 	}
-	
+
 	private function getTryInfo()
 	{
 		$this->tryInfo = $this->getInfoFromDbByIP();
@@ -79,7 +79,7 @@ class Authorization extends \core\Model
 		}
 		return $this;
 	}
-	
+
 	private function getInfoFromDbByIP()
 	{
 		$filter = array(
@@ -90,7 +90,7 @@ class Authorization extends \core\Model
 			);
 		return $this->getOne('*', $filter);
 	}
-	
+
 	private function addFirstTry()
 	{
 		$this->cleanTries();
@@ -100,11 +100,11 @@ class Authorization extends \core\Model
 		$this->tryInfo['id'] = $this->lastInsertId();
 		return $this;
 	}
-	
+
 	private function cleanTries()
 	{
 		$query = '
-			DELETE FROM 
+			DELETE FROM
 				`'.$this->mainTable().'`
 			WHERE
 				(`date`) < ?d
@@ -113,24 +113,24 @@ class Authorization extends \core\Model
 		\core\db\Db::getMysql()->query($query, $data);
 		return $this;
 	}
-	
+
 	private function checkTry()
 	{
 		return $this->checkBanAndThrowException()->checkCaptchaAndThrowException();
 	}
-	
+
 	private function checkBanAndThrowException()
 	{
 		if (!empty($this->tryInfo['ban']))
 			$this->returnError('Ban. You can make other try in 5 minutes!', 64);
 		return $this;
 	}
-	
+
 	private function returnError($message, $code)
 	{
 		throw new \exceptions\ExceptionLogin($message, $code);
 	}
-	
+
 	private function checkCaptchaAndThrowException()
 	{
 		if (!$this->checkCaptchaAndAddTry())
@@ -146,7 +146,7 @@ class Authorization extends \core\Model
 		}
 		return true;
 	}
-	
+
 	private function addTry()
 	{
 		$this->tryInfo['date'] = time();
@@ -155,7 +155,7 @@ class Authorization extends \core\Model
 		$this->edit($this->tryInfo, array('id','date','try', 'ban'));
 		return $this;
 	}
-	
+
 	private function getUser()
 	{
 		$user = UserFactory::getInstance()->getUserByLogin($this->login, $this->password);
@@ -164,12 +164,12 @@ class Authorization extends \core\Model
 		$this->deleteTry();
 		return $user;
 	}
-	
+
 	private function userIsBlocked($userObject)
 	{
 	    return ($userObject->statusId == $this->statusBlocked);
 	}
-	
+
 	private function deleteTry()
 	{
 		$this->baseDelete($this->tryInfo,array('id'));

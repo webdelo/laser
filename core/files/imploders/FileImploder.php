@@ -80,7 +80,6 @@ abstract class FileImploder
 	private function setPathNewFile()
 	{
 		$this->newFile = $this->config['filePathOut'].$this->finalFileName.$this->config['ext'];
-	
 		return $this;
 	}
 	
@@ -101,7 +100,7 @@ abstract class FileImploder
 		$fp = fopen($this->newFile, 'w+');
 		fwrite($fp, $this->finalContent);
 		fclose ($fp);
-		
+			
 		return $this;
 	}
 	

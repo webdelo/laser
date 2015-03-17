@@ -46,7 +46,9 @@
 		<a href="/admin/seo/" <?= $this->getREQUEST()['controller']=='seo' ? 'class="underline" ' : ''?>>SEO</a>
 	<?endif?>
 	<?if($this->checkUserRight('modulesDomain')):?>
-	<a href="/admin/modulesDomain/" <?= $this->getREQUEST()['controller']=='modulesDomain' ? 'class="underline" ' : ''?>>Модули-Домены</a>
+		<?/*
+		<a href="/admin/modulesDomain/" <?= $this->getREQUEST()['controller']=='modulesDomain' ? 'class="underline" ' : ''?>>Модули-Домены</a>
+		*/?>
 	<?endif?>
 	<?if($this->checkUserRight('deliveries_controller')):?>
 		<?/*

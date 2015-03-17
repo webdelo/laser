@@ -20,7 +20,7 @@ abstract class ModuleRelations extends ModuleObjects
 	private function checkOwnerId()
 	{
 		if (empty($this->ownerId))
-			throw new \Exception('OwnerId is empty in class '.get_class($this).'!');
+			throw new \Exception('OwnerId is empty in class '.get_class().'!');
 		return $this;
 	}
 
@@ -59,7 +59,7 @@ abstract class ModuleRelations extends ModuleObjects
 		return \core\db\Db::getMysql()->query($query, array($this->ownerId));
 	}
 
-	public function edit($data)
+	public function edit($data, $fields = array())
 	{
 		return ($this->delete())    ?    ( isset($data) ? $this->add($data) : true )    :    false;
 	}

@@ -55,11 +55,11 @@
 						<select name="parentId" style="width:150px;">
 							<option></option>
 							<?php if ($mainCategories->count()): foreach($mainCategories as $categoryObject):?>
-							<option value="<?=$categoryObject->id?>" <?=($categoryObject->id==$object->parentId) ? 'selected' : ''; ?>><?=$categoryObject->name?></option>
+							<option value="<?=$categoryObject->id?>" <?=($categoryObject->id==$object->parentId) ? 'selected' : ''; ?>><?=$categoryObject->getName()?></option>
 								<?php if ($categoryObject->getChildren() != NULL): foreach($categoryObject->getChildren() as $children):?>
-								<option value="<?=$children->id?>" <?=($children->id==$object->parentId) ? 'selected' : ''; ?>>&nbsp;&nbsp;|-&nbsp;<?=$children->name?></option>
+								<option value="<?=$children->id?>" <?=($children->id==$object->parentId) ? 'selected' : ''; ?>>&nbsp;&nbsp;|-&nbsp;<?=$children->getName()?></option>
 									<?php if ($children->getChildren() != NULL): foreach($children->getChildren() as $children2):?>
-									<option value="<?=$children2->id?>" <?=($children2->id==$object->parentId) ? 'selected' : ''; ?>>&nbsp;&nbsp;&nbsp;&nbsp;|-&nbsp;<?=$children2->name?></option>
+									<option value="<?=$children2->id?>" <?=($children2->id==$object->parentId) ? 'selected' : ''; ?>>&nbsp;&nbsp;&nbsp;&nbsp;|-&nbsp;<?=$children2->getName()?></option>
 									<?php endforeach; endif;?>
 								<?php endforeach; endif;?>
 							<?php endforeach; endif;?>

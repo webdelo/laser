@@ -13,7 +13,7 @@
 					<input name="value" type="text" value="" placeholder="Имя свойства"/>
 					<select name="measureCategoryId">
 						<? foreach($measures->getCategories() as $measure): ?>
-							<option value="<?=$measure->id?>"><?=$measure->name?></option>
+							<option value="<?=$measure->id?>"><?=$measure->getName()?></option>
 						<? endforeach; ?>
 					</select>
 					<a class="newPropertyFormSubmit addInContent"></a>
@@ -29,41 +29,41 @@
 				<?=$count++?>
 			</td>
 			<td>
-				<input 
-					class="values transformer" 
-					name="value" 
+				<input
+					class="values transformer"
+					name="value"
 					type="text"
-					value="<?=$value->getValue()?>" 
-					data-action="/admin/properties/editPropertyValue/" 
+					value="<?=$value->getValue()?>"
+					data-action="/admin/properties/editPropertyValue/"
 					data-post="&id=<?=$value->id?>"
 					style="width: 200px;"
 				/>
 				<div class="measurementsTransformed">
-					(<select 
+					(<select
 						name="measureCategoryId"
-						class="measurements" 
-						data-action="/admin/properties/editPropertyValue/" 
+						class="measurements"
+						data-action="/admin/properties/editPropertyValue/"
 						data-post="&id=<?=$value->id?>"
 					>
 						<? foreach($measures->getCategories() as $measure): ?>
-							<option value="<?=$measure->id?>" <?=($value->measureCategoryId==$measure->id)?'selected=selected':''?>><?=$measure->name?></option>
+							<option value="<?=$measure->id?>" <?=($value->measureCategoryId==$measure->id)?'selected=selected':''?>><?=$measure->getName()?></option>
 						<? endforeach; ?>
 					</select>)
 				</div>
 				<div class="additionalInfo">
-					<textarea 
-						class="values transformer" 
-						name="description" 
-						data-action="/admin/properties/editPropertyValue/" 
+					<textarea
+						class="values transformer"
+						name="description"
+						data-action="/admin/properties/editPropertyValue/"
 						data-post="&id=<?=$value->id?>"
 						data-default="добавить описание"
 					><?=$value->description?></textarea>
 				</div>
 			</td>
 			<td>
-				<a 
-					class="deletePropertyValue confirm pointer deleteInContent" 
-					data-confirm="Удалить значение?" 
+				<a
+					class="deletePropertyValue confirm pointer deleteInContent"
+					data-confirm="Удалить значение?"
 					data-action="/admin/properties/deletePropertyValue/<?=$value->id?>/"
 				>
 				</a>

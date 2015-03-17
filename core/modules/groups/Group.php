@@ -1,12 +1,14 @@
 <?php
 namespace core\modules\groups;
-class Group extends \core\modules\base\ModuleDecorator
+class Group extends \core\modules\base\ModuleObject
 {
+	use \core\modules\rights\RightsListTraitDecorator;
+
+	protected $configClass = '\core\modules\groups\GroupConfig';
+
 	function __construct($objectId)
 	{
-		$object = new GroupObject($objectId);
-		$object = new \core\modules\rights\RightsListDecorator($object);
-		parent::__construct($object);
+		parent::__construct($objectId, new $this->configClass());
 	}
 
 	public function remove () {

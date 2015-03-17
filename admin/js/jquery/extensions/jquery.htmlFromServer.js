@@ -8,6 +8,7 @@
 		};
 		
 		var onComplete = function() {
+			settings.source = null;
 			if ( typeof settings.loader == 'object' )
 				settings.loader.stop($(that));
 			
@@ -23,9 +24,17 @@
 			alert(status);
 		};
 		
+		if ( $(that).data('source') == undefined ) {
+			alert('Пожалуйста добавьте к атрибут data-source к элементу, в который загружаете информацию!');
+			return this;
+		}
+		
+		var source = settings.source || $(that).data('source');
+		
 		$.ajax({
-			url: $(that).data('source'),
+			url: source,
 			beforeSend: onBeforeSend,
+			data: $(that).data('post')||'',
 			type: 'POST',
 			dataType: 'html',
 			success: onSuccess,

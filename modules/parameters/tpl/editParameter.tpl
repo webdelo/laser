@@ -1,6 +1,8 @@
 <script type="text/javascript" src="/modules/parameters/js/additionalCategories.js"></script>
 <script type="text/javascript" src="/admin/js/jquery/multi-select/multi-select.js"></script>
 <link rel="stylesheet" type="text/css" href="/admin/js/jquery/multi-select/multi-select.css" />
+<script type="text/javascript" src="/core/i18n/js/langFieldWrapper.js"></script>
+
 <div class="main_edit parameter">
 	<input type="hidden" class='objectId' name="id" value="<?=$parameter->id?>" />
 	<div class="main_param">
@@ -9,11 +11,14 @@
 			<table width="100%">
 				<tr>
 					<td class="first">Имя:</td>
-					<td><input type="text" name="name" value="<?=$parameter->name?>" /></td>
+					<td>
+						<? \core\i18n\LangFieldWrapper::printInputs($parameter, 'getName', 'name') ?>
+					</td>
 				</tr>
 				<tr>
 					<td class="first">Alias:</td>
 					<td>
+						
 						<input type="text" size="20" name="alias" value="<?=$parameter->alias?>"/>
 					</td>
 				</tr>
@@ -32,11 +37,11 @@
 					<td>
 						<select name="additionalCategories[]" multiple="multiple" class="additionalCategories" >
 						<? if ($objects->getMainCategories()->count()): foreach($objects->getMainCategories() as $categoryObject): ?>
-							<option value="<?=$categoryObject->id?>" <?=(in_array($categoryObject->id, $object->additionalCategoriesArray?$object->additionalCategoriesArray:array())) ? 'selected' : ''; ?>><?=$categoryObject->name?></option>
+							<option value="<?=$categoryObject->id?>" <?=(in_array($categoryObject->id, $object->getAdditionalCategoriesArray()?$object->getAdditionalCategoriesArray():array())) ? 'selected' : ''; ?>><?=$categoryObject->getName()?></option>
 							<?php if ($categoryObject->getChildren()): foreach($categoryObject->getChildren() as $children):?>
-							<option value="<?=$children->id?>" <?=(in_array($children->id, $object->additionalCategoriesArray?$object->additionalCategoriesArray:array())) ? 'selected' : ''; ?>><?=$children->name?></option>
+							<option value="<?=$children->id?>" <?=(in_array($children->id, $object->getAdditionalCategoriesArray()?$object->getAdditionalCategoriesArray():array())) ? 'selected' : ''; ?>><?=$children->getName()?></option>
 								<?php if ($children->getChildren()): foreach($children->getChildren() as $children2):?>
-							<option value="<?=$children2->id?>" <?=(in_array($children2->id, $object->additionalCategoriesArray?$object->additionalCategoriesArray:array())) ? 'selected' : ''; ?>>&nbsp;&nbsp;|-&nbsp;<?=$children2->name?></option>
+							<option value="<?=$children2->id?>" <?=(in_array($children2->id, $object->getAdditionalCategoriesArray()?$object->getAdditionalCategoriesArray():array())) ? 'selected' : ''; ?>>&nbsp;&nbsp;|-&nbsp;<?=$children2->getName()?></option>
 								<?php endforeach; endif;?>
 							<?php endforeach; endif;?>
 						<?php endforeach; endif;?>
@@ -62,7 +67,7 @@
 		<div class="col_in">
 			<? if( $parameter->id ): ?>
 				<div class="parameterValues">
-					<p class="title">Возможные значения для "<?=$parameter->name?>":</p>
+					<p class="title">Возможные значения для "<?=$parameter->getName()?>": </p>
 					<script type="text/javascript" src="/modules/parameters/js/parameters.js"></script>
 					<div class="parameterValuesBlock" data-source="/admin/parameters/ajaxGetParametersValuesBlock/<?=$parameter->id?>">
 						<?=$this->getParameterValuesBlock($parameter->id)?>

@@ -17,6 +17,10 @@ class ParametersAdminController extends \controllers\base\Controller
 		'edit',
 		'editField',
 		'parameter',
+		
+		'translateParameterValues',
+		'actionTranslate',
+		
 		'remove',
 		'changeParametersValuesPriority',
 		'addParameterValue',
@@ -138,7 +142,7 @@ class ParametersAdminController extends \controllers\base\Controller
 	{
 		$objectId =  $this->setObject($this->_config->getObjectsClass())->modelObject->add($post, $this->modelObject->getConfig()->getObjectFields());
 		if ($objectId) {
-			$this->getObject($this->objectClass, $objectId)->additionalCategories->edit($post->additionalCategories);
+			$this->getObject($this->objectClass, $objectId)->getAdditionalCategories()->edit($post->additionalCategories);
 			$this->setObject($this->_config->getObjectClass(), $objectId)
 				 ->addImages();
 		}
@@ -246,5 +250,29 @@ class ParametersAdminController extends \controllers\base\Controller
 			$this->modelObject->getErrors();
 		}
 		echo 1;
+	}
+	
+	protected function translateParameterValues()
+	{
+		$parameter = new \core\Noop();
+		if (isset($this->getREQUEST()[0]))
+			$parameter = $this->getObject($this->_config->getObjectClass(), $this->getREQUEST()[0]);
+		
+		$this->setContent('parameter', $parameter)
+			 ->includeTemplate($this->_config->getAdminTemplateDir().'translateParametersValues');
+	}
+	
+	protected function actionTranslate()
+	{
+		
+		$flag = true;
+		foreach ( $this->getPOST()['values'] as $valId=>$value ) {
+			$parameterValue = $this->getObject('\modules\parameters\components\parametersValues\lib\ParameterValue', $valId);
+			$edit = $this->setObject($parameterValue)->modelObject->edit($value);
+			if (!$edit) {
+				$flag = false;
+			}
+		}
+		$this->ajax($flag, 'ajax', true);
 	}
 }

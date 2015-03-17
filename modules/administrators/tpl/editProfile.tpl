@@ -98,7 +98,7 @@
 				<tr>
 					<td>Mobile:</td>
 					<td>
-						<input type="text" name="mobile" value="<?=$profile->mobile;?>" />
+						<input type="text" name="mobile" value="<?=$profile->getMobile();?>" />
 					</td>
 				</tr>
 			</table>

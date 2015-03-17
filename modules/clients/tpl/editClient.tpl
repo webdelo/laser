@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="/admin/css/editClient.css">
+<link rel="stylesheet" type="text/css" href="/admin/css/ClientEdit.css">
 <input type="hidden" class="objectId" value="<?=$object->id?>">
 
 	<div class="MainInformation">
@@ -14,7 +14,7 @@
 						<dt class="cond">Телефон :</dt>
 						<dd class="def"><input type="text" name="phone" data-action="/admin/clients/editClient/?objectId=<?=$object->id?>" value="<?=$object->phone?>" class="transformer editClientInputs teledit telnum"/></dd>
 						<dt class="cond">Доп. тел :</dt>
-						<dd class="def"><input type="text" name="mobile" data-action="/admin/clients/editClient/?objectId=<?=$object->id?>" value="<?=$object->mobile?>" class="transformer editClientInputs teledit telnum"/></dd>
+						<dd class="def"><input type="text" name="mobile" data-action="/admin/clients/editClient/?objectId=<?=$object->id?>" value="<?=$object->getMobile()?>" class="transformer editClientInputs teledit telnum"/></dd>
 						<dt class="cond">Дата рождения :</dt>
 						<dd class="def"><input type="text" name="birthDate" data-action="/admin/clients/editClient/?objectId=<?=$object->id?>" value="<?=$object->birthDate?>" class="transformer editClientInputs dates"/>-<input type="text" name="birthMonth" data-action="/admin/clients/editClient/?objectId=<?=$object->id?>" value="<?=$object->birthMonth?>" class="transformer editClientInputs dates"/>-<input type="text" name="birthYear" data-action="/admin/clients/editClient/?objectId=<?=$object->id?>" value="<?=$object->birthYear?>" class="transformer editClientInputs dates"/></dd>
 					</dl>
@@ -24,52 +24,40 @@
 			<div class="LeftBlock">
 				<h2 class="BlockCaption">Адрес</h2>
 				<div class="LeftBlockInfo">
-					
+
 					<p class="Addr"><strong>
 						<select class="editClientSelects transformer" data-action="/admin/clients/editClient/?objectId=<?=$object->id?>" name="country" style="width:150px;">
-							<option value="Россия" <?= $object->country=='Россия' ? 'selected' : ''?>>Россия</option>
+							<? foreach($countries as $country): ?>
+							<option value="<?=$country->name?>" <?= $object->country==$country->name ? 'selected' : ''?>><?=$country->name?></option>
+							<? endforeach; ?>
 						</select>
 					</strong><a class="pen editDeliveryButton"></a></p>
 					<p class="Addr">р. <strong><input type="text" name="region" data-action="/admin/clients/editClient/?objectId=<?=$object->id?>" value="<?=$object->region?>" class="transformer editClientInputs addressinput"/></strong>, г. <strong><input type="text" name="city" data-action="/admin/clients/editClient/?objectId=<?=$object->id?>" value="<?=$object->city?>" class="transformer editClientInputs addressinput"/></strong>, ул.<strong><input type="text" name="street" data-action="/admin/clients/editClient/?objectId=<?=$object->id?>" value="<?=$object->street?>" class="transformer editClientInputs streetinput"/></strong>, д.<strong><input type="text" name="home" data-action="/admin/clients/editClient/?objectId=<?=$object->id?>" value="<?=$object->home?>" class="transformer editClientInputs addressinput"/></strong>, корп.<strong><input type="text" name="block" data-action="/admin/clients/editClient/?objectId=<?=$object->id?>" value="<?=$object->block?>" class="transformer editClientInputs addressinput"/></strong>, кв.<strong><input type="text" name="flat" data-action="/admin/clients/editClient/?objectId=<?=$object->id?>" value="<?=$object->flat?>" class="transformer editClientInputs addressinput"/></strong></p>
-					<p class="Addr">индекс : <strong><input type="text" name="index" data-action="/admin/clients/editClient/?objectId=<?=$object->id?>" value="<?=$object->index?>" class="transformer editClientInputs addressinput"/></strong></p>				
+					<p class="Addr">индекс : <strong><input type="text" name="index" data-action="/admin/clients/editClient/?objectId=<?=$object->id?>" value="<?=$object->index?>" class="transformer editClientInputs addressinput"/></strong></p>
 				</div>
 			</div>
-			
-			<div class="LeftBlock">
-				<h2 class="BlockCaption">Данные доставки</h2>
-				<div class="LeftBlockInfo">
-					
-					<p class="Addr"><strong>
-						<select class="editClientSelects transformer" data-action="/admin/clients/editClient/?objectId=<?=$object->id?>" name="deliveryCountry" style="width:150px;">
-							<option value="Россия" <?= $object->deliveryCountry=='Россия' ? 'selected' : ''?>>Россия</option>
-						</select>
-					</strong><a class="pen editDeliveryDataButton"></a></p>
-					<p class="Addr">р. <strong><input type="text" name="deliveryRegion" data-action="/admin/clients/editClient/?objectId=<?=$object->id?>" value="<?=$object->deliveryRegion?>" class="transformer editClientInputs addressinput"/></strong>, г. <strong><input type="text" name="deliveryCity" data-action="/admin/clients/editClient/?objectId=<?=$object->id?>" value="<?=$object->deliveryCity?>" class="transformer editClientInputs addressinput"/></strong>, ул.<strong><input type="text" name="deliveryStreet" data-action="/admin/clients/editClient/?objectId=<?=$object->id?>" value="<?=$object->deliveryStreet?>" class="transformer editClientInputs streetinput"/></strong>, д.<strong><input type="text" name="deliveryHome" data-action="/admin/clients/editClient/?objectId=<?=$object->id?>" value="<?=$object->deliveryHome?>" class="transformer editClientInputs addressinput"/></strong>, корп.<strong><input type="text" name="deliveryBlock" data-action="/admin/clients/editClient/?objectId=<?=$object->id?>" value="<?=$object->deliveryBlock?>" class="transformer editClientInputs addressinput"/></strong>, кв.<strong><input type="text" name="deliveryFlat" data-action="/admin/clients/editClient/?objectId=<?=$object->id?>" value="<?=$object->deliveryFlat?>" class="transformer editClientInputs addressinput"/></strong></p>
-					<p class="Addr">индекс : <strong><input type="text" name="deliveryIndex" data-action="/admin/clients/editClient/?objectId=<?=$object->id?>" value="<?=$object->deliveryIndex?>" class="transformer editClientInputs addressinput"/></strong></p>				
-					<p class="Addr">Контактное лицо: <strong><input type="text" name="deliveryPerson" data-action="/admin/clients/editClient/?objectId=<?=$object->id?>" value="<?=$object->deliveryPerson?>" class="transformer editClientInputs addressinput" style="width: 220px;"/></strong></p>
-				</div>
-			</div>
-			
 		</div>
 
-		
-		
-		
-		
-		
-		
-	<div id="goodsOrder" class="deliveryEditBlock hide">	
+
+
+
+
+
+
+	<div id="goodsOrder" class="deliveryEditBlock hide">
 		<div>
     <p class="title">Доставка:</p>
     <div class="deliveryFormAdd" data-action="/admin/clients/editDeliveryAddress/" data-method="post">
 			<input type="hidden" name="objectId" value="<?=$object->id?>">
-     
+
             <div class="deliveryAddressBlock">
             <div class="deliveryAddressContent">
 				<div class="addressBlock">
 					<input type="hidden" name="flexibleAddress" value="1">
 					<select name="country" style="width:100px;">
-						<option value="Россия" <?= $object->country=='Россия' ? 'selected' : ''?>>Россия</option>
+						<? foreach($countries as $country): ?>
+							<option value="<?=$country->name?>" <?= $object->country==$country->name ? 'selected' : ''?>><?=$country->name?></option>
+						<? endforeach; ?>
 					</select>
 					<input style="width: 230px;" type="text" name="region" value="р. <?=$object->region?>" placeholder="Область">
 					<input style="width: 220px;" type="text" name="city" value="г. <?=$object->city?>" placeholder="Город">
@@ -86,41 +74,13 @@
 		<input class="deliveryFormAddSubmit" type="button" disabled="" value="Добавить доставку">
     </div>
 </div>
-</div>		
-		
-	<div id="goodsOrder" class="deliveryDataBlock hide">
-			<div>
-		<p class="title">Данные доставки:</p>
-		<div class="deliveryDataAdd" data-action="/admin/clients/editDeliveryAddress/" data-method="post">
-				<input type="hidden" name="objectId" value="<?=$object->id?>">
+</div>
 
-				<div class="deliveryAddressBlock">
-				<div class="deliveryAddressContent">
-					<div class="addressBlock">
-						<input type="hidden" name="flexibleAddress" value="1">
-						<select name="deliveryCountry" style="width:100px;">
-							<option value="Россия" <?= $object->deliveryCountry=='Россия' ? 'selected' : ''?>>Россия</option>
-						</select>
-						<input style="width: 230px;" type="text" name="deliveryRegion" value="р. <?=$object->deliveryRegion?>" placeholder="Область">
-						<input style="width: 220px;" type="text" name="deliveryCity" value="г. <?=$object->deliveryCity?>" placeholder="Город">
-					</div>
-					<div class="addressBlock" style="margin-top: 10px;">
-						<input type="text" style="width: 200px;" name="deliveryStreet" value="ул. <?=$object->deliveryStreet?>" placeholder="Улица">
-						<input type="text" name="deliveryHome" value="д. <?=$object->deliveryHome?>" placeholder="Дом">
-						<input type="text" name="deliveryBlock" value="корп. <?=$object->deliveryBlock?>" placeholder="Корпус">
-						<input type="text" name="deliveryFlat" value="кв. <?=$object->deliveryFlat?>" placeholder="Квартира">
-						<input type="text" name="deliveryIndex" value="<?=$object->deliveryIndex?>" placeholder="Индекс">
-					</div>
-				</div>
-			</div>
-			<input class="deliveryFormAddSubmit" type="button" disabled="" value="Добавить доставку">
-		</div>
-	</div>
-	</div>		
-		
-		
-		
-		
+
+
+
+
+
 		<div class="RightBlock">
 			<h2 class="BlockCaption">Авторизационные данные</h2>
 			<div class="RightBlockInfo">
@@ -137,7 +97,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="RightBlock">
 			<h2 class="BlockCaption">Системные данные</h2>
 			<div class="RightBlockInfo">
@@ -153,39 +113,40 @@
 
 					<dt class="cond">Приоритет :</dt>
 					<dd class="def"><strong><input type="text" name="priority" data-action="/admin/clients/editClient/?objectId=<?=$object->id?>" value="<?=$object->priority?>" class="transformer editClientInputs"/></strong></dd>
-
-					<dt class="cond">Организация :</dt>
-					<dd class="def"><strong><input type="text" name="company" data-action="/admin/clients/editClient/?objectId=<?=$object->id?>" value="<?=$object->company?>" class="transformer editClientInputs OrganizationData"/></strong></dd>
-					<dt class="cond">ИНН :</dt>
-					<dd class="def"><strong><input type="text" name="inn" data-action="/admin/clients/editClient/?objectId=<?=$object->id?>" value="<?=$object->inn?>" class="transformer editClientInputs OrganizationData"/></strong></dd>
-					<dt class="cond">КПП :</dt>
-					<dd class="def"><strong><input type="text" name="kpp" data-action="/admin/clients/editClient/?objectId=<?=$object->id?>" value="<?=$object->kpp?>" class="transformer editClientInputs OrganizationData"/></strong></dd>
-					<dt class="cond">ОГРН :</dt>
-					<dd class="def"><strong><input type="text" name="ogrn" data-action="/admin/clients/editClient/?objectId=<?=$object->id?>" value="<?=$object->ogrn?>" class="transformer editClientInputs OrganizationData"/></strong></dd>
-					
 				</dl>
 			</div>
 		</div>
 	</div>
 
 	<div class="BronBlock">
-		<h2 class="BlockCaption">Список заказов</h2>
+		<h2 class="BlockCaption">Список объектов</h2>
 		<div class="BronBlockInfo">
-			<div class="ClientObjects">		
-				<?if ($object): ?>
+			<div class="ClientObjects">
+				<?if ($object->getRealties()->count()): ?>
 				<table class="ObjectsList" width="100%">
 					<tr>
 						<th class="ObjectsList Idth"><strong>id</strong></th>
 						<th class="ObjectsList-031e"><strong>Название, Адрес</strong></th>
 						<th class="ObjectsList-031e"><strong>Дата</strong></th>
+						<th class="ObjectsList-031e"><strong>Цена за день</strong></th>
+						<th class="ObjectsList-031e"><strong>Тип жилья</strong></th>
 						<th class="ObjectsList-031e"><strong>Статус</strong></th>
 					</tr>
-	
+					<? foreach($object->getRealties() as $realty):?>
+					<tr>
+						<td class="idcol"><a class="id_l" href="/admin/realties/newRealty/<?=$realty->id?>"><?=$realty->id?></a></td>
+						<td class="tg-vn4c"><a class="name_l" href="/admin/realties/newRealty/<?=$realty->id?>"><?=$realty->name?$realty->name:'Не указано'?></a><br><div class="additionalData"><?=$realty->addressId?$realty->getAddress()->getAddressString():'адрес не указан'?></div></td>
+						<td class="tg-vn4c"><?=$realty->date?></td>
+						<td class="pricecol"><?=$realty->getPrices()->getDayMinPrice()?$realty->getPrices()->getDayMinPrice()->dayPrice:''?> €</td>
+						<td class="tg-vn4c"><?=$realty->getCategory()->getName()?></td>
+						<td class="tg-vn4c"><font color="<?=$object->getStatus()->color?>"><?=$object->getStatus()->name?></font></td>
+					</tr>
+					<?endforeach?>
 				</table>
 				<? else: ?>
 				<div class="NoBronsBlock">
 					<div class="TextArea">
-						<p>Нет заказов</p>
+						<p>Нет добавленных объектов</p>
 					</div>
 				</div>
 				<? endif; ?>
@@ -193,5 +154,51 @@
 		</div>
 	</div>
 
+	<div class="TripBlock">
+		<h2 class="BlockCaption">Список поездок</h2>
+		<div class="BronBlockInfo">
+			<div class="NoBronsBlock">
+				<div class="TextArea">
+					<p>В разработке</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="TripBlock">
+		<h2 class="BlockCaption">Информация о рассылке</h2>
+		<div class="BronBlockInfo">
+			<div class="NoBronsBlock" style="text-align: left">
+				<div class="TextArea">
+					<p>
+						подписан на важные уведомления о своих объявлениях с сайта - <b><?= $object->notSendBookingMails ? 'да' : 'нет'?></b>
+					</p>
+					<p>
+						подписан на важные уведомления о интересных предложениях с сайта - <b><?= $object->notSendPublicityMails ? 'да' : 'нет'?></b>
+					</p>
+		<h2 class="BlockCaption">Языки</h2>
+		<div class="BronBlockInfo">
+			<div class="NoBronsBlock" style="text-align: left">
+				<div class="TextArea">
+					<table style="width: 100%">
+						<tr>
+							<td>
+								<?$langs = $object->getLang()?>
+								<?if($langs->count()): foreach($langs as $lang):?>
+									<?if($object->isMainLang($lang)):?><span style="color: #009a00"><?endif?>
+									<?=$lang->getName()?> (<?=$lang->getAlias()?>)
+									<?if($object->isMainLang($lang)):?> - основной язык</span><?endif?>
+									<br />
+								<?endforeach; endif;?>
+							</td>
+							<td>
+								<span style="color: #009a00"><?=$object->getSystemLang()->getName()?> (<?=$object->getSystemLang()->getAlias()?>) - язык системы</span>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<div class="clear"></div>

@@ -383,9 +383,15 @@ abstract class Model
 		return self::baseDelete(array($this->idField => $id), array($this->idField));
 	}
 
+	public function deleteByQuery($query, $data = null)
+	{
+		$query = 'DELETE FROM '.$this->mainTable.' WHERE '.$query;
+		return db\Db::getMysql()->query($query,$data);
+	}
+
 	protected function _addRecord($table, $data)
 	{
-		$query = 'INSERT INTO '.$table . '(`'.join('`, `', array_keys($data)).'`)
+		$query = 'INSERT INTO `'.$table.'`(`'.join('`, `', array_keys($data)).'`)
 				VALUES(\'' . join("', '", array_fill(0, sizeof($data), '?s')) . '\')';
 		return ( db\Db::getMysql()->query($query,$data) ) ? $this->lastInsertId() : false ;
 	}
@@ -402,7 +408,7 @@ abstract class Model
 		$query = substr($query, 0, -1);
 		$query .= ' WHERE `'.$field.'` = ?d';
 		array_push($data,$id);
-		return db\Db::getMysql()->query($query,$data);
+		return db\Db::getMysql()->query($query,$data)? $id: false;
 	}
 
 	protected function getDefaultIdField($idField)
@@ -469,7 +475,7 @@ abstract class Model
 
 	public function getMaxId ()
 	{
-		return db\DB::getMaxId($this->mainTable);
+		return DB::getMaxId($this->mainTable);
 	}
 
 	public function getNextId ()

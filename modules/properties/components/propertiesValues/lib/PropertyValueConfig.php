@@ -27,6 +27,7 @@ class PropertyValueConfig extends \core\modules\base\ModuleConfig
 		return array(
 			'value' => array(
 				'validation' => array('_validNotEmpty'),
+				'adapt' => '_adaptHtml',
 			),
 			'propertyId' => array(
 				'validation' => array('_validInt'),
@@ -58,7 +59,7 @@ class PropertyValueConfig extends \core\modules\base\ModuleConfig
 	public function relations()
 	{
 		$relations = array(
-			'tbl_catalog_items_properties_values_relation' => array('idField'=>'propertyValueId'),
+			'tbl_realties_properties_values_relation' => array('idField'=>'propertyValueId'),
 		);
 		return $relations;
 	}

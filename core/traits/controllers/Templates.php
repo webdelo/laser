@@ -32,7 +32,7 @@ trait Templates
 		if (file_exists($path) ) {
 			return $path;
 		}
-
+		
 		if (property_exists($this,'_config'))
 			if (file_exists(DIR.$this->_config->templates.$path)) {
 				return DIR.$this->_config->templates.$path;

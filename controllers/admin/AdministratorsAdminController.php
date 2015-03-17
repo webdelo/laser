@@ -51,7 +51,7 @@ class AdministratorsAdminController extends \controllers\base\Controller
 
 		if (isset($this->getREQUEST()[0])) {
 			$administrator = $this->getObject($this->_config->getObjectClass(), $this->getREQUEST()[0]);
-			$userRights = $administrator->rights;
+			$userRights = $administrator->getRights();
 		}
 		$tabs = array('editAdministrator' => 'Данные');
 		$administrators = new $this->objectsClass;
@@ -59,7 +59,7 @@ class AdministratorsAdminController extends \controllers\base\Controller
 		$this->setContent('administrator', $administrator)
 			->setContent('administrators', $administrators)
 			->setContent('tabs', $tabs)
-			->setContent('groups', $administrators->groups)
+			->setContent('groups', $administrators->getGroups())
 			->setContent('userRights', $userRights)
 			->setContent('tree', $this->getRightsTree($userRights))
 			->includeTemplate($this->_config->getAdminTemplateDir().'administrator');
@@ -68,14 +68,14 @@ class AdministratorsAdminController extends \controllers\base\Controller
 	private function getGroupRightsArrayById ($id)
 	{
 		$groupObject = new \core\modules\groups\Group($id);
-		$rightsArray = $groupObject->rights->getIdArray();
+		$rightsArray = $groupObject->getRights()->getIdArray();
 		return $rightsArray;
 	}
 
 	protected function ajaxGetGroupRightsById ()
 	{
 		$group = new \core\modules\groups\Group($this->getGET()['groupId']);
-		return $this->ajax($this->getRightsTree($group->rights));
+		return $this->ajax($this->getRightsTree($group->getRights()));
 	}
 
 	protected function add ()
@@ -83,10 +83,9 @@ class AdministratorsAdminController extends \controllers\base\Controller
 		$this->checkUserRightAndBlock('admins_add');
 		$post = new \core\ArrayWrapper($this->getPOST());
 		$this->setObject($this->objectsClass);
-		$result = $this->modelObject
-								  ->setPassword($post->password, $post->passwordConfirm)
-								->setLogin($post->login)
-								  ->add($post);
+		$result = $this->modelObject->setPassword($post->password, $post->passwordConfirm)
+									->setLogin($post->login)
+									->add($post);
 		if($result == false){
 			$errors = $this->modelObject->getErrors();
 			$this->resetErrors();
@@ -96,7 +95,7 @@ class AdministratorsAdminController extends \controllers\base\Controller
 		}
 		$this->ajax($result,'ajax');
 		if ($result) {
-			$this->setObject($this->objectClass, $result)->modelObject->rights->add($this->getPOST()['treeList']);
+			$this->setObject($this->objectClass, $result)->modelObject->getRights()->add($this->getPOST()['treeList']);
 		}
 	}
 
@@ -107,7 +106,7 @@ class AdministratorsAdminController extends \controllers\base\Controller
 		$result = $this->setObject($administrator)->modelObject->edit($this->getPOST());
 		$this->ajax($result, 'ajax');
 		if ($result)
-			$this->modelObject->rights->edit($this->getPOST()['treeList']);
+			$this->modelObject->getRights()->edit($this->getPOST()['treeList']);
 	}
 
 	protected function editPassword()
@@ -148,7 +147,7 @@ class AdministratorsAdminController extends \controllers\base\Controller
 
 		$this->setContent('tabs', $tabs)
 			->setContent('object', $group)
-			->setContent('tree', $this->getRightsTree($group->rights))
+			->setContent('tree', $this->getRightsTree($group->getRights()))
 			->includeTemplate($this->_config->getAdminTemplateDir().'administratorGroup');
 	}
 
@@ -158,7 +157,7 @@ class AdministratorsAdminController extends \controllers\base\Controller
 		$result = $this->setObject('\core\modules\groups\Group', $this->getPOST()['id'])->modelObject->edit($this->getPOST());
 		$this->ajax($result, 'ajax');
 		if ($result)
-			$this->modelObject->rights->edit($this->getPOST()['treeList']);
+			$this->modelObject->getRights()->edit($this->getPOST()['treeList']);
 	}
 
 	protected function addGroup ()

@@ -26,6 +26,7 @@ class ParameterValueConfig extends \core\modules\base\ModuleConfig
 		return array(
 			'value' => array(
 				'validation' => array('_validNotEmpty'),
+				'adapt' => '_adaptHtml',
 			),
 			'priority,parameterId' => array(
 				'validation' => array('_validInt'),
@@ -45,7 +46,7 @@ class ParameterValueConfig extends \core\modules\base\ModuleConfig
 	public function relations()
 	{
 		$relations = array(
-			'tbl_catalog_items_parameters_values_relation' => array('idField'=>'objectId')
+			'tbl_realties_parameters_values_relation' => array('idField'=>'objectId')
 		);
 		return $relations;
 	}

@@ -5,7 +5,7 @@
 				<div class="action_buts">
 					<a class="form<?=($object->id)?'Edit':'AddCategory'?>Submit pointer" ><img src="/admin/images/buttons/save_object.png" alt="" /> Сохранить</a>
 					<? if ($object->id):?>
-						<a class="button confirm pointer" data-confirm= "Remove the article?" data-action="/admin/articles/remove/<?=$object->id?>/"
+						<a class="button confirm pointer" data-confirm= "Remove the article?" data-action="/admin/articles/removeCategory/<?=$object->id?>/"
 							data-callback="postRemoveFromDetails" data-post-action="/admin/articles/articles/" >
 							<img src="/admin/images/buttons/delete.png" alt="" /> Удалить
 						</a>
@@ -15,7 +15,7 @@
 				<p class="speedbar"><a href="/admin/">Главная</a>     <span>></span>
 					<a href="/admin/articles/">Статьи</a>    <span>></span>
 					<a href="/admin/articles/categories/">Категории</a>    <span>></span>
-					<?= $object->id ? $object->name: 'Добавление'?>
+					<?= $object->id ? $object->getName(): 'Добавление'?>
 				</p>
 				<div class="clear"></div>
 				<form class="form<?=($object->id)?'Edit':'AddCategory'?>" action="/admin/articles/category<?=($object->id)?'Edit':'Add'?>/" method="post" data-post-action="/admin/articles/categories/">

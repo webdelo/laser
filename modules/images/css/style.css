@@ -141,10 +141,7 @@
 .imagesForm table td.alias input,
 .imagesForm table td.title input,
 .imagesForm table td.status select,
-.imagesForm table td.category select,
-.imagesForm table td.resizetype select, 
-.imagesForm table td.sharp select, 
-.imagesForm table td.bg_fill input {
+.imagesForm table td.category select {
 	border: 1px solid #C0CAD5;
 	width: 200px;
 }
@@ -152,10 +149,7 @@
 .imagesForm table td.title,
 .imagesForm table td.status,
 .imagesForm table td.priority,
-.imagesForm table td.category,
-.imagesForm table td.resizetype,
-.imagesForm table td.sharp, 
-.imagesForm table td.bg_fill {
+.imagesForm table td.category {
 	vertical-align: middle;
 }
 .imagesForm table td.description textarea {

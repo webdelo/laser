@@ -3,11 +3,11 @@ namespace core\images\resize;
 class ImageResizer {
 
 	private $defaultSettings;
-
-	protected $_fileName  = null;
+	
+    protected $_fileName  = null;
     protected $_image     = null;
     protected $_imageInfo = null;
-
+	
 	private $_focusMode = false;
 
     protected $_settings = array(
@@ -46,7 +46,7 @@ class ImageResizer {
 		$this->_settings = $this->defaultSettings;
 		return $this;
 	}
-
+	
 	public function setBgColor($bgColor)
 	{
 		$bgColor = str_replace(' ', '', $bgColor);
@@ -427,6 +427,5 @@ class ImageResizer {
 	protected function _chkSharpen($sharpen)
 	{
 		return;
-	}
-
+	}	
 }

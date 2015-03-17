@@ -7,7 +7,7 @@
 				<select name="categoryId">
 					<option value="">- Category -</option>
 					<?php foreach ($categories as $category):?>
-					<option value="<?=$category->id?>"><?=$category->name?></option>
+					<option value="<?=$category->id?>"><?=$category->getName()?></option>
 					<?php endforeach;?>
 				</select>
 			</td>

@@ -1,10 +1,12 @@
 <?php
 namespace modules\properties\components\propertiesValues\lib;
-class PropertyValues extends \core\modules\base\ModuleDecorator
+class PropertyValues extends \core\modules\base\ModuleObjects
 {
+	protected $configClass     = '\modules\properties\components\propertiesValues\lib\PropertyValueConfig';
+	protected $objectClassName = '\modules\properties\components\propertiesValues\lib\PropertyValue';
+
 	function __construct()
 	{
-		$object = new PropertyValuesObject();
-		parent::__construct($object);
+		parent::__construct(new $this->configClass);
 	}
 }

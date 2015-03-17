@@ -8,8 +8,8 @@ class ErrorHandler
 
 	private $config = array(
 		'title'         => 'Fixed error.',
-		'projectName'   => 'Go-Informator.RU',
-		'mailTo'        => array('d.cercel@webdelo.org', 'a.popov@webdelo.org'),
+		'projectName'   => 'Vput.ru',
+		'mailTo'        => array('d.cercel@webdelo.org', 'a.popov@webdelo.org', 'a.grinceac@webdelo.org', 'd.godiac@webdelo.org'),
 		'log'           => array('Screen'), // array('DB', 'File', 'Email', 'Screen')
 		'message'       => '<strong style="color: red;">Sorry, the system detected an error. Our programmers will take its correction in the near future.</strong>',
 		'exceptionView' => true

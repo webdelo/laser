@@ -23,11 +23,11 @@
 									<select class="filterInput" name="categoryId">
 										<option></option>
 										<?php if ($objects->getMainCategories()->count() != 0): foreach($objects->getMainCategories() as $categoryObject):?>
-										<option value="<?=$categoryObject->id?>" <?=($categoryObject->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>><?=$categoryObject->name?></option>
+										<option value="<?=$categoryObject->id?>" <?=($categoryObject->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>><?=$categoryObject->getName()?></option>
 											<?php if ($categoryObject->getChildren()): foreach($categoryObject->getChildren() as $children):?>
-											<option value="<?=$children->id?>" <?=($children->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>>&nbsp;&nbsp;|-&nbsp;<?=$children->name?></option>
+											<option value="<?=$children->id?>" <?=($children->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>>&nbsp;&nbsp;|-&nbsp;<?=$children->getName()?></option>
 												<?php if ($children->getChildren() != NULL): foreach($children->getChildren() as $children2):?>
-												<option value="<?=$children2->id?>" <?=($children2->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>>&nbsp;&nbsp;&nbsp;&nbsp;|-&nbsp;<?=$children2->name?></option>
+												<option value="<?=$children2->id?>" <?=($children2->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>>&nbsp;&nbsp;&nbsp;&nbsp;|-&nbsp;<?=$children2->getName()?></option>
 												<?php endforeach; endif;?>
 											<?php endforeach; endif;?>
 										<?php endforeach; endif;?>
@@ -84,10 +84,10 @@
 								<td><input type="checkbox" class="groupElements" /></td>
 								<td><?=$object->id?></td>
 								<td><p class="alias"><a href="/admin/articles/article/<?=$object->id?>/"><?=$object->alias?></a></p></td>
-								<td><p class="name"><?=$object->name?></p></td>
+								<td><p class="name"><?=$object->getName()?></p></td>
 								<td>
 									<p class="category_edit"><a href="/admin/articles/category/<?=$object->getCategory()->id?>/"><img src="/admin/images/backgrounds/set.png" /></a></p>
-									<p class="category_name"><?=$object->getCategory()->name?></p></td>
+									<p class="category_name"><?=$object->getCategory()->getName()?></p></td>
 								<td><p class="date"><?=$object->date?></p></td>
 								<td><p class="status"><font color="<?=$object->getStatus()->color?>"><?=$object->getStatus()->name?></font></p></td>
 								<td class="td_bord sortHandle header"><?= $object->priority?></td>
@@ -136,11 +136,11 @@
 									<select id="categoryId" name="categoryId">
 										<option value="">- Категории -</option>
 										<?php if ($objects->getMainCategories()->count() != 0): foreach($objects->getMainCategories() as $categoryObject):?>
-										<option value="<?=$categoryObject->id?>" <?=($categoryObject->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>><?=$categoryObject->name?></option>
+										<option value="<?=$categoryObject->id?>" <?=($categoryObject->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>><?=$categoryObject->getName()?></option>
 											<?php if ($categoryObject->getChildren()): foreach($categoryObject->getChildren() as $children):?>
-											<option value="<?=$children->id?>" <?=($children->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>>&nbsp;&nbsp;|-&nbsp;<?=$children->name?></option>
+											<option value="<?=$children->id?>" <?=($children->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>>&nbsp;&nbsp;|-&nbsp;<?=$children->getName()?></option>
 												<?php if ($children->getChildren() != NULL): foreach($children->getChildren() as $children2):?>
-												<option value="<?=$children2->id?>" <?=($children2->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>>&nbsp;&nbsp;&nbsp;&nbsp;|-&nbsp;<?=$children2->name?></option>
+												<option value="<?=$children2->id?>" <?=($children2->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>>&nbsp;&nbsp;&nbsp;&nbsp;|-&nbsp;<?=$children2->getName()?></option>
 												<?php endforeach; endif;?>
 											<?php endforeach; endif;?>
 										<?php endforeach; endif;?>
@@ -152,10 +152,10 @@
 									</button>
 								</td>
 							</tr>
-							<tr class="groupAction groupRemove" name="removeButton">
+							<tr class="groupAction groupRemove">
 								<td class="first"></td>
 								<td>
-									<button class="remove button confirm active" data-confirm="Удалить объекты?" data-action="/admin/articles/groupRemove/" data-data="input[name*=group]" data-callback="reloadPage">ок</button>
+									<button class="remove button confirm active" name="removeButton" data-confirm="Удалить объекты?" data-action="/admin/articles/groupRemove/" data-data="input[name*=group]" data-callback="reloadPage">ок</button>
 								</td>
 							</tr>
 						</table>

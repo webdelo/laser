@@ -42,8 +42,7 @@ var groupSorting = function (settings) {
 		var that = this;
 		this.settings.element$.children( "tr" ).each(function (i){
 				if ($(this).data('id') !== undefined && $(this).data('priority') !== undefined) {
-//					query += '&data['+$(this).data('id')+']='+$(this).attr('data-priority');
-					query += '&data['+$(this).data('id')+']='+i;
+					query += '&data['+$(this).data('id')+']='+$(this).data('priority');
 					$(this).find(that.settings.handle).text(i);
 				}
 			});

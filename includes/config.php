@@ -1,14 +1,12 @@
 <?php
 define('TEST_MODE', true);
 date_default_timezone_set('Europe/Moscow');
-
 define('AMERICAN_DATE', false);
 if (AMERICAN_DATE) {
 	define('SIMPLE_DATE_PATTERN', 'm-d-Y');
 } else {
 	define('SIMPLE_DATE_PATTERN', 'd-m-Y');
 }
-
 if (TEST_MODE) {
 	ini_set("display_errors",        "1");
 	ini_set("display_startup_errors","1");
@@ -18,40 +16,27 @@ else {
 	ini_set('display_errors', 'Off');
 	error_reporting(0);
 }
-
 ini_set('magic_quotes_gpc', 0);
-
 define('DIR', str_replace('includes','',dirname(__FILE__)));
-
+define('DEFAULT_PROTOCOL','http');
 define('DIR_HTTP',        'http://'.$_SERVER['HTTP_HOST'].'/');
-define('DIR_ADMIN_HTTP',  'http://'.$_SERVER['HTTP_HOST'].'/admin/');
+define('DIR_ADMIN_HTTP',  DEFAULT_PROTOCOL.'://'.$_SERVER['HTTP_HOST'].'/admin/');
 define('DIR_HTTPS',       'https://'.$_SERVER['HTTP_HOST'].'/');
-define('SEND_FROM',       $_SERVER['HTTP_HOST']);
-define('DIR_HTTPS_ORDER', 'https://i-rain-nos.webdelo.org/');
+define('SEND_FROM',       'VPUT');
 define('TEMPLATES',       DIR.'templates/');
 define('TEMPLATES_ADMIN', DIR.'admin/templates/');
 define('FILES_DIR',       '/files/');
 define('DATE_FORMAT',     'mm-dd-yy');
-
-define('MAIN_IMG_MINI_HEIGHT',132);
-define('MAIN_IMG_MINI_WIDTH', 176);
-define('MAIN_IMG_MAX_HEIGHT', 132);
-define('MAIN_IMG_MAX_WIDTH',  176);
-define('MINI_IMG_PREFIX',     'mini_');
-
 define('TABLE_PREFIX', 'tbl_');
-
 define('NO_IMAGE_PATH', '/images/noimage/');
-define('NO_IMAGE_FILE_PATH', DIR.'/images/noimage/no_image_file.png');
-
-
+define('NO_IMAGE_FILE_PATH', DIR.'/images/noimage/noimage.png');
 // All config
 $config = array(
 	'url'=>
 		array(
 			'settings'=>
 				array(
-					'lang'       => 'None',      // 'SubDomain', 'Element', 'None'
+					'lang'       => 'ByDomain',      // 'SubDomain', 'Element', 'None', ByDomain
 					'part'       => 'SubDomain', // 'SubDomain', 'Element', 'None'
 					'controller' => 'Element',   // 'Element', 'None'
 					'domainLevel' => 2,
@@ -60,7 +45,7 @@ $config = array(
 				array(
 					'lang'=>'ru',
 					'part'=>'article',
-					'domain'=>'go.webdelo.org',
+					'domain'=>'run-laser.com',
 					'domainAlias'=>'run-laser.com',
 				),
 			'extensions'=>
@@ -76,12 +61,16 @@ $config = array(
 				),
 			'langs'=>
 				array(
-					'ru',
+					'ru' => array('run-laser.com'),
+					'en' => array('run-laser.com')
 				),
 			'domains'=> array(
 				'run-laser.com' => array(
 					'run-lasers.webdelo.org',
 				),
+			),
+			'developerDomains'=> array(
+				'run-lasers.webdelo.org',
 			),
 			'domainsDevelopersAliases' => array(
 				'run-laser.com' => 'RunLaser',
@@ -89,25 +78,26 @@ $config = array(
 		),
 	'controllers'=>
 		array(
-			'defaultFrontController' => 'catalog',
+			'defaultFrontController' => 'article',
 			'defaultAdminController' => 'index',
 		),
 	'redirect'=>
 		array(
 			'csvPath'        => DIR.'redirect/',
 			'csvFile'        => 'redirect.csv',
-			'www'            => 'redirect',    // 'with', 'without', 'none_redorect'
+			'www'            => 'without',    // 'with', 'without', 'none_redorect'
+			'protocol'       => 'http',      // 'https' OR 'http'
 			'http2https'     => array(),      // all redirect patterns in array. May be URI or path pattern with '*' in end
 			'https2http'     => false,        // true - redirect enable, false - redirect disadle
 			'wwwSubdomains'  => 'without',    // 'with', 'without', 'none_redorect'
-			'subdomainLevel' => 3,            // level sub-domain on which the partition PART begin from second-level domain
+			'subdomainLevel' => 2,            // level sub-domain on which the partition PART begin from second-level domain
 			'endSlash'       => true,         // true - redirect enable, false - redirect disadle (when last URL-simbol is not "/")
 		),
 	'developerShell'=>array(
 			'debugMode'		  => false, // Show shell when fixed debug points
-			'errorMode'		  => true,  // Show shell when fixed errors
-			'dumpMode'		  => true,  // Show shell when fixed dumps
-			'IP'			  => array( '62.221.66.120','95.153.68.122'), // Developers IP
+			'errorMode'		  => false,  // Show shell when fixed errors
+			'dumpMode'		  => false,  // Show shell when fixed dumps
+			'IP'			  => array( '92.115.183.153', '37.26.138.240', '89.28.112.179', '62.221.73.135'), // Developers IP
 	),
 	'cache' =>
 		array(
@@ -145,24 +135,21 @@ $config = array(
 		),
 	'debug' =>
 		array(
-			'log'            => array('Screen'),
-			'projectName'    => 'ritualestet',
-
+			'log'            => array('Mail'),
+			'projectName'    => 'Lasers',
 			'round_timer'     => 4,
 			'max_point_timer' => 5,
-
 			'http_root'       => '/plugins/debug/',
 			'document_root'   => DIR.'plugins/debug/',
-
 			'mailFrom'        => 'support@webdelo.org',
-			'mailTo'          => array(	'd.godiac@webdelo.org' ),
+			'mailTo'          => array(	'dmitriy.cercel@gmail.com', 'd.cercel@webdelo.org', 'a.popov@webdelo.org', 'support@webdelo.org', 'a.grinceac@webdelo.org', 'd.godiac@webdelo.org'),
 			'mailSubject'     => 'Warning! Exceeding the time limit for processing a script.'
 		),
 	'errorHandler' => array(
 			'log'           => array('Screen', 'Email'), // array('DB', 'File', 'Email', 'Screen')
-			'projectName'   => 'InvaTro',
+			'projectName'   => 'Lasers',
 			'title'         => 'Fixed error.',
-			'mailTo'        => array('d.godiac@webdelo.org'),
+			'mailTo'          => array(	'd.cercel@webdelo.org', 'a.popov@webdelo.org', 'a.grinceac@webdelo.org', 'd.godiac@webdelo.org'),
 			'message'       => '<strong style="color: red;">Sorry, the system detected an error. Our programmers will take its correction in the near future.</strong>',
 		),
 	'authorization' => array(
@@ -199,9 +186,8 @@ $config = array(
 		array(
 			'remind_password'=>'Вы запросили код для изменения пароля на сайте '.DIR_HTTP,
 			'new_password'=>'Ваш пароль на сайте '.DIR_HTTP.' был изменен'
-		)
+		),
 );
-
 function __autoload($className)
 {
 	$path = DIR.  str_replace('\\', '/', $className).'.php';

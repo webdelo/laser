@@ -13,7 +13,7 @@
 				<div class="max_width">
 					<div class="login_box">
 						<div class="login_in">
-							<p class="logo"><a href="http://webdelo.org/"><img style="-webkit-filter: invert(60%);" src="/admin/images/logo/auth_logo.png" height="38" alt="" /></a></p>
+							<p class="logo"><a href="http://webdelo.org"><img src="/admin/images/logo/auth_logo.png" alt="" /></a></p>
 							<form action="<?=$this->link?>" method="post">
 								<table width="100%">
 									<tr>
@@ -53,7 +53,7 @@
 							<p>Возникли вопросы? Задайте по приведённым ниже контактам.</p>
 							<div class="foot_in">
 								<div class="f_right">
-									<p><a href="http://webdelo.org/"><img src="/admin/images/logo/foot_logo.png" alt="" /></a></p>
+									<p><a href="http://webdelo.org"><img src="/admin/images/logo/foot_logo.png" alt="" /></a></p>
 									<p>Developed by WebDelo</p>
 									<p>Copyright © 2007-<?=date("Y")?></p>
 								</div>

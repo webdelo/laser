@@ -2,7 +2,7 @@
 		<div class="max_width">
 			<div class="foot_in">
 				<div class="f_right">
-					<p><a href="http://webdelo.org/"><img src="/admin/images/logo/foot_logo.png" alt="" /></a></p>
+					<p><a href="http://webdelo.org"><img src="/admin/images/logo/foot_logo.png" alt="" /></a></p>
 					<p><br /></p>
 					<p>Developed by WebDelo</p>
 					<p><br /></p>

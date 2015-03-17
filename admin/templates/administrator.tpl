@@ -32,7 +32,7 @@
 </head>
 <body>
 <div id="ajax_bg">&nbsp;</div>
-<!--<div id="ajax_img"><img src="../images/ajax-loader.gif"/></div>-->
+<div id="ajax_img"><img src="../images/ajax-loader.gif"/></div>
 <div style="margin:0 auto 0 auto; width:1078px;">
 <table>
 <tr><td align="left" valign="top">

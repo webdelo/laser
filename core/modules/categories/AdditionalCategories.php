@@ -1,10 +1,24 @@
 <?php
 namespace core\modules\categories;
-class AdditionalCategories extends \core\modules\base\ModuleDecorator
+class AdditionalCategories extends \core\modules\base\ModuleRelations
 {
-	function __construct($objectId, $configObject)
+	protected $configClass = '\core\modules\categories\AdditionalCategoriesConfig';
+
+	function __construct($ownerId, $configObject)
 	{
-		$object = new AdditionalCategoriesObject($objectId, $configObject);
-		parent::__construct($object);
+		parent::__construct($ownerId, new $this->configClass($configObject));
 	}
+
+	public function checkCategoryByAlias($alias)
+	{
+		$categories = new Categories();
+		$categoryId = $categories->getIdByAlias($alias);
+		return $this->checkCategoryById($categoryId);
+	}
+
+	public function checkCategoryById($categoryId)
+	{
+		return $this->objectExists($categoryId);
+	}
+
 }

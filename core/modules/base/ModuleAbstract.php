@@ -21,7 +21,7 @@ abstract class ModuleAbstract extends \core\Model
 	
 	private function checkConfigObject($configObject)
 	{
-		return ($configObject instanceof ModuleConfig) ? true : false;
+		return ($configObject instanceof ModuleConfig);
 	}
 	
 	private function getConfigByClassName()

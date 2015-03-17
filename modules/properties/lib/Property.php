@@ -1,23 +1,29 @@
 <?php
 namespace modules\properties\lib;
-class Property extends \core\modules\base\ModuleDecorator
+class Property extends \core\modules\base\ModuleObject
 {
+	use \core\traits\ObjectPool,
+		\core\modules\statuses\StatusTraitDecorator,
+		\core\traits\RequestHandler,
+		\core\i18n\TextLangParserTraitDecorator,
+		\core\modules\categories\AdditionalCategoriesTraitDecorator;
+
+	protected $configClass = '\modules\properties\lib\PropertyConfig';
+
 	function __construct($objectId)
 	{
-		$object = new PropertyObject($objectId);
-		$object = new \core\modules\statuses\StatusDecorator($object);
-		$object = new \core\modules\categories\AdditionalCategoriesDecorator($object);
-		parent::__construct($object);
+		parent::__construct($objectId, new $this->configClass);
 	}
 
 	/* Start: Main Data Methods */
-	public function getName()
+	public function getName($lang = null)
 	{
-		return $this->name;
+		return $this->getTextFromLangParser($this->loadObjectInfo()->objectInfo['name'], $lang);
 	}
+	
 	public function getImagePath()
 	{
-		return $this->imagePath;
+		return $this->loadObjectInfo()->objectInfo['imagePath'];
 	}
 	/*   End: Main Data Methods */
 
@@ -28,18 +34,32 @@ class Property extends \core\modules\base\ModuleDecorator
 		return $propertyValues;
 	}
 
-	public function edit ($data, $fields = array()) {
-		return ($this->additionalCategories->edit($data->additionalCategories)) ? $this->getParentObject()->edit($data, $fields) : false;
+	public function edit ($data = null, $fields = array(), $rules = array()) {
+		return ($this->getAdditionalCategories()->edit($data->additionalCategories)) 
+			? $this->_edit($data, $fields, $rules = array()) 
+			: false;
+	}
+	
+	public function _edit($data = null, $fields = array(), $rules = array()) 
+	{
+		$compacter = new \core\i18n\TextLangCompacter($this, $data);
+		return parent::edit($compacter->getPost(), $fields, $rules);
 	}
 
 	public function remove () {
 		return $this->delete();
 	}
-	
+
 	public function delete () {
-		return ( $this->deleteRelations() ) ? ( $this->getPropertyValues()->delete() ) ? $this->additionalCategories->edit(array()) ? $this->getParentObject()->delete() : false : false : false ;
+		return ( $this->deleteRelations() )
+			? ( $this->getPropertyValues()->delete() )
+				? $this->getAdditionalCategories()->edit(array())
+					? parent::delete()
+					: false
+				: false
+			: false;
 	}
-	
+
 	private function deleteRelations ()
 	{
 		foreach ($this->getConfig()->relations() as $table=>$field) {

@@ -23,15 +23,19 @@ var errors = function (sources) {
 		return this;
 	}
 
-	this.show = function (response) {
+	this.show = function (response, context$) {
 		response = response || this.errors;
-		$(this.settings.error).remove();
+//		$(this.settings.error).remove();
+		if ( typeof context$ === 'object' )
+			this.settings.form = context$;
 
 		var that = this;
 		$.each(response, function (name, message) {
+			// В случае возникновения ошибок ничего не трогать, обязательно сообщить:
+			// Черчел Дмитрию Юрьевичу на корпоративную почту.
 			var element$ = $(that.settings.form).find("[name='"+name+"']:visible");
 			if (element$.length <= 0) {
-				element$ = $(that.settings.form).find("[name='"+name+"']").filter("[type='hidden']").parent();
+				element$ = $(that.settings.form).find("[name='"+name+"'].transformer").filter("[type='hidden']").parent();
 			}
 			if (element$.length <= 0) {
 				element$ = $(that.settings.form).find("[data-alias='"+name+"']");
@@ -39,9 +43,12 @@ var errors = function (sources) {
 			if ( element$.length <=0 )
 				element$ = $("[name='"+name+"']");
 			if(that.settings.showMessage != 'false'){
-							var errorObject = new error(element$, message);
-							errorObject.show();
-			}	
+				var errorObject = new error(element$, message);
+				if(!element$.hasClass('doNotShowError')){
+					errorObject.show();
+				}
+
+			}
 		});
 		this.adapter();
 	}

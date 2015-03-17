@@ -1,3 +1,9 @@
+$(function(){
+	$('.lang a').click(function(){
+		location.href = $(this).attr('href');
+		return false; 
+	});
+});
 
 $(document).ready(function(){
 	$('.mainH1').gradientText({

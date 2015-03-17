@@ -21,12 +21,12 @@ abstract class MailBase extends \core\Model{
 	private $body        = '';
 
 	private $priorities  = array(
-								'1' => 'Highest',
-								'2' => 'High',
-								'3' => 'Normal',
-								'4' => 'Low',
-								'5' => 'Lowest'
-							);
+		'1' => 'Highest',
+		'2' => 'High',
+		'3' => 'Normal',
+		'4' => 'Low',
+		'5' => 'Lowest'
+	);
 
 	private $charset     = "UTF-8";
 	private $encoding    = "8bit";
@@ -52,8 +52,23 @@ abstract class MailBase extends \core\Model{
 		return $this;
 	}
 
+	public function mainTable()
+	{
+		return TABLE_PREFIX.'mails_log';
+	}
+
+	public function rules()
+	{
+		return array(
+			'to,subject,fullBody,headers' => array(
+				'adapt' => '_adaptHtml'
+			),
+		);
+	}
+
 	public function __construct()
 	{
+		parent::__construct();
 		$settings = new \core\Settings();
 		$settings = $settings->getSettings('*', array('where' => array('query' => 'type="'.TYPE.'" OR type="all"')));
 		$this->adminEmail = $settings['admin_email'];
@@ -85,7 +100,7 @@ abstract class MailBase extends \core\Model{
 		return property_exists($this, $value);
 	}
 
-	private function setTo($value)
+	protected function setTo($value)
 	{
 		if (is_string($value))
 			 $value = explode (',', str_replace(' ', '', $value));
@@ -188,13 +203,23 @@ abstract class MailBase extends \core\Model{
 	public function Send()
 	{
 		$this->_beforeSend();
-
-		$res = mail($this->to, $this->subject, $this->fullBody, $this->headers);
-
-		if (  $res )
+		if (mail($this->to, $this->subject, $this->fullBody, $this->headers)){
+			//$this->log();
 			return true;
+		}
+		throw new \Exception('Error mail() in '.get_class($this).'!');
+	}
 
-		return false;
+	protected function log()
+	{
+		$data = array(
+			'to'       => $this->to,
+			'subject'  => $this->subject,
+			'fullBody' => $this->fullBody,
+			'headers'  => $this->headers,
+			'time'     => time(),
+		);
+		return $this->baseAdd($data);
 	}
 
 	public function Show()
@@ -209,7 +234,7 @@ abstract class MailBase extends \core\Model{
 		return $this->body;
 	}
 
-	private function _beforeSend()
+	public function _beforeSend()
 	{
 		$this->to = (sizeof($this->to)>0) ? implode(',', $this->to) : '' ;
 

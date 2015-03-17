@@ -8,21 +8,21 @@ class ContactsFeedback extends \core\mail\MailBase
 	function __construct($data)
 	{
 		parent::__construct();
-		$this->templates = TEMPLATES.\core\url\UrlDecoder::getInstance()->getDomainAlias().'/'.$_REQUEST['lang'].'/emails/';
+		$this->templates = TEMPLATES.\core\url\UrlDecoder::getInstance()->getDomainAlias().'/'.\core\i18n\LangHandler::getInstance()->getLang().'/emails/';
 		$this->data = $data->getArray();
 	}
 
 	public function rules()
 	{
 		return array(
-			'clientName, phone, textToSend' => array(
-				'validation' => array('_validNotEmpty', array('Ф.И.О.', 'Телефон', 'Сообщение')),
+			'clientName, message' => array(
+				'validation' => array('_validNotEmpty', array('Ф.И.О.', 'Сообщение')),
 			),
 			'email' => array(
-				'validation' => array('_validEmail', array('not_empty'=>true)),
+				'validation' => array('_validEmail', array('notEmpty'=>true)),
 			),
 			'captcha' => array(
-				'validation' => array('_validCorrectCaptcha', array('not_empty'=>true)),
+				'validation' => array('_validCorrectCaptcha', array('notEmpty'=>true)),
 			),
 		);
 	}
@@ -35,9 +35,10 @@ class ContactsFeedback extends \core\mail\MailBase
 				->To($this->adminEmail)
 				->Bcc($this->bccEmail)
 				->Subject('Письмо с сайта  '.SEND_FROM)
-				->Content('data', $this->data)
+				->Content('data', new \core\ArrayWrapper($this->data))
 				->BodyFromFile('feedback.tpl')
 				->Send();
-		return $res == true   ?   true   :   $res;
+		
+		return $res;
 	}
 }

@@ -6,8 +6,7 @@ class ModulesDomainAdminController extends \controllers\base\ModulesDomainBaseCo
 		\core\traits\controllers\Templates,
 		\core\traits\controllers\Authorization,
 		\core\traits\Pager,
-		\core\traits\controllers\Categories,
-		\controllers\admin\traits\ListActionsAdminControllerTrait;
+		\core\traits\controllers\Categories;
 
 	const domainsTable = 'tbl_modules_domains';
 
@@ -18,14 +17,9 @@ class ModulesDomainAdminController extends \controllers\base\ModulesDomainBaseCo
 		'moduleDomain',
 		'getDomainsByModuleAlias',
 		'remove',
+		'changePriority',
 		'getModules',
 		'getAllDomains',
-
-		/* Start: List Trait Methods*/
-		'changePriority',
-		'groupActions',
-		'groupRemove',
-		/* End: List Trait Methods*/
 
 		/* Start: Categories Trait Methods*/
 		'categories',

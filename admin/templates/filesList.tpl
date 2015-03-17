@@ -8,44 +8,30 @@
 								<th colspan="2" class="first">Тип файла</th>
 								<th>Название / <span class="alias">Алиас</span> </th>
 								<th>Статус / Категория</th>
-								<th>Размер / Дата</th>
-								<th class="last" colspan="4">Операции</th>
+								<th class="last" colspan="4">Размер / Дата</th>
 							</tr>
 							<?foreach ( $object->getFilesByCategory($item->id) as $file ): ?>
 							<tr>
 								<td></td>
 								<td>
-									<a href="/admin/<?=$_REQUEST['controller']?>/download/<?=$object->id?>/<?=$file->alias?>/" title="Скачать">
+									<a href="/admin/<?=$_REQUEST['controller']?>/download/<?=$object->id?>/<?=$file->alias?>" title="Скачать">
 										<img src="<?=$file->getFileIcon()?>" alt="">
 									</a>
 								</td>
 								<td>
 									<div class="overflow">
 										<div class="sh"></div>
-										<p class="name">
-											<a href="/admin/<?=$_REQUEST['controller']?>/download/<?=$object->id?>/<?=$file->alias?>/" title="Скачать">
-												<?= $file->getTitle()?>
-											</a>
-										</p>
-										<p class="alias">
-											<a href="/admin/<?=$_REQUEST['controller']?>/download/<?=$object->id?>/<?=$file->alias?>/" title="Скачать">
-												<strong><?=$file->alias?></strong>
-											</a>
-										</p>
+										<p class="name"><?= $file->title ? $file->title : $file->name?></p>
+										<p class="alias"><strong><?=$file->alias?></strong></p>
 									</div>
 								</td>
 								<td>
 									<p class="status"><font color="<?=$file->getStatus()->color?>"><?=$file->getStatus()->name?></font></p>
-									<p><?=$file->getCategory()->name?></p>
+									<p><?=$file->getCategory()->getName()?></p>
 								</td>
 								<td>
 									<p><?=$file->getSize()?></p>
 									<p><?=$file->date?></p>
-								</td>
-								<td>
-									<a href="/admin/<?=$_REQUEST['controller']?>/download/<?=$object->id?>/<?=$file->alias?>/" title="Скачать">
-										<img class="download_file" src="/admin/images/buttons/download.png">
-									</a>
 								</td>
 								<td>
 									<?if($this->checkUserRight('showRemoveEditFiles')):?>

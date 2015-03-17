@@ -17,6 +17,37 @@ trait Base
 	{
 		unset($this->data[$key]);
 	}
+	
+	public function _adaptId($key)
+	{
+		if ( empty($this->data['id']) ) {
+			$this->data[$key] = \core\db\Db::getMaxId($this->mainTable()) + 1;
+		}
+	}
+	
+	public function _adaptCodeLikeId($key)
+	{
+		if ( empty($this->data[$key]) ) {
+			$this->data[$key] = $this->data[$this->idField];
+		}
+	}
+	
+	public function _adaptUnique($key)
+	{
+		if (  empty($this->data['id']) && \core\db\Db::getMySql()->isExist($this->mainTable(),  $key, $this->data[$key]) ) {
+			$this->data[$key] = $this->_transformUnique($key);
+		}
+	}
+	
+	private function _transformUnique($key)
+	{
+		$field = (int)$this->data[$key];
+		do {
+			$field++;
+		} while( \core\db\Db::getMySql()->isExist($this->mainTable(),  $key, $field));
+
+		return $field;
+	}
 
 	public function _adaptInt($key)
 	{

@@ -44,11 +44,11 @@ class ImagesDecorator extends \core\modules\base\ModuleDecorator
 	{
 	    $image = new \core\modules\images\ImageNoop();
 	    $images = new Images($this->getParentObject());
-	    $images->setSubquery(' AND `objectId` = ?d AND `categoryId` = ?d',$this->getParentObject()->id,self::PRIMARY_CATEGORY_ID)->setOrderBy('`id` ASC')->setLimit('1');
+	    $images->setSubquery(' AND `objectId` = ?d AND `categoryId` = ?d',$this->getParentObject()->id,self::PRIMARY_CATEGORY_ID)->setOrderBy('`priority` ASC, `date` ASC')->setLimit('1');
 	    if($images->count() != 0){
 			$image = $images->current();
 	    } else {
-			$images->reset()->setSubquery(' AND `objectId` = ?d',$this->getParentObject()->id)->setOrderBy('`id` ASC')->setLimit('1');
+			$images->reset()->setSubquery(' AND `objectId` = ?d',$this->getParentObject()->id)->setOrderBy('`priority` ASC')->setLimit('1');
 			if($images->count() != 0){
 				$image = $images->current();
 			}
@@ -69,8 +69,13 @@ class ImagesDecorator extends \core\modules\base\ModuleDecorator
 	{
 		$images = new Images($this->getParentObject());
 		$images->setSubquery(' AND `objectId` = ?d',$this->getParentObject()->id);
-		$images->setOrderBy(' `priority` ASC ');
+		$images->setOrderBy(' `priority`, `categoryId` ASC ');
 	    return $images;
+	}
+
+	protected function hasImages()
+	{
+		return $this->getImagesByObjectId()->count() > 0;
 	}
 
 	protected function getImageById($id)

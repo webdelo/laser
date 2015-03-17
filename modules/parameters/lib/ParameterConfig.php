@@ -5,6 +5,7 @@ class ParameterConfig extends \core\modules\base\ModuleConfig
 	use \core\traits\validators\Base,
 		\core\traits\adapters\Date,
 		\core\traits\adapters\Alias,
+		\core\traits\adapters\Priority,
 		\core\traits\adapters\Base,
 		\core\traits\outAdapters\OutDate;
 
@@ -21,9 +22,9 @@ class ParameterConfig extends \core\modules\base\ModuleConfig
 	protected $objectFields = array(
 		'id',
 		'statusId',
+		'chooseMethodId',
 		'name',
 		'alias',
-		'chooseMethodId',
 		'description',
 		'priority',
 		'date',
@@ -39,8 +40,14 @@ class ParameterConfig extends \core\modules\base\ModuleConfig
 			'alias' => array(
 				'adapt' => '_adaptAlias',
 			),
+			'priority' => array(
+				'adapt' => '_adaptPriority',
+			),
 			'statusId' => array(
 				'adapt' => '_adaptStatus',
+			),
+			'chooseMethodId' => array(
+				'validation' => array('_validInt'),
 			),
 			'date' => array(
 				'adapt' => '_adaptRegDate',

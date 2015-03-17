@@ -176,4 +176,10 @@ abstract class ModuleConfig implements \interfaces\IModuleConfig
 	{
 		return property_exists($this, 'imagesPath') ? $this->templates : 'files/'.strtolower($this->getObjectsClass()).'/images/';
 	}
+
+	public function getErrorsList()
+	{
+		$objects = new $this->objectsClass();
+		return $objects->getErrorsList();
+	}
 }

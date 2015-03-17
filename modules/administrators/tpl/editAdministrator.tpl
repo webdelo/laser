@@ -114,7 +114,7 @@
 				<tr>
 					<td>Mobile:</td>
 					<td>
-						<input type="text" name="mobile" value="<?=$administrator->mobile;?>" />
+						<input type="text" name="mobile" value="<?=$administrator->getMobile();?>" />
 					</td>
 				</tr>
 				<tr>

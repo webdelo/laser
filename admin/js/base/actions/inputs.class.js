@@ -18,17 +18,18 @@ var inputs = function (settings) {
 	{
 		this.loader = loader;
 		return this;
-	}	
+	};
 	
 	this.setSettings = function (sources) {
 		this.settings = $.extend(this.settings, sources||{});
 		this.errors  = new errors(this.settings);
 		return this;
-	}
+	};
 
 	this.init = function () {
 		var that = this;
-		$(this.settings.element).data('startValue', $(this.settings.element).val());
+		
+		this.saveStartValue();
 		$(this.settings.element).on(this.settings.event, function(e) { that.onChange(this, e) });
 		$(this.settings.element).on("keypress", function(e){
 			if ( $(this).is('textarea') ) {
@@ -45,12 +46,18 @@ var inputs = function (settings) {
 		});
 		
 		return this;
-	}
+	};
+	
+	this.saveStartValue = function() {
+		$(this.settings.element).each(function(){
+			$(this).attr('data-start-value', $(this).val());
+		});
+	};
 	
 	this.onChange = function (that, e) {
-		var access = true;
-		this.setActive($(that));
 		this.element$ = $(that);
+		var access = this.fieldIsChanged();
+		this.setActive($(that));
 		if (access){
 			if ( this.element$.data('action') === undefined )
 				this.callback({}, this.element$);
@@ -60,17 +67,15 @@ var inputs = function (settings) {
 	};
 	
 	this.fieldIsChanged = function () {
-		var startVal = this.getObject().data('startValue');
-		var value    = this.getObject().val();
-		return this.getObject().val() != this.getObject().data('startValue');
-	}
+		return this.getValue() != this.getObject().attr('data-start-value');
+	};
 
 	this.setActive = function (button$) {
 		button$.addClass(this.settings.active.replace('.', ''));
 		this.settings.element = this.settings.element + this.settings.active;
 
 		return this;
-	}
+	};
 
 	this.start = function () {
 			this.loader.start();
@@ -82,20 +87,32 @@ var inputs = function (settings) {
 				.setDataType()
 				.startAction();
 		return this;
-	}
+	};
 
 	this.setCallback = function (callback) {
 		if($.isFunction(callback))
 			this.callback = callback;
 
 		return this;
-	}
+	};
 
 	this.setData = function () {
-		this.data = this.getObject().serialize();
+		this.data = this.getObject().attr('name') + '=' + this.getValue();
+//		this.data = this.getObject().serialize();
 		
 		return this;
-	}
+	};
+	
+	this.getValue = function(){
+		if ( this.getObject().val() === '' ) {
+			if ( this.getObject().context.innerText !== "undefined" ) {
+				return this.getObject().context.innerText;
+			} else {
+				return '';
+			}
+		}
+		return this.getObject().val();
+	};
 	
 	this.setDataFromPost = function () {
 		var post = this.getObject().data('post');
@@ -104,25 +121,25 @@ var inputs = function (settings) {
 		}
 		
 		return this;
-	}
+	};
 
 	this.setAction = function () {
 		this.action = this.getObject().data('action');
 
 		return this;
-	}
+	};
 
 	this.setMethod = function () {
 		this.method = this.getObject().data('method');
 
 		return this;
-	}
+	};
 	
 	this.setDataType = function () {
 		this.type = this.getObject().data('type');
 
 		return this;
-	}
+	};
 
 	this.startAction = function () {
 		var that = this;
@@ -141,65 +158,65 @@ var inputs = function (settings) {
 		this.resetActive();
 
 		return this;
-	}
+	};
 
-	this.before = function () {}
+	this.before = function () {};
 
 	this.error = function () {
 		alert('The request has failed. Please contact the developers!');
-	}
+	};
 
 	this.success = function (response) {
 		if (typeof(response) == 'object' && this.settings.showError === true) {
+			this.highlightError();
 			this.errors.show(response);
-		} else if (response == 1) {
+		} else if (typeof response == 'number') {
 			$(this.settings.message).text('Данные были обновлены!').fadeIn();
+			this.highlightSuccess();
+			this.getObject().data('start-value', this.getObject().val());
+			
 			var localCallback = this.getObject().data('callback');
 			if ($.isFunction(localCallback))
 				window[localCallback](this.getObject());
 		}
 		
-		this.getObject()
-			.addClass('highlightSuccess')
-			.animate({
-				"borderBottomColor": "#80cc80",
-				"borderTopColor": "#80cc80",
-				"borderLeftColor": "#80cc80",
-				"borderRightColor": "#80cc80"
-			}, "slow")
-			.delay(1000)
-			.animate({
-				"borderBottomColor": "#cccccc",
-				"borderTopColor": "#cccccc",
-				"borderLeftColor": "#cccccc",
-				"borderRightColor": "#cccccc"
-			},  "slow", function() {
-				  $(this).removeClass('highlightSuccess')
-			});
+		var borderColor = this.getObject().css('border-color');
 		
 		if($.isFunction(this.callback))
 			this.callback(response, this.element$);
-	}
+	};
+	
+	this.highlightSuccess = function () {
+		this.highlight('highlightSuccess');
+	};
+	
+	this.highlightError = function () {
+		this.highlight('highlightError');
+	};
+	
+	this.highlight = function ($class) {
+		this.getObject().addClass($class);
+		var that = this;
+		setTimeout( function(){
+			that.getObject().removeClass($class);
+		}, 3000 );
+	};
 
 	this.complete = function (response) {
 		this.loader.stop();
 
 		if ($.isFunction(this.settings.completeAjax))
 			this.settings.completeAjax(response);
-	}
+	};
 
 	this.resetActive = function () {
 		this.getObject().removeClass(this.settings.active.replace('.', ''));
 		this.settings.element = this.settings.element.replace(this.settings.active, '') ;
 
 		return this;
-	}
+	};
 	
 	this.getObject = function () {
 		return this.element$;
-	}
-	
-	this.getValue = function () {
-		return this.getObject().val();
-	}
-}
+	};
+};

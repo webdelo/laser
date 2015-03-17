@@ -15,7 +15,6 @@ class UrlRedirector
 	private $uri;
 	private $queryString;
 	private $url;
-	private $constantAdresPart = false;
 
 	private static function init()
 	{
@@ -54,6 +53,7 @@ class UrlRedirector
 		return array(
 			'csvPath'        => '',
 			'www'            => 'with',
+			'protocol'       => 'http',
 			'http2https'     => array(),
 			'https2http'     => true,
 			'wwwSubdomains'  => 'without',
@@ -71,6 +71,7 @@ class UrlRedirector
 
 	private function loadCsvFile()
 	{
+
 		$csvFile = $this->config['csvPath'].$this->getCurrentDomainAlias().'.'.$this->config['csvFile'];
 		if (file_exists($csvFile))
 			return file($csvFile);
@@ -79,7 +80,7 @@ class UrlRedirector
 		if(file_exists($defaultFile))
 			return file($defaultFile);
 
-		throw new Exception('CSV redirect file was not found in '.$csvFile.'!', 1);
+		throw new \Exception('CSV redirect file was not found in '.$csvFile.'!', 1);
 	}
 
 	private function parseCsvData($csvArray)
@@ -198,8 +199,8 @@ class UrlRedirector
 	{
 		$this->checkCsvRedirect()
 			 ->checkWwwRedirect()
-			 ->checkHttps2HttpRedirect()
-			 ->checkHttp2HttpsRedirect()
+//			 ->checkHttps2HttpRedirect()
+//			 ->checkHttp2HttpsRedirect()
 			 ->checkEndSlashRedirect();
 		return true;
 	}
@@ -207,61 +208,17 @@ class UrlRedirector
 	private function checkCsvRedirect()
 	{
 		if ($this->redirectInfo['current']){
-			$redirectKey = $this->getSimpleRedirectKey() ? $this->getSimpleRedirectKey() : $this->getPatternRedirectKey();
+			$redirectKey = array_search($this->url, $this->redirectInfo['current']);
 			if (is_int($redirectKey))
-				$this->redirect($this->redirectInfo['redirect'][$redirectKey - 1]);
+				$this->redirect($this->redirectInfo['redirect'][$redirectKey]);
 		}
 		return $this;
-	}
-
-	private function getSimpleRedirectKey()
-	{
-		$url = urldecode($this->url . ($this->queryString ? '?'.$this->queryString : ''));
-
-		$redirectKey = array_search($url, $this->redirectInfo['current']);
-
-		if(!is_int($redirectKey))
-			$redirectKey = array_search(substr($url, 0, strlen($url)-1), $this->redirectInfo['current']);
-
-		if(!is_int($redirectKey))
-			$redirectKey = array_search($url.'/', $this->redirectInfo['current']);
-
-		return is_int($redirectKey) ? $redirectKey + 1 : false;
-	}
-
-	private function getPatternRedirectKey()
-	{
-		$adres = urldecode('http://'.$this->domain.$_SERVER['REQUEST_URI']);
-		foreach($this->redirectInfo['current'] as $element){
-			if(strpos($element, '*')){
-				$elementPart = explode('*', urldecode($element));
-				$constantAdresPart = urldecode(str_replace($elementPart[0], '', str_replace($elementPart[1], '', $adres)));
-				if( substr_count($adres, $element[0]) && str_replace('*', $constantAdresPart, $element)===$adres ){
-					$redirectKey = array_search($element, $this->redirectInfo['current']);
-					$this->setConstantAdresPart($constantAdresPart);
-				}
-			}
-		}
-		return (isset($redirectKey) && is_int($redirectKey)) ? $redirectKey + 1: false;
-	}
-
-	private function setConstantAdresPart($constantAdresPart)
-	{
-		$this->constantAdresPart = $constantAdresPart;
 	}
 
 	private function redirect($redirectUrl)
 	{
 		if($this->checkUrl($redirectUrl))
-			$this->setHeaders( $this->checkConstantAdresPart($redirectUrl) );
-	}
-
-	private function checkConstantAdresPart($redirectUrl)
-	{
-		if($this->constantAdresPart){
-			$redirectUrl = str_replace('http:/', 'http://', str_replace('//', '/', str_replace('*', $this->constantAdresPart, $redirectUrl))) ;
-		}
-		return $redirectUrl;
+			$this->setHeaders($redirectUrl);
 	}
 
 	private function checkUrl($redirectUrl)
@@ -272,7 +229,8 @@ class UrlRedirector
 	private function setHeaders($redirectUrl)
 	{
 		header('HTTP/1.1 301 Moved Permanently');
-		header('Location: ' . $redirectUrl );
+		$queryString = ($this->queryString) ? '?'.$this->queryString : '';
+		header('Location: ' . $redirectUrl . $queryString);
 		die();
 	}
 
@@ -306,6 +264,8 @@ class UrlRedirector
 
 	private function checkHttp2Https()
 	{
+		if ($this->config['protocol'] != 'http')
+			return true;
 		foreach ($this->config['http2https'] as $pattern){
 			$pattern = $this->www.$this->domain.str_replace('*', '', $pattern);
 			if (strpos($this->url, $pattern) !==false)

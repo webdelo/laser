@@ -34,7 +34,7 @@
 									<p class="category_name"><?=$administrator->getGroup()->name?></p>
 								</td>
 								<td>
-									<a href="/admin/administrators/administrator/<?=$administrator->id?>/" class="pen"></a>
+									<a href="/admin/administrators/administrator/<?=$administrator->id?>" class="pen"></a>
 								</td>
 								<? if ( $administrator->id != 1 ): ?>
 								<td>

@@ -18,7 +18,7 @@ class Sitemap
 	
 	private function getDefaultDomain()
 	{
-		return 'http://'.$_SERVER['HTTP_HOST'];
+		return 'https://'.$_SERVER['HTTP_HOST'];
 	}
 	
 	public function addObjects($objects) 

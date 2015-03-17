@@ -1,14 +1,12 @@
 <?php
 namespace core\modules\base;
-abstract class ModuleObjects extends ModuleAbstract implements \Iterator, \Countable, \ArrayAccess
+abstract class ModuleObjects extends ModuleAbstract implements \Iterator, \Countable, \ArrayAccess, \Serializable
 {
-	protected $objectClassName;
-	protected $pager;
-	protected $limit          = array();
-	protected $objectsList    = array();
-	protected $filters;
-	protected $objectsIdArray = array();
 	protected $quantityItemsOnSubpageList = array(10,25,50,100);
+	protected $objectsList    = array();
+	protected $objectsIdArray = array();
+	protected $pager;
+	protected $filters;
 
 	protected $_loadWithoutRemovedObjects = true;
 
@@ -131,11 +129,9 @@ abstract class ModuleObjects extends ModuleAbstract implements \Iterator, \Count
 	public function loadObjects()
 	{
 		$idArray = new \core\ArrayWrapper($this->getIdArray());
-		$objectConfig = clone $this->_moduleConfig;
-		$objectConfig->removePostfix();
 		foreach ($idArray as $objId) {
 			$id = $objId[$this->idField];
-			$this->objectsList[$id] = &\core\ObjectPool::getInstance()->getObject($this->getConfig()->getObjectClass(), $id, $objectConfig);
+			$this->objectsList[$id] = $this->getModuleObject($id);
 		}
 		return $this->objectsList;
 	}
@@ -205,6 +201,16 @@ abstract class ModuleObjects extends ModuleAbstract implements \Iterator, \Count
 			$id = $objectId[$this->idField];
 			$object = $this->getObjectById($id);
 			$object->delete();
+		}
+		return true;
+	}
+
+	public function edit($data, $fields = array())
+	{
+		foreach ($this->getIdArray() as $objectId) {
+			$id = $objectId[$this->idField];
+			$object = $this->getObjectById($id);
+			$object->edit($data);
 		}
 		return true;
 	}
@@ -333,6 +339,7 @@ abstract class ModuleObjects extends ModuleAbstract implements \Iterator, \Count
 		return $object->unsetObject();
 	}
 
+	/* Start: ArrayAccess Methods */
 	public function offsetExists($offset)
 	{
 		$this->getObjects();
@@ -360,30 +367,27 @@ abstract class ModuleObjects extends ModuleAbstract implements \Iterator, \Count
 		$this->getObjects();
 		unset($this->objectsList[$offset]);
 	}
+	/* End: ArrayAccess Methods */
 
-	public function getFirst()
-	{
-		$this->getObjects();
-		if(empty($this->objectsList))
-			return false;
-		foreach($this->objectsList as $object)
-			return $object;
+	/* Start: Serializable interface Methods */
+	public function serialize()
+    {
+		$data['_moduleConfig'] = $this->_moduleConfig;
+		$data['pager'] = $this->pager;
+		$data['filters'] = $this->filters;
+		$data['quantityItemsOnSubpageList'] = $this->quantityItemsOnSubpageList;
+		$data['_loadWithoutRemovedObjects'] = $this->_loadWithoutRemovedObjects;
+		return serialize($data);
+    }
+
+	public function unserialize($data)
+    {
+		$data = unserialize($data);
+		$this->pager = $data['pager'];
+		$this->filters = $data['filters'];
+		$this->quantityItemsOnSubpageList = $data['quantityItemsOnSubpageList'];
+		$this->_loadWithoutRemovedObjects = $data['_loadWithoutRemovedObjects'];
+		parent::__construct($data['_moduleConfig']);
 	}
-
-	public function getNextObject($currentChild)
-	{
-		$temp = clone($this);
-		$temp->rewind();
-		foreach($temp as $child){
-			if(isset($escape))
-				return $child;
-
-			if($child->id == $currentChild->id){
-				$escape = true;
-				continue;
-			}
-		}
-		unset($temp);
-		return false;
-	}
+	/* End: Serializable interface Methods */
 }

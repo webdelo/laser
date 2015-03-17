@@ -36,15 +36,8 @@
 							<tr>
 								<td class="right">Заметки:</td>
 								<td><textarea style="width: 171px" name="description" cols="60"><?=$this->getGET()['description']?></textarea></td>
-								<td class="right">Клиент:</td>
-								<td>
-									<script type="text/javascript" src="/modules/orders/js/autosuggest/autosuggestListPage.js"></script>
-									<script type="text/javascript" src="/modules/orders/js/autosuggest/jquery.autoSuggest.js"></script>
-									<link rel="stylesheet" type="text/css" href="/modules/orders/css/autoSuggest.css" />
-									<input type="text" class="inputClient">
-									<input type="hidden" class="getClientId" value="<?= $this->getGet()['clientId'] ? $this->getGet()['clientId'] : ''?>">
-									<input type="hidden" class="getClientName" value="<?=   $this->getGet()['clientId']   ?   $this->getController('Orders')->getClientById($this->getGet()['clientId'])->getAllName().' - '.$this->getController('Orders')->getClientById($this->getGet()['clientId'])->city.' ('.$this->getController('Orders')->getClientById($this->getGet()['clientId'])->getLogin().')'   :   ''?>">
-								</td>
+								<td class="right">E-mail:</td>
+								<td><input class="filterInput" type="text" name="email" value="<?=$this->getGET()['email']?>" /></td>
 								<td colspan="4">
 									<div class="action_buts">
 										<a class="pointer" onclick="$('#search').submit()"><img src="/admin/images/buttons/search.png" /> Поиск</a>
@@ -65,7 +58,8 @@
 							<th>Клиент</th>
 							<th class="clientAddress">Адрес</th>
 							<th>Статус</th>
-							<th class="salequantity">Кол-во покупок</th>
+							<th class="objquantity">Кол-во предложений</th>
+							<th class="bronquantity">Кол-во бронирований</th>
 							<th class="last" colspan="4">Приоритет</th>
 						</tr>
 						<?foreach ($clients as $client):?>
@@ -86,8 +80,8 @@
 								</td>
 								<td><?=$client->country?>, <?=$client->city?>, <?=$client->street?>, д. <?=$client->home?>, кв. <?=$client->flat?></td>
 								<td><p class="status" style="color:<?=$client->getStatus()->color?>"><?=$client->getStatus()->name?></p></td>
-								<td><center>0</center></td>
-								<td class="td_bord sortHandle header"><?= $client->priority?></td>
+								<td><center><?=$client->getRealties()->count()?></center></td>
+								<td><center><?=$client->getRealties()->count()?></center></td>
 								<td><a href="/admin/clients/client/<?=$client->id?>" class="pen"></a></td>
 								<td><a data-confirm= "Remove the item?" data-action="/admin/clients/remove/<?=$client->id?>/"
 								       data-callback="postRemoveFromDetails" data-post-action="/admin/clients/" class="del button confirm pointer"></a></td>
@@ -127,10 +121,10 @@
 									</button>
 								</td>
 							</tr>
-							<tr class="groupAction groupRemove" name="removeButton">
+							<tr class="groupAction groupRemove">
 								<td class="first"></td>
 								<td>
-									<button class="remove button confirm active" data-confirm="Удалить объекты?" data-action="/admin/clients/groupRemove/" data-data="input[name*=group]" data-callback="reloadPage">ок</button>
+									<button class="remove button confirm active" name="removeButton" data-confirm="Удалить объекты?" data-action="/admin/clients/groupRemove/" data-data="input[name*=group]" data-callback="reloadPage">ок</button>
 								</td>
 							</tr>
 						</table>

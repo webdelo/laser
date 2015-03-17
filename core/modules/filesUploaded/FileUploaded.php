@@ -20,9 +20,4 @@ class FileUploaded extends \core\modules\base\ModuleDecorator
 		$fileIcon = new FileIcon();
 		return $fileIcon->getFileIconByType(mime_content_type(DIR.$this->getRealPath()));
 	}
-
-	protected function getTitle()
-	{
-		return $this->title ? $this->title : $this->name;
-	}
 }

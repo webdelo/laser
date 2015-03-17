@@ -33,7 +33,9 @@ trait Alias
 
 	public function _adaptAlias($key)
 	{
-		$alias = preg_replace("|[^\d\w ]-+|i", "", mb_strtolower(\core\utils\Utils::translit(!empty($this->data[$key]) ? $this->data[$key] : $this->data['name'])));
+		$alias = !empty($this->data[$key]) ? $this->data[$key] : $this->data['name'];
+		$alias = mb_strtolower(\core\utils\Utils::translit($alias));
+		$alias = preg_replace("|[^\d\w ]-+|i", "", $alias);
 		$alias = str_replace ($this->deniedSimbols, '', $alias );
 		$alias = str_replace ($this->replaceWithUnderscoreSimbols, '_', $alias );
 
@@ -42,7 +44,7 @@ trait Alias
 
 		if(!$this->isAliasExist($alias))
 			return $this->data[$key] = $alias;
-
+		
 		$this->data[$key] = $this->_transformAlias($alias);
 	}
 

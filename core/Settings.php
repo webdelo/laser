@@ -21,11 +21,11 @@ class Settings extends Model
 				'adapt' => '_adaptChangeName'
 			),
 			'admin_email' => array(
-				'validation' => array('_validEmail',  array('not_empty'=>true)),
+				'validation' => array('_validEmail',  array('notEmpty'=>true)),
 				'adapt' => '_adaptChangeName'
 			),
 			'bcc_email' => array(
-				'validation' => array('_validEmail',  array('not_empty'=>true)),
+				'validation' => array('_validEmail',  array('notEmpty'=>true)),
 				'adapt' => '_adaptChangeName'
 			),
 			'noreply_email, rate' => array(

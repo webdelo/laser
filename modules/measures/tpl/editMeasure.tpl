@@ -10,7 +10,7 @@
 				</tr>
 				<tr>
 					<td class="first">Короткое название:</td>
-					<td><input type="text" name="shortName" class="short" value="<?=$measure->shortName?>" /></td>
+					<td><input type="text" name="shortName" class="short" value="<?=$measure->getShortName()?>" /></td>
 				</tr>
 				<tr>
 					<td class="first">Варианты:</td>
@@ -35,11 +35,11 @@
 						<select name="categoryId" style="width:250px;">
 							<option></option>
 							<? if ($mainCategories->count()): foreach($mainCategories as $categoryObject):?>
-							<option value="<?=$categoryObject->id?>" <?= $categoryObject->id==$measure->categoryId ? 'selected' : ''; ?>><?=$categoryObject->name?></option>
+							<option value="<?=$categoryObject->id?>" <?= $categoryObject->id==$measure->categoryId ? 'selected' : ''; ?>><?=$categoryObject->getName()?></option>
 								<?if ($categoryObject->getChildren() != NULL): foreach($categoryObject->getChildren() as $children):?>
-								<option value="<?=$children->id?>" <?= $children->id==$measure->categoryId ? 'selected' : ''; ?>>&nbsp;&nbsp;|-&nbsp;<?=$children->name?></option>
+								<option value="<?=$children->id?>" <?= $children->id==$measure->categoryId ? 'selected' : ''; ?>>&nbsp;&nbsp;|-&nbsp;<?=$children->getName()?></option>
 									<? if ($children->getChildren() != NULL): foreach($children->getChildren() as $children2):?>
-									<option value="<?=$children2->id?>" <?= $children2->id==$measure->categoryId ? 'selected' : ''; ?>>&nbsp;&nbsp;&nbsp;&nbsp;|-&nbsp;<?=$children2->name?></option>
+									<option value="<?=$children2->id?>" <?= $children2->id==$measure->categoryId ? 'selected' : ''; ?>>&nbsp;&nbsp;&nbsp;&nbsp;|-&nbsp;<?=$children2->getName()?></option>
 									<?endforeach; endif?>
 								<?endforeach; endif?>
 							<?endforeach; endif?>

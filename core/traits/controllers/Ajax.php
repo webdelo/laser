@@ -15,10 +15,12 @@ trait Ajax
 	{
 		if ($response === false)
 			$response = $this->modelObject->getErrors();
+		
 		if ($type == 'ajax')
 			$this->ajaxResponse($response, $json);
 		elseif ($type == 'iframe')
 			$this->iframeResponse($response, $json, $j_script_action);
+		
 		return $this;
 	}
 

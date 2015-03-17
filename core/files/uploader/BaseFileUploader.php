@@ -8,6 +8,7 @@ abstract class BaseFileUploader extends \core\files\DirectoryFilesReader
 	protected $inputKey;
 
 	private $_extension;
+	private $_basename;
 	private $_fileData;
 
 	public function __construct()
@@ -58,7 +59,8 @@ abstract class BaseFileUploader extends \core\files\DirectoryFilesReader
 
 	protected function getFileExtension()
 	{
-		$fileParts = pathinfo($this->_fileData['name'][0]);
+		$fileParts = pathinfo($this->_fileData['name']);
+		$this->_basename  = $fileParts['basename'];
 		$this->_extension = $fileParts['extension'];
 		return $this;
 	}
@@ -74,7 +76,7 @@ abstract class BaseFileUploader extends \core\files\DirectoryFilesReader
 	{
 		$errorMessage = 'The temporary directory does not exist or is not writable rights!';
 		$tempFileName = $this->getTempFileName();
-		return (@move_uploaded_file($this->_fileData['tmp_name'][0], $tempFileName)) ? $this->getResultArray($this->getFileUrl($tempFileName), true) : $this->getResultArray($errorMessage);
+		return (@move_uploaded_file($this->_fileData['tmp_name'], $tempFileName)) ? $this->getResultArray($this->getFileUrl($tempFileName), true) : $this->getResultArray($errorMessage);
 	}
 
 	protected function getTempFileName()
@@ -85,8 +87,9 @@ abstract class BaseFileUploader extends \core\files\DirectoryFilesReader
 	protected function getResultArray($message, $result = false)
 	{
 		return array(
-			'result'  => $result,
-			'message' => $message
+			'result'   => $result,
+			'message'  => $message,
+			'basename' => $this->_basename,
 		);
 	}
 

@@ -11,10 +11,6 @@ class PropertyConfig extends \core\modules\base\ModuleConfig
 
 	const ACTIVE_STATUS_ID = 1;
 	const BLOCKED_STATUS_ID = 2;
-	
-	const PROPERTY_SPECS_ID = 5;
-	
-	const PROPERTY_MODAFURS_CLOTHES_CATEGORY_ID = 10;
 
 	protected $objectClass  = '\modules\properties\lib\Property';
 	protected $objectsClass = '\modules\properties\lib\Properties';
@@ -40,6 +36,7 @@ class PropertyConfig extends \core\modules\base\ModuleConfig
 		return array(
 			'name' => array(
 				'validation' => array('_validNotEmpty'),
+				'adapt' => '_adaptHtml',
 			),
 			'alias' => array(
 				'adapt' => '_adaptAlias',
@@ -75,7 +72,7 @@ class PropertyConfig extends \core\modules\base\ModuleConfig
 	public function relations()
 	{
 		$relations = array(
-			'tbl_catalog_items_properties_values_relation' => array('idField'=>'propertyValueId')
+			'tbl_realties_properties_values_relation' => array('idField'=>'propertyValueId')
 		);
 		return $relations;
 	}

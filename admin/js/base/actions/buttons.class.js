@@ -3,7 +3,8 @@ var buttons = function (settings) {
 		'element' : '.button',
 		'message' : '.message',
 		'active'  : '.active',
-		'beforeAjax'   : function () {},
+		'disabled': '.disabled',
+		'beforeSend'   : function () {},
 		'successAjax'  : function () {},
 		'completeAjax' : function () {}
 	}, settings||{});
@@ -12,15 +13,16 @@ var buttons = function (settings) {
 	this.errors  = new errors(this.settings);
 
 	this.setSettings = function (sources) {
-		this.settings = $.extend(this.settings, sources||{});return this;
+		this.settings = $.extend(this.settings, sources||{});
 		this.errors  = new errors(this.settings);
+		return this;
 	}
 
 	this.init = function () {
 		this.loader.init();
 		var that = this;
-		$(this.settings.element).live("click", function () {
-			var access = true;
+		$(this.settings.element).live("click", function (e) {
+			var access = !$(this).hasClass(that.settings.disabled.replace('.', ''));
 			that.setActive($(this));
 
 			if ($(this).hasClass('confirm'))
@@ -31,11 +33,32 @@ var buttons = function (settings) {
 				that.element$ = $(this);
 				that.start();
 			}
-
-				return false;
-			});
+			e.stopPropagation();
+			return false;
+		});
 		return this;
-	}
+	};
+	
+	this.initOne = function (button$, callback) {
+		this.loader.init();
+		var that = this;
+		button$.on("click", function (){
+			var access = !$(this).hasClass(that.settings.disabled.replace('.', ''));
+			that.setActive($(this));
+			if ($(this).hasClass('confirm'))
+				if (!confirm($(this).data('confirm')||'Do you sure?'))
+					access = false;
+
+			if (access) {
+				that.element$ = $(this);
+				that.start();
+			}
+
+			return false;
+		});
+		this.setCallback(callback);
+		return this;
+	};
 	
 	this.setLoader = function (newLoader) {
 		this.loader = newLoader;
@@ -47,7 +70,7 @@ var buttons = function (settings) {
 		this.settings.element = this.settings.element + this.settings.active;
 
 		return this;
-	}
+	};
 
 	this.start = function () {
 			this.loader.start();
@@ -58,20 +81,20 @@ var buttons = function (settings) {
 				.setAction()
 				.startAction();
 		return this;
-	}
+	};
 
 	this.setCallback = function (callback) {
 		if($.isFunction(callback))
 			this.callback = callback;
 
 		return this;
-	}
+	};
 
 	this.setData = function () {
 		this.data = $(this.getObject().data('data')).serialize();
 
 		return this;
-	}
+	};
 	
 	this.setDataFromPost = function () {
 		var post = this.getObject().data('post');
@@ -80,19 +103,19 @@ var buttons = function (settings) {
 		}
 		
 		return this;
-	}
+	};
 
 	this.setAction = function () {
 		this.action = this.getObject().data('action');
 
 		return this;
-	}
+	};
 
 	this.setMethod = function () {
 		this.method = this.getObject().data('method');
 
 		return this;
-	}
+	};
 
 	this.startAction = function () {
 		var that = this;
@@ -111,15 +134,20 @@ var buttons = function (settings) {
 		this.resetActive();
 
 		return this;
-	}
+	};
 
 	this.before = function () {
 		this.loader.title('Send to server...');
-	}
+		
+		if ( $.isFunction( this.settings.beforeSend ) ) {
+			this.settings.beforeSend.call(this);
+		}
+		
+	};
 
 	this.error = function () {
 		alert('Произошла ошибка при выполнении '+this.action+'! Пожалуйста свяжитесь с разработчиками.');
-	}
+	};
 
 	this.success = function (response) {
 		if (typeof(response) == 'object') {
@@ -132,7 +160,7 @@ var buttons = function (settings) {
 		}
 		if($.isFunction(this.callback))
 			this.callback(response, this.element$);
-	}
+	};
 
 	this.complete = function (response) {
 		this.loader
@@ -141,16 +169,16 @@ var buttons = function (settings) {
 
 		if ($.isFunction(this.settings.completeAjax))
 			this.settings.completeAjax(response);
-	}
+	};
 
 	this.resetActive = function () {
 		$(this.settings.element).removeClass(this.settings.active.replace('.', ''));
 		this.settings.element = this.settings.element.replace(this.settings.active, '') ;
 
 		return this;
-	}
+	};
 	
 	this.getObject = function () {
 		return this.element$;
-	}
+	};
 }

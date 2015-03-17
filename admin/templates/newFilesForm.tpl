@@ -46,7 +46,7 @@
 													<td class="category">
 														<select name="">
 															<? foreach( $objects->getFilesCategories() as $category ): ?>
-																<option value="<?=$category->id?>"><?=$category->name?></option>
+																<option value="<?=$category->id?>"><?=$category->getName()?></option>
 															<? endforeach; ?>
 														</select>
 													</td>

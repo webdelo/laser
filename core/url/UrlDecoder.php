@@ -15,6 +15,8 @@ class UrlDecoder
 	private $default;
 	private $parts;
 	private $langs;
+	private $langsDomains;
+	private $developerDomains;
 	private $domains;
 	private $extensions = array();
 	private $defaultConfig = array(
@@ -61,12 +63,14 @@ class UrlDecoder
 		if (!$config  || !is_array($config))
 			$config = $this->setDefaultConfig();		
 		
-		$this->config = $config['settings'];
-		$this->default = $config['default'];
-		$this->langs = $config['langs'];
-		$this->parts = $config['parts'];
-		$this->extensions = $config['extensions'];
-		$this->domains = $config['domains'];
+		$this->config       = $config['settings'];
+		$this->default      = $config['default'];
+		$this->langsDomains = $config['langs'];
+		$this->langs        = array_keys($config['langs']);
+		$this->parts        = $config['parts'];
+		$this->extensions   = $config['extensions'];
+		$this->domains      = $config['domains'];
+		$this->developerDomains = $config['developerDomains'];
 		
 		return self::$object;
 	}
@@ -88,6 +92,12 @@ class UrlDecoder
 		\core\RequestHandler::getInstance()->setREQUEST($request);
 		return $this;
 	}
+	
+	private function updateRequestInHandler()
+	{
+		\core\RequestHandler::getInstance()->updateREQUEST();
+		return $this;
+	}
 
 	public function requestRebuild ()
 	{
@@ -105,15 +115,23 @@ class UrlDecoder
 		$_REQUEST = array_merge($_REQUEST, $this->request, $this->url);
 		return $this->setRequestToHandler($_REQUEST);
 	}
+	
+	public function moveRequestLevel () 
+	{
+		$this->reset();
+		$this->config['controller']='NextElement';
+		$this->setRequestData();
+		$_REQUEST = array_merge($this->request, $this->url);
+		return $this->updateRequestInHandler();
+	}
 
 	public function reset () 
 	{
 		$this->url = null;
 		$this->hosturl = null;
 		$this->request = null;
-        $this->getREQUEST()['controller'] = '';
-		$this->getREQUEST()['lang'] = '';
-		$this->getREQUEST()['action'] = '';
+        $this->getREQUEST()['controller'] = $this->getREQUEST()['action'] = $this->getREQUEST()['lang'] = '';
+		$_REQUEST['controller'] = $_REQUEST['action'] = $_REQUEST['lang'] = '';
 	}
         
     function setRequestData()
@@ -125,7 +143,7 @@ class UrlDecoder
                 
 		$this->parseUrl();
 		$this->parseHostUrl();
-                
+
 		$methods = array(
 			'setLang'.$this->config['lang'],
 			'setPart'.$this->config['part'],
@@ -206,6 +224,12 @@ class UrlDecoder
 	{
 		$this->request['controller'] = $this->shiftUrl();
 	}
+	
+	public function setControllerNextElement ()
+	{
+		$this->request['lastController'] = $this->shiftUrl();
+		$this->request['controller'] = $this->shiftUrl();
+	}
 
 	public function setControllerSubDomain ()
 	{
@@ -227,10 +251,23 @@ class UrlDecoder
 
 	public function setLangSubDomain ()
 	{
-		 if (in_array($this->hosturl[0], $this->langs))
+		 if (in_array($this->hosturl[0], $this->langs)) 
 			$this->request['lang'] = $this->shiftHostUrl();
 		 else
 			$this->setLangNone();
+	}
+
+	public function setLangByDomain ()
+	{
+		$this->setLangNone();
+		foreach ($this->langsDomains as $lang => $domaings) {
+			if (is_array($domaings) ) {
+				if ( in_array(implode('.', $this->hosturl), $domaings) ) {
+					$this->request['lang'] = $lang;
+					break;
+				}
+			}
+		}
 	}
 
 	public function setPartNone ()
@@ -313,11 +350,20 @@ class UrlDecoder
 		return $this->url;
 	}
 	
+	public function getCurrenPageWithoutQueryString() 
+	{
+		return str_replace('?'.$_SERVER['QUERY_STRING'], '', $_SERVER['REQUEST_URI']);
+	}
+	
+	public function isCurrentPage($page)
+	{
+		return ( $this->getCurrenPageWithoutQueryString() == $page );
+	}
+
+
 	public function isDeveloperDomain()
 	{
-		$domains = $this->domains[$this->getDomainAlias()];
-		unset($domains[array_search($this->getDomainAlias(), $domains)]);
-		return in_array(implode('.', $this->hosturl), $domains);
+		return in_array(implode('.', $this->hosturl), $this->developerDomains);
 	}
 	
 	public function isProductionDomain()

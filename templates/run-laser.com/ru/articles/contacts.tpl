@@ -3,7 +3,7 @@
 <main>
 	<div class="content">
 		<h1><?=$article->getH1()?></h1>
-		<?=$article->text?>
+		<?=$article->getText()?>
 		<br>
 				<p>Вы можете связаться с нами заполнив следующие поля.</p>
 				<form class="contactForm">

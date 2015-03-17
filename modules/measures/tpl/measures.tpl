@@ -23,11 +23,11 @@
 									<select class="filterInput" name="categoryId">
 										<option></option>
 										<?php if ($objects->getMainCategories()->count() != 0): foreach($objects->getMainCategories() as $categoryObject):?>
-										<option value="<?=$categoryObject->id?>" <?=($categoryObject->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>><?=$categoryObject->name?></option>
+										<option value="<?=$categoryObject->id?>" <?=($categoryObject->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>><?=$categoryObject->getName()?></option>
 											<?php if ($categoryObject->getChildren()): foreach($categoryObject->getChildren() as $children):?>
-											<option value="<?=$children->id?>" <?=($children->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>>&nbsp;&nbsp;|-&nbsp;<?=$children->name?></option>
+											<option value="<?=$children->id?>" <?=($children->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>>&nbsp;&nbsp;|-&nbsp;<?=$children->getName()?></option>
 												<?php if ($children->getChildren() != NULL): foreach($children->getChildren() as $children2):?>
-												<option value="<?=$children2->id?>" <?=($children2->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>>&nbsp;&nbsp;&nbsp;&nbsp;|-&nbsp;<?=$children2->name?></option>
+												<option value="<?=$children2->id?>" <?=($children2->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>>&nbsp;&nbsp;&nbsp;&nbsp;|-&nbsp;<?=$children2->getName()?></option>
 												<?php endforeach; endif;?>
 											<?php endforeach; endif;?>
 										<?php endforeach; endif;?>
@@ -97,7 +97,7 @@
 								</td>
 								<td>
 									<p class="category_edit"><a href="/admin/measures/category/<?=$object->getCategory()->id?>/"><img src="/admin/images/backgrounds/set.png" /></a></p>
-									<p class="category_name"><?=$object->getCategory()->name?></p>
+									<p class="category_name"><?=$object->getCategory()->getName()?></p>
 								</td>
 								<td class="td_bord sortHandle header"><?= $object->priority?></td>
 								<td><a href="/admin/measures/measure/<?=$object->id?>/" class="pen"></a></td>
@@ -145,11 +145,11 @@
 									<select id="categoryId" name="categoryId">
 										<option value="">- Категории -</option>
 										<?php if ($objects->getMainCategories()->count() != 0): foreach($objects->getMainCategories() as $categoryObject):?>
-										<option value="<?=$categoryObject->id?>" <?=($categoryObject->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>><?=$categoryObject->name?></option>
+										<option value="<?=$categoryObject->id?>" <?=($categoryObject->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>><?=$categoryObject->getName()?></option>
 											<?php if ($categoryObject->getChildren()): foreach($categoryObject->getChildren() as $children):?>
-											<option value="<?=$children->id?>" <?=($children->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>>&nbsp;&nbsp;|-&nbsp;<?=$children->name?></option>
+											<option value="<?=$children->id?>" <?=($children->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>>&nbsp;&nbsp;|-&nbsp;<?=$children->getName()?></option>
 												<?php if ($children->getChildren() != NULL): foreach($children->getChildren() as $children2):?>
-												<option value="<?=$children2->id?>" <?=($children2->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>>&nbsp;&nbsp;&nbsp;&nbsp;|-&nbsp;<?=$children2->name?></option>
+												<option value="<?=$children2->id?>" <?=($children2->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>>&nbsp;&nbsp;&nbsp;&nbsp;|-&nbsp;<?=$children2->getName()?></option>
 												<?php endforeach; endif;?>
 											<?php endforeach; endif;?>
 										<?php endforeach; endif;?>

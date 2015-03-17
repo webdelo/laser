@@ -1,14 +1,18 @@
 <?php
 namespace modules\properties\components\propertiesValues\lib;
-class PropertyValue extends \core\modules\base\ModuleDecorator
+class PropertyValue extends \core\modules\base\ModuleObject
 {
+	use \modules\measures\lib\MeasuresTraitDecorator,
+		\core\traits\RequestHandler,
+		\core\i18n\TextLangParserTraitDecorator;
+
+	protected $configClass = '\modules\properties\components\propertiesValues\lib\PropertyValueConfig';
+
 	function __construct($objectId)
 	{
-		$object = new PropertyValueObject($objectId);
-		$object = new \modules\measures\lib\MeasuresDecorator($object);
-		parent::__construct($object);
+		parent::__construct($objectId, new $this->configClass);
 	}
-	
+
 	public function getProperty()
 	{
 		if(empty($this->property))
@@ -19,15 +23,15 @@ class PropertyValue extends \core\modules\base\ModuleDecorator
 	/* Start: Main Data Methods */
 	public function getName()
 	{
-		return $this->getProperty()->name;
+		return $this->getProperty()->getName();
 	}
 	public function getImagePath()
 	{
 		return $this->getProperty()->imagePath;
 	}
-	public function getValue()
+	public function getValue( $lang = null )
 	{
-		return $this->value;
+		return $this->getTextFromLangParser($this->loadObjectInfo()->objectInfo['value'], $lang);
 	}
 	/*   End: Main Data Methods */
 
@@ -35,10 +39,16 @@ class PropertyValue extends \core\modules\base\ModuleDecorator
 		return $this->delete();
 	}
 	
-	public function delete () {
-		return ( $this->deleteRelations() ) ? $this->getParentObject()->delete() : false ;
+	public function edit($data = null, $fields = array(), $rules = array()) 
+	{
+		$compacter = new \core\i18n\TextLangCompacter($this, $data);
+		return parent::edit($compacter->getPost(), $fields, $rules);
 	}
-	
+
+	public function delete () {
+		return ( $this->deleteRelations() ) ? parent::delete() : false ;
+	}
+
 	private function deleteRelations ()
 	{
 		foreach ($this->getConfig()->relations() as $table=>$field) {

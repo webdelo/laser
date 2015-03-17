@@ -10,7 +10,7 @@ $(function () {
 		})
 		.init();
 
-var editClientInputs = new inputs;
+	var editClientInputs = new inputs;
 	editClientInputs
 		.setSettings({'element' : '.editClientInputs', 'event': 'blur'})
 		.setCallback(function (response) {
@@ -60,6 +60,12 @@ var editClientInputs = new inputs;
 		$(this).val(targ);
 	});
 	
+	
+	
+	
+	
+	
+	
 	var buttonsToDeliveryDialog = {
 		"Сохранить": function() {
 			$('.deliveryFormAddSubmit').click();
@@ -87,14 +93,6 @@ var editClientInputs = new inputs;
 		});
 	});
 	
-	$('.editDeliveryDataButton').click(function(){
-		$('.deliveryDataBlock').dialog({
-			'width': 'auto',
-
-			buttons: buttonsToDeliveryDialog
-		});
-	});
-	
 	var deliveryForm = new form;
 	deliveryForm
 		.setSettings({'form' : '.deliveryFormAdd'})
@@ -103,19 +101,6 @@ var editClientInputs = new inputs;
 				$('.deliveryEditBlock').dialog('destroy').remove();
 				//$('.goodsTableList').htmlFromServer();
 				$('.deliveryEditBlock').remove();
-				//$('.deliveryContainer').htmlFromServer();
-			}
-		})
-		.init();
-
-	var deliveryData = new form;
-	deliveryData
-		.setSettings({'form' : '.deliveryDataAdd'})
-		.setCallback(function (response) {
-			if ( typeof response == 'number' ) {
-				$('.deliveryDataBlock').dialog('destroy').remove();
-				//$('.goodsTableList').htmlFromServer();
-				$('.deliveryDataBlock').remove();
 				//$('.deliveryContainer').htmlFromServer();
 			}
 		})

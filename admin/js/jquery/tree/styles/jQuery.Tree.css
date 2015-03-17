@@ -39,18 +39,18 @@
 
 .jquery-tree-leaf {
     padding-left: 30px;
-	line-height: 130%;
+	line-height: 149%;
 }
 
 .jquery-tree-node {
     padding-left: 20px;
-	line-height: 130%;
+	line-height: 149%;
 }
 
 .jquery-tree-node ul {
 	border-left: 1px dotted #000;
 	margin-left: 16px;
-	line-height: 130%;
+	line-height: 149%;
 }
 
 .jquery-tree-title {

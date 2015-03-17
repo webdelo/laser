@@ -15,16 +15,11 @@ trait Authorization
 		return $this->getAuthorizatedUser()->getGroup() == '\modules\managers\lib\Manager';
 	}
 
-	protected function isAuthorisatedUserAClient()
-	{
-		return $this->getAuthorizatedUser()->getGroup() == '\modules\clients\lib\Client';
-	}
-
 	public function isGuest()
 	{
 		return $this->getAuthorizatedUser()->getGroup() == 'Guests';
 	}
-	
+
 	protected function getAuthorizatedUserId()
 	{
 		$id = $this->getAuthorizatedUser()->id;

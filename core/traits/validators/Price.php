@@ -28,4 +28,12 @@ trait Price
 
 		return true;
 	}
+
+	public function _validAdditionalPrice($data)
+	{
+		if (!empty($data) && is_numeric($data)) {
+				return true;
+		}
+		return false;
+	}
 }

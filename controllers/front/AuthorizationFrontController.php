@@ -4,8 +4,7 @@ class AuthorizationFrontController extends \controllers\base\AuthorizationBaseCo
 {
 	use	\core\traits\controllers\Templates,
 		\core\traits\controllers\Authorization,
-		\core\traits\controllers\Meta,
-		\core\traits\controllers\Breadcrumbs;
+		\core\traits\controllers\Meta;
 
 	protected $postLoginKey     = 'login';
 	protected $postPasswordKey  = 'password';
@@ -14,7 +13,7 @@ class AuthorizationFrontController extends \controllers\base\AuthorizationBaseCo
 	protected $postSubmitKey    = 'authorization_client_submit';
 	protected $requestLogoutKey = 'client_logout';
 	protected $allowableGroups  = array(
-		'run-laser.com'   => array(
+		'vput.ru'   => array(
 			'groups'   => array('modules\clients\lib\Client'),
 			'statuses' => array(1),
 		)
@@ -24,7 +23,7 @@ class AuthorizationFrontController extends \controllers\base\AuthorizationBaseCo
 	protected $cookieArrayKey   = 'clientAuthorizaton';
 	protected $permissibleActions = array(
 		'ajaxGetAuthorizationBlock',
-		'ajaxGetCabinetBlock',
+		'ajaxGetCabinetBlock'
 	);
 
 	public function __construct()
@@ -48,25 +47,8 @@ class AuthorizationFrontController extends \controllers\base\AuthorizationBaseCo
 		$this->setTitle('Авторизация')
 			 ->setDescription('Авторизация')
 			 ->setKeywords('Авторизация')
-			 ->setLevel('Авторизация')
+			 ->setContent('bodyType', 'authorization')
 			 ->includeTemplate('authorization');
-	}
-	
-	protected function ajaxGetAuthorizationBlock()
-	{
-		if($this->checkUserGroupAndStatus())
-			echo 'NaN';
-		else
-			echo $this->getAuthorizationBlock();
-	}
-
-	private function getAuthorizationBlock()
-	{
-	    ob_start();
-	    $this->includeTemplate('headerAutorizationBlock');
-	    $contents = ob_get_contents();
-	    ob_end_clean();
-	    return $contents;
 	}
 
 	public function ajaxAuthorization()
@@ -74,10 +56,11 @@ class AuthorizationFrontController extends \controllers\base\AuthorizationBaseCo
 		parent::logout();
 		$_POST[$this->postSubmitKey] = true;
 		$this->authorization();
-		if ($this->checkNeedDeleteGuestShopcart())
-			$this->getController('Shopcart')->ajaxDelAuthorizatedShopcartSaveGuestShopcart();
-		if ($this->checkUserGroupAndStatus())
-				$this->ajaxResponse(1);
+		if ($this->checkUserGroupAndStatus()){
+			if( $this->getAuthorizatedUser()->getSystemLang() )
+				$this->getObject('\core\i18n\LangHandler')->setLangInSESSION($this->getAuthorizatedUser()->getSystemLang()->getAlias());
+			$this->ajaxResponse(1);
+		}
 		else
 			$this->ajaxResponse($this->getErrorArray());
 		return $this;
@@ -101,12 +84,6 @@ class AuthorizationFrontController extends \controllers\base\AuthorizationBaseCo
 			parent::logout();
 		}
 		return false;
-	}
-	
-	private function checkNeedDeleteGuestShopcart()
-	{
-		if (isset($_POST['del_auth_shopcart']) && ($_POST['del_auth_shopcart'] == '1'))
-			return true;
 	}
 
 	public function ajaxCheckAuthorization()
@@ -143,37 +120,9 @@ class AuthorizationFrontController extends \controllers\base\AuthorizationBaseCo
 		return 'cabinet';
 	}
 
-	public function getHeaderAuthorizationBlock()
-	{
-		ob_start();
-		$this->includeTemplate('headerAuthorizationBlock');
-		$contents = ob_get_contents();
-		ob_end_clean();
-		return $contents;
-	}
-
 	public function isClient()
 	{
-		return get_class($this->authorizatedUser()) == 'Client';
-	}
-
-	public function ajaxGetHeaderAuthorizationBlock()
-	{
-		echo $this->getHeaderAuthorizationBlock();
-	}
-
-	protected function ajaxGetCabinetBlock()
-	{
-		echo $this->getCabinetBlock();
-	}
-
-	private function getCabinetBlock()
-	{
-		ob_start();
-		$this->includeTemplate('headerCabinetBlock');
-		$contents = ob_get_contents();
-		ob_end_clean();
-		return $contents;
+		return get_class($this->authorizatedUser()) == 'modules\clients\lib\Client';
 	}
 
 	public function isAdminAuthorizated()

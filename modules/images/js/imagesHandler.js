@@ -30,7 +30,7 @@ var imagesHandler = function()
 		})
 		.setCallback(function (response) {
 			if (response == true) {
-				(new imagesUpload).reloadForm();
+				(new imagesUpload).reloadForm().getImagesListBlock();
 			}
 		})
 		.init();
@@ -47,7 +47,6 @@ var imagesHandler = function()
 			'message' : '.message'
 		})
 		.setCallback(function (response) {
-			(new imagesUpload).getImagesListBlock($('.objectId').val());
 			$('.ui-dialog').fadeOut('fast', function () {
 				$(this).remove();
 			});
@@ -64,8 +63,20 @@ var imagesHandler = function()
 			'element'    : '.removeImage'
 		})
 		.setCallback(function (response) {
-			if (typeof response == "number")
-				$('#image'+response).fadeOut('fast', function(){$(this).remove()});
+			if (typeof response == "number") {
+				$('#image'+response).fadeOut('fast', function(){
+					$(this).remove();
+					if ( $('.imagesList .image').length === 0 ) {
+						if ( $('.imagesHeader').length > 0 ) {
+							$('.imagesHeader').find('img').fadeOut();
+						}
+						if ( $('.finalSave').length > 0 ) {
+							$('.finalSave').addClass('disabled');
+						}
+					}
+				});
+				
+			}
 		}).init = function (){
 			this.loader.init();
 			var that = this;
@@ -300,9 +311,7 @@ var imagesHandler = function()
     
     this.InitAll = function()
     {
-		this.initImageControll()
-			.initImage()
-			.InitImageAddForm()
+		this.initImage()
 			.InitImageEditForm()
 			.InitImageRemoveForm()
 			.InitPrimaryButton()
@@ -314,3 +323,19 @@ var imagesHandler = function()
 			.InitImagesSortable();
     };
 };
+
+$(function () {
+	(new imagesHandler())
+	    .initImageControll()
+	    .initImage()
+	    .InitImageAddForm()
+	    .InitImageEditForm()
+	    .InitImageRemoveForm()
+	    .InitPrimaryButton()
+	    .InitResetPrimaryButton()
+	    .InitBlockButton()
+	    .InitResetBlockButton()
+	    .InitImageRemoveFromDetails()
+	    .InitAjaxModal()
+		.InitImagesSortable();
+});

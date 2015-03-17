@@ -48,10 +48,10 @@ class MeasureConfig extends \core\modules\base\ModuleConfig
 				'adapt' => '_adaptHtml',
 			),
 			'statusId' => array(
-				'validation' => array('_validInt', array('not_empty'=>true)),
+				'validation' => array('_validInt', array('notEmpty'=>true)),
 			),
 			'categoryId' => array(
-				'validation' => array('_validInt', array('not_empty'=>true)),
+				'validation' => array('_validInt', array('notEmpty'=>true)),
 			),
 			'date' => array(
 				'adapt' => '_adaptRegDate',

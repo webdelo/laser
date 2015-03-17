@@ -1,10 +1,24 @@
 <?php
 namespace core\modules\rights;
-class RightsList extends \core\modules\base\ModuleDecorator
+class RightsList extends \core\modules\base\ModuleRelations
 {
-	function __construct($objectId, $configObject)
+	protected $configClass = '\core\modules\rights\RightsListConfig';
+
+	function __construct($ownerId, $configObject)
 	{
-		$object = new RightsListObject($objectId, $configObject);
-		parent::__construct($object);
+		parent::__construct($ownerId, new $this->configClass($configObject));
 	}
+
+	public function checkRightByAlias($alias)
+	{
+		$rights = new Rights();
+		$rightId = $rights->getIdByAlias($alias);
+		return $this->checkRightById($rightId);
+	}
+
+	public function checkRightById($rightId)
+	{
+		return $this->objectExists($rightId);
+	}
+
 }

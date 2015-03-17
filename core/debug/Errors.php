@@ -1,6 +1,6 @@
 <?php
 namespace core\debug;
-class Errors extends Model
+class Errors extends \core\Model
 {
 	public function addError($errorHandler) {
 		$data = array(

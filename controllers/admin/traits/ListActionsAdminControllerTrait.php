@@ -51,8 +51,8 @@ trait ListActionsAdminControllerTrait
 		}
 
 		$object = $this->getOperationObject($objectId);
-		if(is_array($object->additionalCategoriesArray))
-			$data['additionalCategories'] = $object->additionalCategoriesArray;
+		if(is_array($object->getAdditionalCategoriesArray()))
+			$data['additionalCategories'] = $object->getAdditionalCategoriesArray();
 
 		return $data;
 	}

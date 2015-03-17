@@ -1,6 +1,6 @@
 <?php
 namespace core\modules\base;
-abstract class ModuleObject extends ModuleAbstract
+abstract class ModuleObject extends ModuleAbstract implements \Serializable
 {
 	protected $objectId;
 	protected $objectInfo = array();
@@ -48,7 +48,7 @@ abstract class ModuleObject extends ModuleAbstract
 
 		$setterName = 'set'.ucfirst($key).'Field';
 		if (method_exists($this, $setterName)) {
-			$this->$setterName($value);
+			throw new \Exception('Must use setter-method "'.$setterName.'" in class '.get_class($this).'!');
 		} elseif (property_exists($this, $key)) {
 			$this->$key = $value;
 		} else {
@@ -71,10 +71,12 @@ abstract class ModuleObject extends ModuleAbstract
 			return $this->objectId;
 
 		$this->isInitialized()->loadObjectInfo();
-		if (isset($this->objectInfo[$key]))
-			return method_exists($this, $getterName = 'get'.ucfirst($key))
-				? $this->$getterName()
-				: $this->objectInfo[$key];
+		if (isset($this->objectInfo[$key])){
+//			if (method_exists($this, $getterName = 'get'.ucfirst($key)))
+//				return $this->$getterName();
+				//throw new \Exception('Must use getter-method "'.$getterName.'" in class '.get_class($this).'!');
+			return $this->objectInfo[$key];
+		}
 	}
 
 	protected function loadObjectInfo()
@@ -107,7 +109,7 @@ abstract class ModuleObject extends ModuleAbstract
 	{
 		return $this->edit(array('statusId' => $this->getRemovedStatus()));
 	}
-	
+
 	// Method alias for delete()
 	public function remove()
 	{
@@ -131,7 +133,7 @@ abstract class ModuleObject extends ModuleAbstract
 
 		return $this->baseEdit($data, $fields, $rules) ? $this->updateNewFieldsInObjectInfo($data) : false;
 	}
-	
+
 	public function editField($value, $field, $rules = array()) {
 		$values = array($field=>$value);
 		$fields = array($field);
@@ -139,8 +141,7 @@ abstract class ModuleObject extends ModuleAbstract
 
 		$data[$this->idField] = $this->objectId;
 		$fields[] = $this->idField;
-		
-		return $this->baseEdit($data, $fields, $rules) ? $this->updateNewFieldsInObjectInfo($data) : false;		
+		return $this->baseEdit($data, $fields, $rules) ? $this->updateNewFieldsInObjectInfo($data) : false;
 	}
 
 	protected function getActualFields($data, $fields, $objectFields = null)
@@ -168,7 +169,23 @@ abstract class ModuleObject extends ModuleAbstract
 
 	protected function updateNewFieldsInObjectInfo($data)
 	{
-		$this->objectInfo = array_merge($this->objectInfo, $this->getSharedElements($data));
+		$this->objectInfo = array_merge($this->getObjectInfo(), $this->getSharedElements($data));
 		return (int)$this->objectInfo[$this->idField];
 	}
+
+	/* Start: Serializable interface Methods */
+	public function serialize()
+    {
+		$data['objectId'] = $this->objectId;
+		$data['_moduleConfig'] = $this->_moduleConfig;
+		return serialize($data);
+    }
+
+	public function unserialize($data)
+    {
+		$data = unserialize($data);
+		$this->objectId = $data['objectId'];
+		parent::__construct($data['_moduleConfig']);
+	}
+	/* End: Serializable interface Methods */
 }

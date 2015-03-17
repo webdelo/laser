@@ -14,7 +14,7 @@
 				</div>
 				<p class="speedbar"><a href="/admin/">Главная</a>     <span>></span>
 					<a href="/admin/articles/">Статьи</a>    <span>></span>
-					<?= $article->id ? $article->name : 'Добавление'?>
+					<?= $article->id ? $article->getName() : 'Добавление'?>
 				</p>
 				<div class="clear"></div>
 				<form class="form<?= $article->id ? 'Edit' : 'Add'?>" action="/admin/articles/<?= $article->id ? 'edit' : 'add'?>/" method="post" data-post-action="<?= $article->id ? 'none' : '/admin/articles/articles/'?>">

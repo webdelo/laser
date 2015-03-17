@@ -2,7 +2,7 @@
 namespace controllers\admin;
 class ArticlesAdminController extends \controllers\base\Controller
 {
-	use	\core\traits\controllers\Categories,
+	use	\core\traits\controllers\TranslateCategories,
 		\core\traits\controllers\Images,
 		\core\traits\controllers\Files,
 		\core\traits\controllers\Rights,

@@ -4,6 +4,7 @@ class ClientsAdminController extends \controllers\base\ClientsBaseController
 {
 	use	\core\traits\Pager,
 		\core\traits\controllers\Rights,
+		\core\traits\controllers\Images,
 		\core\traits\controllers\Templates,
 		\core\traits\Settings,
 		\controllers\admin\traits\ListActionsAdminControllerTrait;
@@ -14,18 +15,32 @@ class ClientsAdminController extends \controllers\base\ClientsBaseController
 		'client',
 		'editLoginById',
 		'editClientById',
-		'editClient',
-		'editDeliveryAddress',
 		'remove',
 		'ajaxGetAutosuggestClients',
 		'ajaxGetClientById',
 		'ajaxEditPassword',
+		'editClient',
+		'editDeliveryAddress',
 
 		/* Start: List Trait Methods*/
 		'changePriority',
 		'groupActions',
 		'groupRemove',
 		/* End: List Trait Methods*/
+
+		/* Start: Images Trait Methods*/
+		'uploadImage',
+		'addImagesFromEditPage',
+		'removeImage',
+		'setPrimary',
+		'resetPrimary',
+		'setBlock',
+		'resetBlock',
+		'editImage',
+		'getTemplateToEditImage',
+		'ajaxGetImagesBlock',
+		'ajaxGetImagesListBlock',
+		/*   End: Images Trait Methods*/
 	);
 
 	public function  __construct()
@@ -48,12 +63,11 @@ class ClientsAdminController extends \controllers\base\ClientsBaseController
 		$start_date = (empty($this->getGET()['start_date'])) ? '' : \core\utils\DataAdapt::textValid($this->getGET()['start_date']);
 		$end_date = (empty($this->getGET()['end_date'])) ? '' : \core\utils\DataAdapt::textValid($this->getGET()['end_date']);
 		$status = (empty($this->getGET()['statusId'])) ? '' : \core\utils\DataAdapt::textValid($this->getGET()['statusId']);
-		if(!empty($this->getGET()['clientId']))
-			$this->getGET()['id'] = $this->getGET()['clientId'];
 		$id = (empty($this->getGET()['id'])) ? '' : \core\utils\DataAdapt::textValid($this->getGET()['id']);
 		$allName = (empty($this->getGET()['allName'])) ? '' : \core\utils\DataAdapt::textValid($this->getGET()['allName']);
 		$description = (empty($this->getGET()['description'])) ? '' : \core\utils\DataAdapt::textValid($this->getGET()['description']);
 		$company = (empty($this->getGET()['company'])) ? '' : \core\utils\DataAdapt::textValid($this->getGET()['company']);
+		$email = (empty($this->getGET()['email'])) ? '' : \core\utils\DataAdapt::textValid($this->getGET()['email']);
 		$itemsOnPage = (empty($this->getGET()['itemsOnPage'])) ? '' : \core\utils\DataAdapt::textValid($this->getGET()['itemsOnPage']);
 
 
@@ -78,13 +92,16 @@ class ClientsAdminController extends \controllers\base\ClientsBaseController
 		if (!empty($company))
 			$this->modelObject->setSubquery('AND `company` LIKE \'%?s%\'', $company);
 
+		if (!empty($email))
+			$this->modelObject->setSubquery('AND `id` IN (SELECT `id` FROM `tbl_user_logins` WHERE `login` LIKE \'%?s%\')', $email);
+
 		$this->modelObject->setOrderBy('`id` DESC')->setPager($itemsOnPage);
 
 		$this->setContent('clients', $this->modelObject)
 			->setContent('statuses', $this->modelObject->getStatuses())
 			->setContent('pager', $this->modelObject->getPager())
 			->setContent('pagesList', $this->modelObject->getQuantityItemsOnSubpageListArray())
-			->includeTemplate($this->_config->getAdminTemplateDir().'clients');
+			->includeTemplate('clients');
 	}
 
 	protected function add()
@@ -104,41 +121,41 @@ class ClientsAdminController extends \controllers\base\ClientsBaseController
 	public function NormalizeClientAddress($Data)
 	{
 		$NewData = $Data;
-		
+
 		if (mb_substr($NewData['region'], 0, 3,'UTF-8') == "р. ") { $NewData['region'] = substr($NewData['region'], 4);
 		} elseif (mb_substr($NewData['region'], 0, 2,'UTF-8') == "р.") { $NewData['region'] = substr($NewData['region'], 3);}
-		
+
 		if (mb_substr($NewData['city'], 0, 3,'UTF-8') == "г. ") { $NewData['city'] = substr($NewData['city'], 4);
 		} elseif (mb_substr($NewData['city'], 0, 2,'UTF-8') == "г.") { $NewData['city'] = substr($NewData['city'], 3);}
-				
+
 		if (mb_substr($NewData['street'], 0, 4,'UTF-8') == "ул. ") { $NewData['street'] = substr($NewData['street'], 6);
 		} elseif (mb_substr($NewData['street'], 0, 3,'UTF-8') == "ул.") { $NewData['street'] = substr($NewData['street'], 5);}
-				
+
 		if (mb_substr($NewData['home'], 0, 3,'UTF-8') == "д. ") { $NewData['home'] = substr($NewData['home'], 4);
 		} elseif (mb_substr($NewData['home'], 0, 2,'UTF-8') == "д.") { $NewData['home'] = substr($NewData['home'], 3);}
-				
+
 		if (mb_substr($NewData['block'], 0, 6,'UTF-8') == "корп. ") { $NewData['block'] = substr($NewData['block'], 10);
 		} elseif (mb_substr($NewData['block'], 0, 5,'UTF-8') == "корп.") { $NewData['block'] = substr($NewData['block'], 9);}
-				
+
 		if (mb_substr($NewData['flat'], 0, 4,'UTF-8') == "кв. ") { $NewData['flat'] = substr($NewData['flat'], 6);
 		} elseif (mb_substr($NewData['flat'], 0, 3,'UTF-8') == "кв.") { $NewData['flat'] = substr($NewData['flat'], 5);}
-				
+
 		return $NewData;
 	}
-	
+
 	protected function editDeliveryAddress()
 	{
 		$client = $this->getObject($this->objectClass, $this->getPOST()['objectId']);
 		$NewData = $this->NormalizeClientAddress($this->getPOST());
 		$this->setObject($client)->ajax($this->modelObject->edit($NewData), 'ajax', true);
 	}
-	
+
 	protected function editClient()
 	{
 		$client = $this->getObject($this->objectClass, $this->getGET()->objectId);
 		$this->setObject($client)->ajax($this->modelObject->edit($this->getPOST()), 'ajax', true);
 	}
-	
+
 	protected function client()
 	{
 		$this->checkUserRightAndBlock('client');
@@ -149,14 +166,19 @@ class ClientsAdminController extends \controllers\base\ClientsBaseController
 		if (isset($this->getREQUEST()[0])) {
 			$object = $this->getObject($this->_config->getObjectClass(), $this->getREQUEST()[0]);
 		}
-		$tabs = array('editClient' => 'Общая информация');
+		$tabs = array(
+			'editClient' => 'Общая информация',
+			'imagesTab' => 'Изображения'
+		);
 
 		$objects = new \modules\clients\lib\Clients();
+		$countries = (new \modules\locations\lib\Locations)->getCountries();
 
 		$this->setContent('object', $object)
 			 ->setContent('tabs', $tabs)
 			 ->setContent('statuses', $objects->getStatuses())
-			 ->includeTemplate($this->_config->getAdminTemplateDir().'client');
+			 ->setContent('countries', $countries)
+			 ->includeTemplate('client');
 	}
 
 	protected function remove()
@@ -174,29 +196,9 @@ class ClientsAdminController extends \controllers\base\ClientsBaseController
 	protected function ajaxGetAutosuggestClients()
 	{
 		$this->setObject($this->objectsClass);
-
-		$search = explode(' ', $this->getGET()->q);
-		$query = ' AND (';
-		foreach ( $search as $word ) {
-			$query .= '
-					(
-					 (
-						`phone` LIKE \'%'.$word.'%\' OR
-						`company` LIKE \'%'.$word.'%\' OR
-						`surname` LIKE \'%'.$word.'%\' OR
-						`name` LIKE \'%'.$word.'%\' OR
-						`patronimic` LIKE \'%'.$word.'%\'
-					 ) OR
-					`id` IN (
-						SELECT `id` FROM `tbl_user_logins` WHERE `login`  LIKE \'%'.$word.'%\'
-					 )
-				)
-			AND';
-
-		}
-		$query = substr($query, 0, -3);
-		$query .=')';
-		$clients = $this->modelObject->setSubquery($query);
+		$clients = $this->modelObject->setSubquery('AND ( `name`LIKE \'%?s%\'   OR   `surname`LIKE \'%?s%\'
+										OR   `patronimic`LIKE \'%?s%\'   OR   `company`LIKE \'%?s%\'
+										) ', $_GET["q"], $_GET["q"], $_GET["q"], $_GET["q"]);
 
 		foreach($clients as $client){
 			$json = array();

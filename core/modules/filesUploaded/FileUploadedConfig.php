@@ -4,7 +4,7 @@ class FileUploadedConfig extends \core\modules\base\ModuleConfig
 {
 	protected $objectClass = '\core\modules\filesUploaded\FileUploaded';
 	protected $objectsClass = '\core\modules\filesUploaded\FilesUploaded';
-	
+
 	protected $tablePostfix = '_files'; // set value without preffix!\
 	protected $idField = 'id';
 	protected $objectFields = array(
@@ -115,12 +115,7 @@ class FileUploadedConfig extends \core\modules\base\ModuleConfig
 		}
 		return $alias;
 	}
-
-
-
-
-
-
+	
 	public function _adaptHtml($key)
 	{
 		if (isset($this->data[$key]))

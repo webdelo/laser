@@ -7,23 +7,22 @@ trait Rights
 {
 	protected function checkUserRight($alias)
 	{
-		return $this->getAuthorizatedUser()->rights->checkRightByAlias($alias);
+		return $this->getAuthorizatedUser()->getRights()->checkRightByAlias($alias);
 	}
 
 	protected function checkUserRightById($rightID)
 	{
-		return $this->getAuthorizatedUser()->rights->checkRightById($rightID);
+		return $this->getAuthorizatedUser()->getRights()->checkRightById($rightID);
 	}
 
 	protected function checkUserRightAndBlock($alias, $noMessage = null)
 	{
 		$rights = $this->getObject('\core\modules\rights\Rights');
-		if ($this->getAuthorizatedUser()->rights->checkRightByAlias($alias))
+		if ($this->getAuthorizatedUser()->getRights()->checkRightByAlias($alias))
 			return $this;
 		$rights = $this->getObject('\core\modules\rights\Rights');
 		$rightId = $rights->getIdByAlias($alias);
 		$right = $this->getObject('\core\modules\rights\Right', $rightId);
-		var_dump($alias); die;
 		$noMessage == 'noMessage'   ?   ''   :   $this->accessDenied($right);
 		throw new \exceptions\ExceptionAccess();
 	}

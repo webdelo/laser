@@ -12,9 +12,10 @@ var selects = function (settings) {
 	this.errors  = new errors(this.settings);
 
 	this.setSettings = function (sources) {
-		this.settings = $.extend(this.settings, sources||{});return this;
+		this.settings = $.extend(this.settings, sources||{});
 		this.errors  = new errors(this.settings);
-	}
+		return this;
+	};
 
 	this.init = function () {
 		var that = this;
@@ -22,7 +23,7 @@ var selects = function (settings) {
 		if ( typeof this.settings.element == 'string' ) {
 			element$ = $(this.settings.element);
 		}
-
+		
 		element$.on("change", function (e) {
 			if ( that.doNeedConfirm() )
 				that.element$ = $(this);
@@ -30,28 +31,33 @@ var selects = function (settings) {
 					that.callback({}, that.element$);
 				else
 					that.start();
-
-
-
+				
+					
+					
 				return false;
 			});
 		return this;
-	}
-
+	};
+	
+	this.setLoader = function (newLoader) {
+		this.loader = newLoader;
+		return this;
+	};
+	
 	this.doNeedConfirm = function() {
 		if ($(this).hasClass('confirm'))
 			if (!confirm($(this).data('confirm')||'Do you sure?'))
 				return false;
-
+		
 		return true;
-	}
+	};
 
 	this.setActive = function (button$) {
 		button$.addClass(this.settings.active.replace('.', ''));
 		this.settings.element = this.settings.element + this.settings.active;
 
 		return this;
-	}
+	};
 
 	this.start = function () {
 			$('body').css('cursor', 'wait');
@@ -63,14 +69,14 @@ var selects = function (settings) {
 				.setDataType()
 				.startAction();
 		return this;
-	}
+	};
 
 	this.setCallback = function (callback) {
 		if($.isFunction(callback))
 			this.callback = callback;
 
 		return this;
-	}
+	};
 
 	this.setData = function () {
 		this.data = this.getObject().serialize();
@@ -79,34 +85,34 @@ var selects = function (settings) {
 		}
 
 		return this;
-	}
+	};
 
 	this.setDataFromPost = function () {
 		var post = this.getObject().data('post');
 		if ( post !== undefined ) {
 			this.data += post;
 		}
-
+		
 		return this;
-	}
+	};
 
 	this.setAction = function () {
 		this.action = this.getObject().data('action');
 
 		return this;
-	}
+	};
 
 	this.setMethod = function () {
 		this.method = this.getObject().data('method');
 
 		return this;
-	}
-
+	};
+	
 	this.setDataType = function () {
 		this.type = this.getObject().data('type');
 
 		return this;
-	}
+	};
 
 	this.startAction = function () {
 		var that = this;
@@ -124,13 +130,13 @@ var selects = function (settings) {
 		}
 
 		return this;
-	}
+	};
 
-	this.before = function () {}
+	this.before = function () {};
 
 	this.error = function () {
 		alert('The request has failed. Please contact the developers!');
-	}
+	};
 
 	this.success = function (response) {
 		if (typeof(response) == 'object' && this.settings.showError === true) {
@@ -141,7 +147,7 @@ var selects = function (settings) {
 			if ($.isFunction(localCallback))
 				window[localCallback](this.getObject());
 		}
-
+		
 		this.getObject()
 			.addClass('highlightSuccess')
 			.animate({
@@ -159,42 +165,30 @@ var selects = function (settings) {
 			},  "slow", function() {
 				  $(this).removeClass('highlightSuccess')
 			});
-
+			
 		if($.isFunction(this.callback))
 			this.callback(response, this.element$);
-	}
+	};
 
 	this.complete = function (response) {
 		$('body').css('cursor', 'auto');
 
 		if ($.isFunction(this.settings.completeAjax))
 			this.settings.completeAjax(response);
-	}
-
+	};
+	
 	this.getObject = function () {
 		return this.element$;
-	}
-
+	};
+	
 	this.getChoosedObject = function () {
 		return this.getObject().children(':selected');
-	}
-
+	};
+	
 	this.getValue = function () {
 		return this.getChoosedObject().val();
-	}
+	};
 	this.getText = function () {
 		return this.getChoosedObject().text();
-	}
-
-	this.cancelInit = function () {
-		var that = this;
-		var element$ = this.settings.element;
-		if ( typeof this.settings.element == 'string' ) {
-			element$ = $(this.settings.element);
-		}
-
-		element$.unbind('change');
-
-		return this;
-	}
-}
+	};
+};

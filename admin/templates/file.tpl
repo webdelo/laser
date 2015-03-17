@@ -35,7 +35,7 @@
 							<td class="status">
 								<select name="categoryId">
 									<? foreach( $objects->getFilesCategories() as $category ): ?>
-										<option value="<?=$category->id?>" <?=($category->id==$file->getCategory()->id)?'selected':''?>><?=$category->name?></option>
+										<option value="<?=$category->id?>" <?=($category->id==$file->getCategory()->id)?'selected':''?>><?=$category->getName()?></option>
 									<? endforeach; ?>
 								</select>
 							</td>

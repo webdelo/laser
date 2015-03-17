@@ -156,4 +156,9 @@ trait RequestHandler
 	{
 		return $this->getRequestHandler()->getDevelopersDomainAlias($domainAlias);
 	}
+	
+	protected function moveRequestLevel()
+	{
+		return $this->getRequestHandler()->moveRequestLevel();
+	}
 }

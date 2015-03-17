@@ -7,7 +7,7 @@
 					<a href="/admin/properties/property/"><img src="/admin/images/buttons/add.png" alt="" /> Создать</a>
 					<a class="filters pointer"><img src="/admin/images/buttons/search.png" alt="" /> Фильтрация</a>
 					<a href="/admin/properties/categories/"><img src="/admin/images/buttons/folder.png" alt="" /> Категории</a>
-					<a href="/admin/"><img src="/admin/images/buttons/back.png" alt="" /> Вернуться</a>
+					<a href="/admin/realties/"><img src="/admin/images/buttons/back.png" alt="" /> Вернуться</a>
 				</div>
 				<p class="speedbar">
 					<a href="/admin/">Главная</a>     <span>></span>
@@ -25,11 +25,11 @@
 									<select class="filterInput" name="categoryId">
 										<option></option>
 										<?php if ($objects->getMainCategories()->count() != 0): foreach($objects->getMainCategories() as $categoryObject):?>
-										<option value="<?=$categoryObject->id?>" <?=($categoryObject->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>><?=$categoryObject->name?></option>
+										<option value="<?=$categoryObject->id?>" <?=($categoryObject->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>><?=$categoryObject->getName()?></option>
 											<?php if ($categoryObject->getChildren()): foreach($categoryObject->getChildren() as $children):?>
-											<option value="<?=$children->id?>" <?=($children->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>>&nbsp;&nbsp;|-&nbsp;<?=$children->name?></option>
+											<option value="<?=$children->id?>" <?=($children->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>>&nbsp;&nbsp;|-&nbsp;<?=$children->getName()?></option>
 												<?php if ($children->getChildren() != NULL): foreach($children->getChildren() as $children2):?>
-												<option value="<?=$children2->id?>" <?=($children2->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>>&nbsp;&nbsp;&nbsp;&nbsp;|-&nbsp;<?=$children2->name?></option>
+												<option value="<?=$children2->id?>" <?=($children2->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>>&nbsp;&nbsp;&nbsp;&nbsp;|-&nbsp;<?=$children2->getName()?></option>
 												<?php endforeach; endif;?>
 											<?php endforeach; endif;?>
 										<?php endforeach; endif;?>
@@ -86,7 +86,7 @@
 								<td><input type="checkbox" class="groupElements" /></td>
 								<td><?=$object->id?></td>
 								<td><p class="alias"><a href="/admin/properties/property/<?=$object->id?>/"><?=$object->alias?></a></p></td>
-								<td><p class="name"><?=$object->name?></p></td>
+								<td><p class="name"><?=$object->getName()?></p></td>
 								<td>
 									<? if ($object->getPropertyValues()->count()>0): $count=0; foreach( $object->getPropertyValues() as $value ): $count++?>
 										<?=$value->getValue()?><?if ($object->getPropertyValues()->count()>$count):?>,<?endif;?>
@@ -96,8 +96,8 @@
 								</td>
 								<td><p class="status"><font color="<?=$object->getStatus()->color?>"><?=$object->getStatus()->name?></font></p></td>
 								<td>
-									<?  if ($object->additionalCategories->count()>0): $count=0; foreach($object->additionalCategories as $category): $count++?>
-										<?=$category->name?><?if ($object->additionalCategories->count()>$count):?>,<?endif;?>
+									<?  if ($object->getAdditionalCategories()->count()>0): $count=0; foreach($object->getAdditionalCategories() as $category): $count++?>
+										<?=$category->getName()?><?if ($object->getAdditionalCategories()->count()>$count):?>,<?endif;?>
 									<? endforeach; else:?>
 										<span style="color: gray;">категории не назначены</span>
 									<? endif;?>

@@ -1,10 +1,11 @@
 <?php
 namespace modules\parameters\lib;
-class ParametersRelation extends \core\modules\base\ModuleDecorator
+class ParametersRelation extends \core\modules\base\ModuleRelations
 {
-	function __construct($objectId, $configObject)
+	protected $configClass = '\modules\parameters\lib\ParametersRelationConfig';
+
+	function __construct($ownerId, $configObject)
 	{
-		$object = new ParametersRelationObject($objectId, $configObject);
-		parent::__construct($object);
+		parent::__construct($ownerId, new $this->configClass($configObject));
 	}
 }

@@ -8,7 +8,7 @@
 			<div style="height: 100px; overflow-x: auto">
 				<table>
 				<?php foreach ($categories as $category):?>
-					<tr><td><a href="?category=<?=$category->id?>"><?=$category->name?></a></td></tr>
+					<tr><td><a href="?category=<?=$category->id?>"><?=$category->getName()?></a></td></tr>
 				<? endforeach; ?>
 				</table>
 			</div>

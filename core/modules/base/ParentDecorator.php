@@ -50,26 +50,4 @@ class ParentDecorator extends ModuleDecorator
 		return $objects;
 	}
 
-	public function getChildrenIdString($statusesArray = array(), $excludedId = array())
-	{
-		$children = $this->getChildren($statusesArray, $excludedId);
-		if(!$children)
-			return false;
-
-		$idString = $this->getChildrenIdStringRecursive($this, $statusesArray, $excludedId);
-		return substr($idString, 0, strlen($idString)-1);
-
-	}
-
-	//	на уровне базы делать выборку id
-
-	private function getChildrenIdStringRecursive($category, $statusesArray, $excludedId, &$idString = '')
-	{
-		foreach($category->getChildren($statusesArray, $excludedId) as $child){
-			$idString .= $child->id.',';
-			if($child->getChildren($statusesArray, $excludedId))
-				$this->getChildrenIdStringAction($child, $statusesArray, $excludedId, $idString);
-		}
-		return $idString;
-	}
 }

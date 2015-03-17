@@ -122,8 +122,9 @@ abstract class AuthorizationBaseController extends Controller
 		return $this;
 	}
 
-	protected function login()
+	public function login()
 	{
+		
 		if ($this->login) {
 			try {
 				$authConfig = \core\Configurator::getInstance()->getArrayByKey('authorization');
@@ -182,7 +183,7 @@ abstract class AuthorizationBaseController extends Controller
 	private function checkSubmitKey()
 	{
 		if (isset($this->getPOST()[$this->postSubmitKey]) && empty($this->errorMessage))
-			$this->setErrorData ('Не указаны авторизационные данные!', 512);
+			$this->setErrorData ('Not specified authorization data!', 512);
 		return $this;
 	}
 
@@ -225,7 +226,7 @@ abstract class AuthorizationBaseController extends Controller
 	{
 		return $this->getPostData()
 					->setLogin($this->postLogin)
-					->setPassword(md5(strtolower($this->postPassword)))
+					->setPassword(strtolower(md5($this->postPassword)))
 					->setCookie($this->postCookie)
 					->setCaptcha($this->postCaptcha);
 	}
@@ -283,9 +284,9 @@ abstract class AuthorizationBaseController extends Controller
 
 	protected function checkUser()
 	{
-		if ($this->user instanceof IUserForAuthorization)
+		if ($this->user instanceof \interfaces\IUserForAuthorization)
 			return $this;
-		throw new \Exception('Passed user object is not a class implements IUserForAuthorization Interface in '.get_class($this).'!');
+		throw new \Exception('Passed user object is not a class implements \interfaces\IUserForAuthorization Interface in '.get_class($this).'!');
 	}
 
 	protected function setDataFromUser()
@@ -293,7 +294,7 @@ abstract class AuthorizationBaseController extends Controller
 		return $this->setLogin($this->user->getLogin())
 					->setPassword($this->user->getPassword());
 	}
-	
+
 	public function isUserAuthorizedInCookie()
 	{
 		return isset($this->getCOOKIE()[$this->cookieArrayKey]['password']);

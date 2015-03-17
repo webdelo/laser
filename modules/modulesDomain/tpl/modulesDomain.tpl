@@ -1,6 +1,5 @@
 <?include(TEMPLATES_ADMIN.'top.tpl');?>
 		<script type="text/javascript" src="/admin/js/base/system/sorting.js"></script>
-		<script type="text/javascript" src="/admin/js/base/system/groupActions.js"></script>
 		<div class="main single">
 			<div class="max_width">
 				<div class="action_buts">
@@ -23,11 +22,11 @@
 									<select class="filterInput" name="categoryId">
 										<option></option>
 										<?php if ($modulesDomain->getMainCategories()->count() != 0): foreach($modulesDomain->getMainCategories() as $categoryObject):?>
-										<option value="<?=$categoryObject->id?>" <?=($categoryObject->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>><?=$categoryObject->name?></option>
+										<option value="<?=$categoryObject->id?>" <?=($categoryObject->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>><?=$categoryObject->getName()?></option>
 											<?php if ($categoryObject->getChildren()): foreach($categoryObject->getChildren() as $children):?>
-											<option value="<?=$children->id?>" <?=($children->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>>&nbsp;&nbsp;|-&nbsp;<?=$children->name?></option>
+											<option value="<?=$children->id?>" <?=($children->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>>&nbsp;&nbsp;|-&nbsp;<?=$children->getName()?></option>
 												<?php if ($children->getChildren() != NULL): foreach($children->getChildren() as $children2):?>
-												<option value="<?=$children2->id?>" <?=($children2->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>>&nbsp;&nbsp;&nbsp;&nbsp;|-&nbsp;<?=$children2->name?></option>
+												<option value="<?=$children2->id?>" <?=($children2->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>>&nbsp;&nbsp;&nbsp;&nbsp;|-&nbsp;<?=$children2->getName()?></option>
 												<?php endforeach; endif;?>
 											<?php endforeach; endif;?>
 										<?php endforeach; endif;?>
@@ -80,17 +79,17 @@
 						</tr>
 						<?foreach ($modulesDomain as $moduleDomain):?>
 							<tr id="id<?=$moduleDomain->id?>" class="dblclick ui-selectee" data-url="/admin/modulesDomain/moduleDomain/<?=$moduleDomain->id?>" data-id="<?=$moduleDomain->id?>" data-priority="<?=$moduleDomain->priority?>">
-								<td><input type="checkbox" class="groupElements" /></td>
+								<td><input type="checkbox" /></td>
 								<td><?=$moduleDomain->id?></td>
-								<td><p class="alias"><a href="/admin/modulesDomain/moduleDomain/<?=$moduleDomain->id?>/"><?=$moduleDomain->alias?></a></p></td>
+								<td><p class="alias"><a href="/admin/modulesDomain/moduleDomain/<?=$moduleDomain->id?>"><?=$moduleDomain->alias?></a></p></td>
 								<td><p class="name"><?=$moduleDomain->name?></p></td>
 								<td>
-									<p class="category_edit"><a href="/admin/modulesDomain/category/<?=$moduleDomain->getCategory()->id?>/"><img src="/admin/images/backgrounds/set.png" /></a></p>
-									<p class="category_name"><?=$moduleDomain->getCategory()->name?></p></td>
+									<p class="category_edit"><a href="/admin/modulesDomain/category/<?=$moduleDomain->getCategory()->id?>"><img src="/admin/images/backgrounds/set.png" /></a></p>
+									<p class="category_name"><?=$moduleDomain->getCategory()->getName()?></p></td>
 								<td><p class="date"><?=$moduleDomain->date?></p></td>
 								<td><p class="status on"><?=$moduleDomain->getStatus()->name?></p></td>
 								<td class="td_bord sortHandle header"><?= $moduleDomain->priority?></td>
-								<td><a href="/admin/modulesDomain/moduleDomain/<?=$moduleDomain->id?>/" class="pen"></a></td>
+								<td><a href="/admin/modulesDomain/moduleDomain/<?=$moduleDomain->id?>" class="pen"></a></td>
 								<td><a class="del pointer button confirm" data-confirm="Remove the item?" data-action="/admin/modulesDomain/remove/<?=$moduleDomain->id?>/" data-callback="postRemoveArticle"></a></td>
 							</tr>
 						<?endforeach?>
@@ -101,64 +100,17 @@
 				<?$this->printPager($pager, 'pager')?>
 
 				<div class="action_edit">
-					<form id="groupArray" action="/admin/modulesDomain/groupActions/" class="groupArray" method="post" data-callback="reloadPage">
-						<table>
-							<tr>
-								<td><a href="javascript:" class="check_all"><span>Выделить все</span></a></td>
-								<td>
-									<select class="groupActionSelect">
-										<option value="">- С выделенными -</option>
-										<option value="statusId">Назначить статус</option>
-										<option value="categoryId">Назначить категорию</option>
-										<option value="groupRemove">Удалить</option>
-									</select>
-								</td>
-							</tr>
-							<tr class="groupAction statusId">
-								<td class="first"><strong></strong></td>
-								<td>
-									<select id="statusId" name="categoryId">
-										<option value="">- Статусы -</option>
-										<?php foreach ($modulesDomain->getStatuses() as $status):?>
-										<option value="<?=$status->id?>" <?=($this->getGET()['statusId']==$status->id)?'selected':''?>><?=$status->name?></option>
-										<?php endforeach;?>
-									</select>
-								<td>
-									<button  class="ok groupArraySubmit">
-										<span>ок</span>
-									</button>
-								</td>
-							</tr>
-							<tr class="groupAction categoryId">
-								<td class="first"><strong></strong></td>
-								<td>
-									<select id="categoryId" name="categoryId">
-										<option value="">- Категории -</option>
-										<?php if ($modulesDomain->getMainCategories()->count() != 0): foreach($modulesDomain->getMainCategories() as $categoryObject):?>
-										<option value="<?=$categoryObject->id?>" <?=($categoryObject->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>><?=$categoryObject->name?></option>
-											<?php if ($categoryObject->getChildren()): foreach($categoryObject->getChildren() as $children):?>
-											<option value="<?=$children->id?>" <?=($children->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>>&nbsp;&nbsp;|-&nbsp;<?=$children->name?></option>
-												<?php if ($children->getChildren() != NULL): foreach($children->getChildren() as $children2):?>
-												<option value="<?=$children2->id?>" <?=($children2->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>>&nbsp;&nbsp;&nbsp;&nbsp;|-&nbsp;<?=$children2->name?></option>
-												<?php endforeach; endif;?>
-											<?php endforeach; endif;?>
-										<?php endforeach; endif;?>
-									</select>
-								</td>
-								<td>
-									<button  class="ok groupArraySubmit" name="actionButton">
-										<span>ок</span>
-									</button>
-								</td>
-							</tr>
-							<tr class="groupAction groupRemove">
-								<td class="first"></td>
-								<td>
-									<button class="remove button confirm active" name="removeButton" data-confirm="Удалить объекты?" data-action="/admin/modulesDomain/groupRemove/" data-data="input[name*=group]" data-callback="reloadPage">ок</button>
-								</td>
-							</tr>
-						</table>
-					</form>
+					<table>
+						<tr>
+							<td><a href="javascript:" class="check_all"><span>Выделить все</span></a></td>
+							<td>
+								<select>
+									<option>С выделенными</option>
+								</select>
+							</td>
+							<td></td>
+						</tr>
+					</table>
 				</div>
 			</div>
 		</div><!--main-->

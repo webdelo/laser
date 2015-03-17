@@ -1,21 +1,36 @@
 <?php
 namespace modules\parameters\lib;
-class Parameter extends \core\modules\base\ModuleDecorator
+class Parameter extends \core\modules\base\ModuleObject
 {
+	use \core\traits\ObjectPool,
+		\core\modules\statuses\StatusTraitDecorator,
+		\core\traits\RequestHandler,
+		\core\i18n\TextLangParserTraitDecorator,
+		\core\modules\categories\AdditionalCategoriesTraitDecorator;
+
+	protected $configClass = '\modules\parameters\lib\ParameterConfig';
+
 	function __construct($objectId)
 	{
-		$object = new ParameterObject($objectId);
-		$object = new \core\modules\statuses\StatusDecorator($object);
-		$object = new \modules\parameters\components\chooseMethods\lib\ChooseMethodDecorator($object);
-		$object = new \core\modules\categories\AdditionalCategoriesDecorator($object);
-		parent::__construct($object);
+		parent::__construct($objectId, new $this->configClass);
+	}
+
+	public function getChooseMethod()
+	{
+		if ( !$this->chooseMethod ) {
+			$this->chooseMethod = $this->chooseMethodId
+				? new \modules\parameters\components\chooseMethods\lib\ChooseMethod($this->chooseMethodId)
+				: $this->getNoop();
+		}
+		return $this->chooseMethod;
 	}
 
 	/* Start: Main Data Methods */
-	public function getName()
+	public function getName($lang = null)
 	{
-		return $this->name;
+		return $this->getTextFromLangParser($this->loadObjectInfo()->objectInfo['name'], $lang);
 	}
+	
 	public function getImagePath()
 	{
 		return $this->imagePath;
@@ -25,13 +40,30 @@ class Parameter extends \core\modules\base\ModuleDecorator
 	public function getParameterValues()
 	{
 		$parameterValues = new \modules\parameters\components\parametersValues\lib\ParameterValues();
-		$parameterValues->setSubquery(' AND `parameterId`=?d ', (int)$this->id)->setOrderBy('`priority` ASC');
+		$parameterValues->setSubquery(' AND `parameterId`=?d ', (int)$this->id)
+						->setOrderBy('`priority` ASC');
 		return $parameterValues;
 	}
 
-	public function edit ($data, $fields = array())
+	public function getActualParameterValues($ownerObject)
 	{
-		return ($this->additionalCategories->edit($data->additionalCategories)) ? $this->getParentObject()->edit($data, $fields) : false;
+		$parameterValues = new \modules\parameters\components\parametersValues\lib\ParameterValues();
+		$existsQuery = ' SELECT `objectId` FROM `'.$ownerObject->mainTable().'_parameters_values_relation` ';
+		$parameterValues->setSubquery(' AND `parameterId`=?d AND id IN ('.$existsQuery.')', (int)$this->id)
+						->setOrderBy('`priority` ASC');
+		return $parameterValues;
+	}
+
+	public function edit ($data = null, $fields = array(), $rules = array()) {
+		return ($this->getAdditionalCategories()->edit($data->additionalCategories))
+			? $this->_edit($data, $fields, $rules)
+			: false;
+	}
+	
+	public function _edit($data = null, $fields = array(), $rules = array()) 
+	{
+		$compacter = new \core\i18n\TextLangCompacter($this, $data);
+		return parent::edit($compacter->getPost(), $fields, $rules);
 	}
 
 	public function remove () {
@@ -39,7 +71,13 @@ class Parameter extends \core\modules\base\ModuleDecorator
 	}
 
 	public function delete () {
-		return ( $this->deleteRelations() ) ? ( $this->getParameterValues()->delete() ) ? $this->additionalCategories->edit(array()) ? $this->getParentObject()->delete() : false : false : false ;
+		return ( $this->deleteRelations() )
+			? ($this->getParameterValues()->delete()
+				? ($this->getAdditionalCategories()->edit(array())
+					? $this->delete()
+					: false)
+				: false)
+			: false;
 	}
 
 	private function deleteRelations ()
@@ -56,18 +94,5 @@ class Parameter extends \core\modules\base\ModuleDecorator
 	public function isCheckbox()
 	{
 		return (int)$this->chooseMethodId === 2;
-	}
-	
-	public function getParameterValuesByObjectParametersArray($objectParametersArray)
-	{
-		$array = [];
-		foreach ($this->getParameterValues() as $value)
-			if(in_array($value->id, $objectParametersArray)){
-				$temp = [];
-				$temp['description'] = $value->description;
-				$temp['name'] = $value->getValue();
-				$array[] = $temp;
-			}
-		return $array;
 	}
 }

@@ -13,40 +13,40 @@ class FilterGenerator
 			$key ? $this->addWhereValue($value) : $this->addWhereSubquery($value);
 		return $this;
 	}
-	
-        public function setSubqueryArray($subquery, $data = array())
+
+	public function setSubqueryArray($subquery, $data = array())
 	{
-                foreach($data as $value)
-                    $this->addWhereValue($value); 
-                $this->addWhereSubquery($subquery);
-                
+		foreach($data as $value)
+			$this->addWhereValue($value);
+		$this->addWhereSubquery($subquery);
+
 		return $this;
 	}
-	
+
 	protected function addWhereSubquery($subquery)
 	{
 		$this->whereQuery .= ' '.$subquery;
 		return $this;
 	}
-	
+
 	protected function addWhereValue($value)
 	{
-                $this->whereData[] = $value;
+		$this->whereData[] = $value;
 		return $this;
 	}
-	
+
 	public function setOrderBy($subquery)
 	{
 		$this->orderBy = $subquery;
 		return $this;
 	}
-	
+
 	public function setLimit($subquery)
 	{
 		$this->limit = $subquery;
 		return $this;
 	}
-	
+
 	public function getFiltersArray()
 	{
 		return array(
@@ -58,7 +58,7 @@ class FilterGenerator
 			'order_by' => $this->orderBy,
 		);
 	}
-	
+
 	public function reset()
 	{
 		$this->whereQuery = '';

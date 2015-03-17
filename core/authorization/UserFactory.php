@@ -194,10 +194,10 @@ class UserFactory extends \core\modules\base\ModuleAbstract
 		if ($this->loginExists($login))
 			throw new \exceptions\ExceptionUserFactory('Login "'.$login.'" is already exists!', 64);
 		$data = array(
-			'login'   =>$login,
-			'password'=>md5($password),
-			'group'   =>(string)$group,
-			'status'  =>(int)$status
+			'login'   => $login,
+			'password'=> $password,
+			'group'   => (string)$group,
+			'status'  => (int)$status
 		);
 
 		return ($this->baseAdd($data)) ? $this->lastInsertId() : false;
@@ -206,7 +206,7 @@ class UserFactory extends \core\modules\base\ModuleAbstract
 	public function editPassword($newPassword, $userId)
 	{
 		$data = array(
-			'password' => md5($newPassword),
+			'password' => $newPassword,
 			'id'       => (int)$userId,
 		);
 		return $this->baseEdit($data);
@@ -277,7 +277,7 @@ class UserFactory extends \core\modules\base\ModuleAbstract
 	{
 		return $this->deleteById($userId);
 	}
-	
+
 	public function searchUser($searchWord, $domainAlias = null, $excludeStatuses = array())
 	{
 		$data = array();

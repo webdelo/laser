@@ -1,23 +1,26 @@
 <?php
 namespace modules\measures\lib;
-class Measure extends \core\modules\base\ModuleDecorator
+class Measure extends \core\modules\base\ModuleObject
 {
+	use \core\modules\statuses\StatusTraitDecorator,
+		\core\traits\ObjectPool,
+		\core\modules\categories\CategoryTraitDecorator;
+
+	protected $configClass = '\modules\measures\lib\MeasureConfig';
+
 	function __construct($objectId)
 	{
-		$object = new MeasureObject($objectId);
-		$object = new \core\modules\categories\CategoryDecorator($object);
-		$object = new \core\modules\statuses\StatusDecorator($object);
-
-		parent::__construct($object);
+		parent::__construct($objectId, new $this->configClass);
 	}
-	
+
 	public function getDeclension($numbers)
 	{
-		return \core\utils\Utils::declension($numbers, array($this->declension1,$this->declension2,$this->declension3));
+		return \core\utils\Utils::declension($numbers, array($this->declension1, $this->declension2, $this->declension3));
 	}
-	
+
 	public function getShortName()
 	{
-		return $this->shortName ? $this->shortName : $this->name;
+		$this->loadObjectInfo();
+		return $this->objectInfo['shortName'] ? $this->objectInfo['shortName'] : $this->name;
 	}
 }

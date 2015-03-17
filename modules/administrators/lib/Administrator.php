@@ -1,25 +1,46 @@
 <?php
 namespace modules\administrators\lib;
-class Administrator extends \core\authorization\AuthorizatedUser
+class Administrator extends \core\authorization\AuthorizatedUser implements \interfaces\IUserForAuthorization
 {
+	use \core\traits\ObjectPool,
+		\core\modules\statuses\StatusTraitDecorator,
+		\core\modules\groups\GroupTraitDecorator,
+		\core\modules\rights\RightsListTraitDecorator;
+
+	protected $configClass = '\modules\administrators\lib\AdministratorConfig';
+	protected $rightsKey = 'rights';
+
 	function __construct($objectId)
 	{
-		$object = new AdministratorObject($objectId);
-		$object = new \core\modules\groups\GroupDecorator($object);
-		$object = new \core\modules\statuses\StatusDecorator($object);
-		$object = new \core\modules\rights\RightsListDecorator($object);
-		parent::__construct($object);
+		parent::__construct($objectId, new $this->configClass);
 	}
 
 	public function delete()
 	{
-		if ($this->rights->delete())
-			return $this->getParentObject()->delete();
+		if ($this->getRights()->delete())
+			return parent::delete();
 		return false;
 	}
 
 	public function getAllName()
 	{
-		return trim(( $this->name && $this->firstname ) ? $this->name.' '.$this->firstname.' '.$this->lastname: $this->getLogin());
+		return $this->name.' '.$this->firstname.' '.$this->lastname;
 	}
+
+	public function getDefaultName()
+	{
+		var_dump(1);
+		return trim($this->getAllName()) ? $this->getAllName() : $this->getLogin();
+	}
+
+	public function getFullName()
+	{
+		return trim($this->getAllName()) ? $this->getAllName() : 'Имя не указано';
+	}
+
+	public function getMobile()
+	{
+		return $this->loadObjectInfo()->objectInfo['mobile'];
+	}
+
 }

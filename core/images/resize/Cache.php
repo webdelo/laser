@@ -22,6 +22,7 @@ class Cache
 	private $_width;
 	private $_heigth;
 
+
 	public function __construct()
 	{
 		$this->setImageResizer();
@@ -125,7 +126,7 @@ class Cache
 		$this->setDataFromUserImage($image, $watermark)
 			 ->setResolution($resolution)
 			 ->setUserImagePath();
-		
+
 		if ($this->isImageCacheNotExists()) {
 			$this->checkAndCreateCacheDir();
 			$this->imageResizer->setBgColor($this->_image->rgbBgColor)->setSharpen((boolean)$this->_image->sharpen);
@@ -133,6 +134,7 @@ class Cache
 											$this->_width, $this->_height,
 											$this->_watermark, $this->_focus);
 		}
+
 		return $this->_imagePath;
 	}
 
@@ -188,17 +190,17 @@ class Cache
 		$imagePath = explode('/', $imagePath);
 		unset($imagePath[sizeof($imagePath)-1]);
 		unset($imagePath[sizeof($imagePath)-1]);
-		
+
 		return implode('/', $imagePath);
 	}
-	
-    public function clearImageFiles(\core\modules\images\ImageObject $image)
-    {
+
+	public function clearImageFiles(\core\modules\images\Image $image)
+	{
 		$this->setDataFromImage($image);
-        $imagePath = rtrim($this->getCacheImageBaseUrl($this->_imageUrl),'/');
-        $imageFileName = $image->alias . '.' . $image->extension;
-        $this->_clearImageFiles(DIR . $imagePath, $imageFileName);
-    }
+		$imagePath = rtrim($this->getCacheImageBaseUrl($this->_imageUrl),'/');
+		$imageFileName = $image->alias . '.' . $image->extension;
+		$this->_clearImageFiles(DIR . $imagePath, $imageFileName);
+	}
 
 	protected function _clearImageFiles($dir, $imageFileName)
 	{
@@ -217,5 +219,4 @@ class Cache
 		}
 		closedir($handle);
 	}
-//===
 }

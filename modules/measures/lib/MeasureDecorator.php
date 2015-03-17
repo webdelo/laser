@@ -19,7 +19,7 @@ class MeasureDecorator extends \core\modules\base\ModuleDecorator
 	
 	public function getMeasureShort()
 	{
-		return $this->getMeasure()->shortName;
+		return $this->getMeasure()->getShortName();
 	}
 	
 	public function getMeasureDeclension($numbers)

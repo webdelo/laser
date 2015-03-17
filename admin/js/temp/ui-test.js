@@ -79,13 +79,7 @@ $(function() {
 		.init();
 
 	var removeButton = new buttons();
-	removeButton
-		.setCallback(function (response) {
-//			if (response == true) {
-//				window.groupDialog.closeAction();
-//			}
- 		})
-		.init();
+	removeButton.init();
 
 	var deleteOrder = new buttons();
 	deleteOrder

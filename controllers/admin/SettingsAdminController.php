@@ -16,7 +16,8 @@ class SettingsAdminController extends \controllers\base\Controller
 		$settings = new \core\Settings();
 		$filter = array('order_by' => 'sort_order');
 		$infos = $settings->getSettingsEdit($filter);
-		include(DIR.'/modules/settings/tpl/settings.tpl');
+		//print_r($infos);
+		include(TEMPLATES_ADMIN.'settings.tpl');
 	}
 
 	public function saveSettings()
@@ -41,10 +42,5 @@ class SettingsAdminController extends \controllers\base\Controller
 		return $this->modelObject->getField('id', $name, 'name');
 	}
 
-	public function ajaxClearCache()
-	{
-		$cache = new \core\images\resize\Cache();
-		$this->ajaxResponse($cache->clearAll());
-	}
 }
 ?>

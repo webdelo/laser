@@ -1,0 +1,122 @@
+.addressDetails {
+	position: relative;
+	border: 1px solid #e8f2fc;
+	border-bottom-color: #deeaf7;
+	background: #f7f9fc;
+	padding: 10px;
+	padding-bottom: 35px;
+}
+.addressDetails p {
+	width: 85%;
+	font-size: 14px;
+	margin-bottom: 10px;
+	
+}
+
+.addressDetails a {
+	font-size: 13px;
+	color: #005c91;
+}
+.addressDetails a:hover {
+	font-size: 13px;
+	color: #0072BC;
+}
+
+.additionals {
+	color: #666;
+	font-size: 10px;
+	margin: 0;
+	padding: 0;
+	line-height: normal;
+	font-weight: normal;
+}
+
+.addressDetails .deleteAddress {
+	position: absolute;
+	right: -1px;
+	top: -1px;
+	
+	font-weight: normal;	
+	background: #f7efef;
+	border: 1px solid #f4dcdc;
+	border-bottom-color: #edd0d0;
+	padding: 0 10px;
+	color: #f49a9a;
+	border-radius: 0 0 3px 0;
+	font-size: 11px;
+}
+
+.addressDetails .deleteAddress:hover {
+	font-size: 11px;
+	background: #f7caca;
+	border: 1px solid #ed9c9c;
+	border-bottom-color: #e59595;
+	color: #ea4b4b;
+}
+
+div.clientSearchBlock ul.as-selections {
+	margin: 0px -15px 0px 0px;
+}
+
+.setToObjectBlock input.street {
+	width: 200px;
+	height: 28px;
+}
+
+.setToObjectBlock ul.as-selections {
+	margin: 0px -15px 0px 0px;
+	width: 404px;
+}
+.setToObjectBlock input.citySearch.as-input {
+	width: 404px;
+}
+
+.setToObjectBlock input.home, 
+.setToObjectBlock input.block, 
+.setToObjectBlock input.flat{
+	width: 46px;
+	height: 28px;
+	float: none;
+	margin: 3px;
+}
+
+.setToObjectBlock select.countryChoose, .setToObjectBlock select.regionChoose, .setToObjectBlock select.cityChoose {
+	width: 135px;
+	height: 28px;
+}
+
+#googleMaps {
+	height: 300px;
+}
+.mapCoordinates {
+	opacity: 0.4;
+	font-weight: normal;
+}
+
+.mapCoordinates:hover {
+	opacity: 1;
+}
+.mapCoordinates span.desc {
+	float: left;
+	width: 200px;
+	display: inline-block;
+	margin: 3px;
+	padding-top: 5px;
+	font-size: 11px;
+	line-height: 11px;
+}
+.setToObjectBlock input.longitude,
+.setToObjectBlock input.latitude {
+	width: 80px;
+	height: 28px;
+	float: left;
+	margin: 3px;
+}
+.remark {
+	font-weight: normal;
+	font-size: 12px;
+	opacity: 0.5;
+}
+.remark:hover {
+	opacity: 1;
+}

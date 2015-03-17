@@ -69,7 +69,7 @@ class Cacher
 			$this->enginesPool[$engineName] = new $class();
 			return this;
 		}
-		throw new Exception('Unknown cache engine "'.$engineName.'" in class '.get_class($this).'!');
+		throw new \Exception('Unknown cache engine "'.$engineName.'" in class '.get_class($this).'!');
 	}
 	
 	private function checkEngineClass($class)

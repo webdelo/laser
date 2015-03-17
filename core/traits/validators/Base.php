@@ -18,9 +18,10 @@ trait Base
 	}
 
 	public function _validInt($data,$settings = array())
-	{
+	{	
 		if (empty($data) && !isset($settings['notEmpty']))
 			return true;
+		
 		if(isset($settings['positive']))
 			return (is_numeric($data) && $data > 0);
 		return is_numeric($data);
@@ -38,7 +39,19 @@ trait Base
 			$d[] = $this->data[$this->idField];
 		}
 		$row = \core\db\Db::getMysql()->rowNum($q,$d);
-		return empty($row[0]);
+		if ($row[0] != 0)
+		$this->setError($settings['field'], $settings['message']);
+
+		return ($row[0] == 0);
+	}
+
+	public function _validCharacters($data, $settings = array())
+	{
+		if ( \core\utils\Utils::isEmail($data) ) {
+			$this->addError($settings['field'], $this->getErrorsList()['onlyCharacters'][\core\i18n\LangHandler::getInstance()->getLang()]);
+			return true;
+		}
+		return true;
 	}
 
 	public function _validInTable($data, $settings = array())
@@ -66,5 +79,14 @@ trait Base
 
 		}
 		return !$this->errorsExists();
+	}
+
+	public function _validLimitString($data,$settings = array())
+	{
+		if(mb_strlen($data, 'utf-8') > $settings['limit']){
+			$this->setError($settings['field'], $settings['message1'].$settings['limit'].$settings['message2']);
+			return false;
+		}
+		return true;
 	}
 }

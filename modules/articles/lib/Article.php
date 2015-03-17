@@ -1,50 +1,75 @@
 <?php
 namespace modules\articles\lib;
-class Article extends \core\modules\base\ModuleDecorator implements \interfaces\IObjectToFrontend
+class Article extends \core\modules\base\ModuleObject implements \interfaces\IObjectToFrontend, \core\i18n\interfaces\Ii18n
 {
-	function __construct($objectId)
-	{
-		$object = new ArticleObject($objectId);
-		$object = new \core\modules\categories\CategoryDecorator($object);
-		$object = new \core\modules\statuses\StatusDecorator($object);
-		$object = new \core\modules\images\ImagesDecorator($object);
-		$object = new \core\modules\filesUploaded\FilesDecorator($object);
+	use \core\traits\ObjectPool,
+		\core\modules\statuses\StatusTraitDecorator,
+		\core\modules\categories\TranslateCategoryTraitDecorator,
+		\core\modules\images\ImagesTraitDecorator,
+		\core\i18n\TextLangParserTraitDecorator,
+		\core\modules\filesUploaded\FilesTraitDecorator,
+		\core\traits\RequestHandler,
+		\core\i18n\traits\ObjectLangTrait;
 
-		parent::__construct($object);
+	protected $configClass = '\modules\articles\lib\ArticleConfig';
+
+	public function __construct($objectId)
+	{
+		parent::__construct($objectId, new $this->configClass);
+	}
+
+	public function edit($data = null, $fields = array(), $rules = array())
+	{
+		$compacter = new \core\i18n\TextLangCompacter($this, $data);
+		return parent::edit($compacter->getPost(), $fields, $rules);
 	}
 
 	/* Start: Meta Methods */
-	public function getMetaTitle()
+	public function getMetaTitle($lang = null)
 	{
-		return $this->metaTitle ? $this->metaTitle : $this->getName();
+		return $this->metaTitle
+			? $this->getTextFromLangParser($this->metaTitle, $this->getLang($lang))
+			: $this->getName();
 	}
 
-	public function getMetaDescription()
+	public function getMetaDescription($lang = null)
 	{
-		return $this->metaDescription;
+		return $this->getTextFromLangParser($this->metaDescription, $this->getLang($lang));
 	}
 
-	public function getMetaKeywords()
+	public function getMetaKeywords($lang = null)
 	{
-		return $this->metaKeywords;
+		return $this->getTextFromLangParser($this->metaKeywords, $this->getLang($lang));
 	}
 
-	public function getHeaderText()
+	public function getHeaderText($lang = null)
 	{
-		return $this->headerText;
+		return $this->getTextFromLangParser($this->headerText, $this->getLang($lang));
 	}
 	/*   End: Meta Methods */
 
 	/* Start: Main Data Methods */
-	public function getName()
+	public function getName($lang = null)
 	{
-		return $this->name;
+		return $this->getTextFromLangParser($this->name, $this->getLang($lang));
+	}
+
+	public function getDescription($lang = null)
+	{
+		return $this->getTextFromLangParser($this->description, $this->getLang($lang));
+	}
+
+	public function getText($lang = null)
+	{
+		return $this->getTextFromLangParser($this->text, $this->getLang($lang));
 	}
 	/*   End: Main Data Methods */
 
-	public function getH1()
+	public function getH1($lang = null)
 	{
-		return empty($this->h1) ? $this->name : $this->h1;
+		return $this->h1
+			? $this->getTextFromLangParser($this->h1, $this->getLang($lang))
+			: $this->getName($lang);
 	}
 
 	/* Start: URL Methods */
@@ -63,6 +88,10 @@ class Article extends \core\modules\base\ModuleDecorator implements \interfaces\
 		if ($this->categoryId == ArticleConfig::INFORMATOR_ARTICLES_CATEGORY_ID)
 			return '/articles/'.$this->alias.'/';
 		return '/'.$this->alias.'/';
+	}
+	public function getAdminPath()
+	{
+		return '/admin/articles/article/'.$this->id.'/';
 	}
 	/*   End: URL Methods */
 

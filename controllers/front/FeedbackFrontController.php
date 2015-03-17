@@ -32,7 +32,7 @@ class FeedbackFrontController extends \controllers\base\Controller
 		$this->setContent('captchaString', $captchaSting)
 			->includeTemplate('feedback/feedbackContactBlock');
 	}
-	
+
 	protected function ajaxSendContactMessage()
 	{
 		$feedback = new \modules\mailers\SendContactMessage($this->getPOST());

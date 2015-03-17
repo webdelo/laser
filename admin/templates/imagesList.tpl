@@ -5,7 +5,7 @@
 		<? endif; ?>
 		<?if($object->getImagesCategories()) foreach($object->getImagesCategories() as $item): ?>
 		<?if( $object->getImagesByCategory($item->id)->current() ): ?>
-			<p><b><?=$item->name?></b></p>
+			<p><b><?=$item->getName()?></b></p>
 		<?endif?>
 			<div class="imagesSortable" data-action="/admin/<?=$_REQUEST['controller']?>/setPriority/?objectId=<?=$object->id?>">
 		    <? foreach ( $object->getImagesByCategory($item->id) as $image ): ?>
@@ -71,14 +71,11 @@
 						<span class="fileTitle"><?=$image->name?></span>
 						<span class="fileDescription"><?=$image->description?></span>
 					</div>
-					<a href="<?=$image->getUserImage('800x600')?>" class="lightbox">
-						<img src="<?=$image->getUserImage('240x180')?>" />
+					<a href="<?=$image->getImage('800x600')?>" class="lightbox">
+						<img src="<?=$image->getImage('240x180')?>" />
 					</a>
 					<p>Приоритет - <?= $image->priority?></p>
 					<p>ID - <?= $image->id?></p>
-					<p>Sharpen - <?= $image->sharpen?></p>
-					<p>Focus - <?= $image->focus?></p>
-					<p>rgbBgColor - <?= $image->rgbBgColor?></p>
 					<p><?=  str_replace(DIR, '/', $image->getPath())?></p>
 				</div>
 				<? endforeach; ?>

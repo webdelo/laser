@@ -24,11 +24,11 @@
 									<select class="filterInput" name="parentCategoryId">
 										<option></option>
 										<?php if ($objects->getMainCategories()->count()): foreach($objects->getMainCategories() as $categoryObject):?>
-										<option value="<?=$categoryObject->id?>" <?=($categoryObject->id==$this->getGET()['parentCategoryId']) ? 'selected' : ''; ?>><?=$categoryObject->name?></option>
+										<option value="<?=$categoryObject->id?>" <?=($categoryObject->id==$this->getGET()['parentCategoryId']) ? 'selected' : ''; ?>><?=$categoryObject->getName()?></option>
 											<?php if ($categoryObject->getChildren()): foreach($categoryObject->getChildren() as $children):?>
-											<option value="<?=$children->id?>" <?=($children->id==$this->getGET()['parentCategoryId']) ? 'selected' : ''; ?>>&nbsp;&nbsp;|-&nbsp;<?=$children->name?></option>
+											<option value="<?=$children->id?>" <?=($children->id==$this->getGET()['parentCategoryId']) ? 'selected' : ''; ?>>&nbsp;&nbsp;|-&nbsp;<?=$children->getName()?></option>
 												<?php if ($children->getChildren() != NULL): foreach($children->getChildren() as $children2):?>
-												<option value="<?=$children2->id?>" <?=($children2->id==$this->getGET()['parentCategoryId']) ? 'selected' : ''; ?>>&nbsp;&nbsp;&nbsp;&nbsp;|-&nbsp;<?=$children2->name?></option>
+												<option value="<?=$children2->id?>" <?=($children2->id==$this->getGET()['parentCategoryId']) ? 'selected' : ''; ?>>&nbsp;&nbsp;&nbsp;&nbsp;|-&nbsp;<?=$children2->getName()?></option>
 												<?php endforeach; endif;?>
 											<?php endforeach; endif;?>
 										<?php endforeach; endif;?>
@@ -78,12 +78,12 @@
 							<tr id="id<?=$category->id?>" class="dblclick" data-url="/admin/measures/category/<?=$category->id?>" data-id="<?=$category->id?>" data-priority="<?=$category->priority?>">
 								<td><input type="checkbox" class="groupElements" /></td>
 								<td><?=$category->id?></td>
-								<td><p class="alias"><a href="/admin/measures/category/<?=$category->id?>/"><?=$category->alias?></a></p></td>
-								<td><p class="name"><?=$category->name?> / <b><?=$category->getParent()->name ? $category->getParent()->name : 'Главная категория'?></b></p></td>
+								<td><p class="alias"><a href="/admin/measures/category/<?=$category->id?>"><?=$category->alias?></a></p></td>
+								<td><p class="name"><?=$category->getName()?> / <b><?=$category->getParent()->name ? $category->getParent()->name : 'Главная категория'?></b></p></td>
 								<td><p class="date"><?=$category->date?></p></td>
 								<td><p class="status"><font color="<?=$category->getStatus()->color?>"><?=$category->getStatus()->name?></font></p></td>
 								<td class="td_bord sortHandle header"><?= $category->priority?></td>
-								<td><a href="/admin/measures/category/<?=$category->id?>/" class="pen"></a></td>
+								<td><a href="/admin/measures/category/<?=$category->id?>" class="pen"></a></td>
 								<td><a class="del pointer button confirm" data-confirm="Remove the category?" data-action="/admin/measures/removeCategory/<?=$category->id?>/" data-callback="postRemoveCategory"></a></td>
 							</tr>
 						<?endforeach?>
@@ -129,11 +129,11 @@
 										<option value="">- Категории -</option>
 										<option value="main">Главная категория</option>
 										<?php if ($objects->getMainCategories()->count() != 0): foreach($objects->getMainCategories() as $categoryObject):?>
-										<option value="<?=$categoryObject->id?>" <?=($categoryObject->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>><?=$categoryObject->name?></option>
+										<option value="<?=$categoryObject->id?>" <?=($categoryObject->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>><?=$categoryObject->getName()?></option>
 											<?php if ($categoryObject->getChildren()): foreach($categoryObject->getChildren() as $children):?>
-											<option value="<?=$children->id?>" <?=($children->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>>&nbsp;&nbsp;|-&nbsp;<?=$children->name?></option>
+											<option value="<?=$children->id?>" <?=($children->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>>&nbsp;&nbsp;|-&nbsp;<?=$children->getName()?></option>
 												<?php if ($children->getChildren() != NULL): foreach($children->getChildren() as $children2):?>
-												<option value="<?=$children2->id?>" <?=($children2->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>>&nbsp;&nbsp;&nbsp;&nbsp;|-&nbsp;<?=$children2->name?></option>
+												<option value="<?=$children2->id?>" <?=($children2->id==$this->getGET()['categoryId']) ? 'selected' : ''; ?>>&nbsp;&nbsp;&nbsp;&nbsp;|-&nbsp;<?=$children2->getName()?></option>
 												<?php endforeach; endif;?>
 											<?php endforeach; endif;?>
 										<?php endforeach; endif;?>

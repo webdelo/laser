@@ -45,7 +45,7 @@ class Dates
 
 			$date = mktime($times[0], $times[1], $times[2], $dates[1], $dates[2], $dates[0]);
 		}
-
+		
 		return $date;
 	}
 
@@ -76,6 +76,26 @@ class Dates
 	{
 		$startDate = Dates::toTimestamp($startDate);
 		$endDate   = Dates::toTimestamp($endDate);
+		if ((int)$startDate > (int)$endDate)
+			throw new \Exception('Incorrect dates in Dates::daysBetweenDates()!');
+		return ceil(($endDate - $startDate)/Dates::$secondsInDay);
+	}
+	
+	public static function daysInPeriod($startDate, $endDate)
+	{
+		$startDate = Dates::toTimestamp($startDate);
+		$endDate   = Dates::toTimestamp($endDate);
+		if ((int)$startDate > (int)$endDate)
+			throw new \Exception('Incorrect dates in Dates::daysBetweenDates()!');
+		return ceil(($endDate - $startDate)/Dates::$secondsInDay) + 1;
+	}
+	
+	public static function nightsInPeriod($startDate, $endDate)
+	{
+		$startDate = Dates::toTimestamp($startDate);
+		$endDate   = Dates::toTimestamp($endDate);
+		if ((int)$startDate > (int)$endDate)
+			throw new \Exception('Incorrect dates in Dates::nightsInPeriod()!');
 		return ceil(($endDate - $startDate)/Dates::$secondsInDay);
 	}
 
@@ -195,6 +215,30 @@ class Dates
 				$string .= $hms['s'].' с.';
 
 		return $string;
+	}
+	
+	public static function getDayNumberFromUnixDate($date)
+	{
+		return date('j',$date);
+	}
+	
+	public static function getMonthNumberFromUnixDate($date)
+	{
+		return date('n',$date);
+	}
+	
+	public static function getYearNumberFromUnixDate($date)
+	{
+		return date('Y',$date);
+	}
+	
+	public static function getDateDetails($date)
+	{
+		return new \core\ArrayWrapper(array(
+			'day' => self::getDayNumberFromUnixDate($date),
+			'month' => self::getMonthNumberFromUnixDate($date),
+			'year' => self::getYearNumberFromUnixDate($date),
+		));
 	}
 }
 ?>

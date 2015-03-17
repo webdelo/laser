@@ -19,6 +19,10 @@ class PropertiesAdminController extends \controllers\base\Controller
 		'changePropertiesValuesPriority',
 		'addPropertyValue',
 		'editPropertyValue',
+		
+		'translatePropertiesValues',
+		'actionTranslate',
+		
 		'changeMeasureCategoryInValue',
 		'deletePropertyValue',
 		'ajaxGetPropertiesValuesBlock',
@@ -136,7 +140,7 @@ class PropertiesAdminController extends \controllers\base\Controller
 	{
 		$objectId =  $this->setObject($this->_config->getObjectsClass())->modelObject->add($post, $this->modelObject->getConfig()->getObjectFields());
 		if ($objectId) {
-			$this->getObject($this->objectClass, $objectId)->additionalCategories->edit($post->additionalCategories);
+			$this->getObject($this->objectClass, $objectId)->getAdditionalCategories()->edit($post->additionalCategories);
 		}
 		return $objectId;
 	}
@@ -262,5 +266,29 @@ class PropertiesAdminController extends \controllers\base\Controller
 			$this->modelObject->getErrors();
 		}
 		echo 1;
+	}
+	
+	protected function translatePropertiesValues()
+	{
+		$property = new \core\Noop();
+		if (isset($this->getREQUEST()[0]))
+			$property = $this->getObject($this->_config->getObjectClass(), $this->getREQUEST()[0]);
+		
+		$this->setContent('property', $property)
+			 ->includeTemplate($this->_config->getAdminTemplateDir().'translatePropertiesValues');
+	}
+	
+	protected function actionTranslate()
+	{
+		
+		$flag = true;
+		foreach ( $this->getPOST()['values'] as $valId=>$value ) {
+			$propertyValue = $this->getObject('\modules\properties\components\propertiesValues\lib\PropertyValue', $valId);
+			$edit = $this->setObject($propertyValue)->modelObject->edit($value);
+			if (!$edit) {
+				$flag = false;
+			}
+		}
+		$this->ajax($flag, 'ajax', true);
 	}
 }
