@@ -12,7 +12,7 @@ class FileUploadedObject extends \core\modules\base\ModuleObject
 	public function delete()
 	{
 		$config = $this->getParentObjectConfig();
-		$file = new \core\files\uploader\File(DIR.$config->filesPath.$this->id.'.'.$this->extension);
+		$file = new \core\files\uploader\File(DIR.$config->filesPath.$this->alias);
 		$file->delete();
 		return ( parent::delete() ) ? (int)$this->id : false ;
 	}
@@ -26,8 +26,8 @@ class FileUploadedObject extends \core\modules\base\ModuleObject
 	{
 		$config = $this->getParentObjectConfig();
 		$config = $config->getParentConfig()->getConfig();
-		if(file_exists(DIR.$config->filesPath.$this->id.'.'.$this->extension))
-			return '/'.$config->filesPath.$this->id.'.'.$this->extension;
+		if(file_exists(DIR.$config->filesPath.$this->alias))
+			return '/'.$config->filesPath.$this->alias;
 		else
 			return 'this file does not exist';
 	}
@@ -36,7 +36,7 @@ class FileUploadedObject extends \core\modules\base\ModuleObject
 	{
 		$config = $this->getParentObjectConfig();
 		$config = $config->getParentConfig()->getConfig();
-		if(file_exists(DIR.$config->filesPath.$this->id.'.'.$this->extension))
+		if(file_exists(DIR.$config->filesPath.$this->alias))
 			return '/'.$config->filesUrl.$parentId.'/'.$this->alias.'.'.$this->extension;
 		else
 			return 'this file does not exist';

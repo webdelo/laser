@@ -1,12 +1,6 @@
-$(function(){
-	$('.lang a').click(function(){
-		location.href = $(this).attr('href');
-		return false; 
-	});
-});
 
 $(document).ready(function(){
-	$('.mainH1').gradientText({
+	$('.mainH1,.priceLabel').gradientText({
 		colors: ['#6bc85b', '#2f9773']
 	});
 });

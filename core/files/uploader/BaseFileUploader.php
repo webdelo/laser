@@ -54,6 +54,11 @@ abstract class BaseFileUploader extends \core\files\DirectoryFilesReader
 		if (empty($_FILES[$this->inputKey]))
 			throw new \Exception('Variable $_FILES['.$this->inputKey.'] is empty!');
 		$this->_fileData = $_FILES[$this->inputKey];
+
+        if(is_array(current($this->_fileData)))
+            foreach($this->_fileData as $key=>$value)
+                $this->_fileData[$key] = $this->_fileData[$key][0];
+
 		return $this;
 	}
 

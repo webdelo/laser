@@ -37,6 +37,7 @@ header {
 
 .number span {
     font-size: 24px;
+	color: #fff;
 }
 
 .number.two {
@@ -47,6 +48,15 @@ header {
     padding-right: 20px;
     font-family: SegoeUIB;
     border-right: solid 1px #316549;
+}
+
+.number a,.two a {
+	color:  #ffffff;
+	text-decoration: none;
+}
+
+.infoBlockCenter .two a {
+	color: #613082 !important;
 }
 
 .lang {
@@ -244,6 +254,10 @@ header {
     padding: 0 34px;
 }
 
+.infoBlock strong a{
+	color: #2B3083;
+}
+
 .contentCenter {
     max-width: 1200px;
     margin: 0px auto;
@@ -314,6 +328,10 @@ header {
     font-size: 33px;
     line-height: 49px;
     font-family: SegoeUIL;
+}
+
+.type .alphaBeta a {
+	color: #ec921d;
 }
 
 .type img {
@@ -392,7 +410,7 @@ footer {
     font-weight: 400;
     line-height: 20px;
     display: block;
-    padding-bottom: 8px;
+    padding-bottom: 12px;
 }
 
 .videoModal {
@@ -837,4 +855,88 @@ footer {
 	-ms-border-radius: 5px;
 	-o-border-radius: 5px;
 	border-radius: 5px;
+}
+
+.inlineTextBlockFirst {
+	display : inline-block;
+	width: 70%;
+}
+
+.inlineTextBlockSecond {
+	display : inline-block;
+	width: 25%;
+	position: absolute;
+}
+
+.orderButton {
+border-radius: 4px;
+  background: -webkit-linear-gradient(90deg, rgba(47, 151, 115, 0.83) 0%, rgba(107, 200, 91, 0.83) 100%);
+  background: -moz-linear-gradient(90deg, rgba(47, 151, 115, 0.83) 0%, rgba(107, 200, 91, 0.83) 100%);
+  background: -o-linear-gradient(90deg, rgba(47, 151, 115, 0.83) 0%, rgba(107, 200, 91, 0.83) 100%);
+  background: -ms-linear-gradient(90deg, rgba(47, 151, 115, 0.83) 0%, rgba(107, 200, 91, 0.83) 100%);
+  background: linear-gradient(0deg, rgba(47, 151, 115, 0.83) 0%, rgba(107, 200, 91, 0.83) 100%);
+  width: 272px;
+  height: 43px;
+  color: #ffffff !important;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 45px;
+  text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.35);
+  text-transform: uppercase;
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.topTextMain  {
+	margin-bottom:20px;
+}
+
+.topTextMain  p{
+  color: #474747;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  padding-bottom: 30px;
+}
+
+.allignRight {
+	float: right;
+	margin-right: 30px;
+	margin-top: -57px;
+	margin-bottom: 10px;
+}
+
+.allignRight img {
+	margin: 0 auto;
+	width: 144px;
+	height: 161px;
+	display: block;
+}
+
+.priceLabel {
+	font-family: SegoeUIB;
+	margin-top: 15px;
+	margin-left: 10px;
+	display: block;
+}
+
+.ycounter {
+	margin-left: 20px;
+	margin-top: 7px;
+	visibility: hidden;
+}
+
+.socials {
+	margin-left: 20px;
+}
+
+.socials img {
+	display: block;
+	margin-bottom: 3px;
+}
+
+img.center-img {
+	display: block;
+	margin: 10px auto;
 }

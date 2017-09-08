@@ -71,6 +71,25 @@ class Article extends \core\modules\base\ModuleObject implements \interfaces\IOb
 			? $this->getTextFromLangParser($this->h1, $this->getLang($lang))
 			: $this->getName($lang);
 	}
+	
+	public function getCurrency()
+	{
+		$settings = new \core\Settings();
+		return $settings->getSettings('*',[])['rate'];
+	}
+	
+	public function getEquipmentPrice($name)
+	{
+		$settings = new \core\Settings();
+		if ($name == 's_full') return $settings->getSettings('*',[])['s_full'];
+		if ($name == 's_minimum') return $settings->getSettings('*',[])['s_minimum'];
+		if ($name == 'm_full') return $settings->getSettings('*',[])['m_full'];
+		if ($name == 'm_minimum') return $settings->getSettings('*',[])['m_minimum'];
+		if ($name == 'l_full') return $settings->getSettings('*',[])['l_full'];
+		if ($name == 'l_minimum') return $settings->getSettings('*',[])['l_minimum'];
+		if ($name == 'xl_full') return $settings->getSettings('*',[])['xl_full'];
+		if ($name == 'xl_minimum') return $settings->getSettings('*',[])['xl_minimum'];
+	}
 
 	/* Start: URL Methods */
 	public function getPath()

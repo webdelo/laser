@@ -36,7 +36,6 @@
 		->add('jquery.gradienttext.js', '/js/base/')
 		->add('jquery.measurer.js', '/js/base/')
 		->add('lightbox.js', '/js/lightbox/')
-		->add('languageHandler.js', '/js/base/')
 		->add('errors.class.js','/admin/js/base/actions/')
 		->add('error.class.js','/admin/js/base/actions/')
 		->add('buttons.class.js','/admin/js/base/actions/')
@@ -52,5 +51,6 @@
 		->tagsPrint();
 	?>
 	<!-- End: JS files -->
+	<script type="text/javascript" src="/js/base/languageHandler.js?v=1.1"></script>
 
 </head>

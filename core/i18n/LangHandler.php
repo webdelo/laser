@@ -73,6 +73,11 @@ class LangHandler
 	{
 		return $this->lang ? $this->lang : $this->getDefaultLang();
 	}
+
+	public function setLang($lang)
+    {
+        $this->lang = $lang;
+    }
 	
 	public function getDefaultLang() 
 	{

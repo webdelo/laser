@@ -21,7 +21,14 @@ try {
 		->setConfig($urlRedirectorConfig)
 		->loadCsvData()
 		->redirectCurrentPage();
-	
+
+    if (!empty($_SERVER['HTTP_HOST'])) {
+        if ($_SERVER['HTTP_HOST'] == 'en.run-laser.com')
+            \core\i18n\LangHandler::getInstance()->setLang('en');
+        else
+            \core\i18n\LangHandler::getInstance()->setLang('ru');
+    }
+
 	$controllerFactoryConfig = $configurator->getArrayByKey('controllers');
 	$controller = \controllers\base\ControllerFactory::getInstance()
 		->setConfig($controllerFactoryConfig)

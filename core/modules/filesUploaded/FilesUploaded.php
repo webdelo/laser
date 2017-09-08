@@ -18,7 +18,7 @@ class FilesUploaded extends \core\modules\base\ModuleObjects
 		$data = array_merge($data, $this->getAdditionalData($file));
 		$fileId = parent::add($data);
 		if ($fileId) {
-			if (!$file->move(DIR.$this->getParentObjectConfig()->filesPath.$fileId.'.'.$file->extension))
+			if (!$file->move(DIR.$this->getParentObjectConfig()->filesPath.$data['alias']))
 				return false;
 		} else {
 			return false;

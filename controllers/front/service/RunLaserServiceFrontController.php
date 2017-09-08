@@ -1,5 +1,7 @@
 <?php
 namespace controllers\front\service;
+use core\Configurator;
+
 class RunLaserServiceFrontController extends \controllers\base\Controller
 {
 	use	\core\traits\controllers\ControllersHandler,
@@ -57,11 +59,11 @@ class RunLaserServiceFrontController extends \controllers\base\Controller
 				WHERE
 					`domainAlias` = "?s"
 			)';
-		$articles->setSubquery($query, \modules\articles\lib\ArticleConfig::ACTIVE_STATUS_ID, '57,82,59,83', $this->getCurrentDomainAlias());
-		$items = new \modules\catalog\items\lib\Catalog();
-		$items->setSubquery(' AND `statusId` NOT IN (?d, ?d)', \modules\catalog\items\lib\CatalogItemConfig::BLOCKED_STATUS_ID, \modules\catalog\items\lib\CatalogItemConfig::REMOVED_STATUS_ID);
-		$itemsCategories = $items->getCategories()->setSubquery(' AND `statusId` = ?d', 1);
-		$sitemap->addObjects($itemsCategories)->addObjects($items)->addObjects($articles)->printSitemap();
+		$articles->setSubquery($query, \modules\articles\lib\ArticleConfig::ACTIVE_STATUS_ID, '57,102', $this->getCurrentDomainAlias());
+		//$items = new \modules\catalog\items\lib\Catalog();
+		//$items->setSubquery(' AND `statusId` NOT IN (?d, ?d)', \modules\catalog\items\lib\CatalogItemConfig::BLOCKED_STATUS_ID, \modules\catalog\items\lib\CatalogItemConfig::REMOVED_STATUS_ID);
+		//$itemsCategories = $items->getCategories()->setSubquery(' AND `statusId` = ?d', 1);
+		$sitemap->addObjects($articles)->printSitemap();
 	}
 
 	protected function robots()
@@ -74,6 +76,12 @@ class RunLaserServiceFrontController extends \controllers\base\Controller
 						: DIR.'/robots/DeveloperRobots.txt';
 		*/
 		$filePath = DIR.'/robots/'.$this->getDevelopersDomainAlias().'Robots.txt';
+
+        $configurator = Configurator::getInstance();
+
+        if ( $_SERVER['HTTP_HOST'] == \core\i18n\LangHandler::getInstance()->getLang() . '.' . $configurator->getArrayByKey('url')['default']['domain'] )
+            $filePath = DIR.'/robots/'. ucfirst(\core\i18n\LangHandler::getInstance()->getLang()) . $this->getDevelopersDomainAlias().'Robots.txt';
+
 		if (file_exists($filePath)){
 			header('Content-type: text/plain');
 			include($filePath);

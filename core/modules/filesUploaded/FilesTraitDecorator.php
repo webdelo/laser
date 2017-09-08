@@ -2,31 +2,31 @@
 namespace core\modules\filesUploaded;
 trait FilesTraitDecorator
 {
-	private $files;
+    private $files;
 
-	protected function getFilesCategories()
-	{
-		$files = new FilesUploaded($this);
-		return $files->getCategories();
-	}
+    public function getFilesCategories()
+    {
+        return $this->getFiles()->getCategories();
+    }
 
-	protected function getFilesStatuses()
-	{
-		$files = new FilesUploaded($this);
-		return $files->getStatuses();
-	}
+    public function getFilesStatuses()
+    {
+        return $this->getFiles()->getStatuses();
+    }
 
-	protected function getFilesByCategory($categories)
-	{
-	    $files = new FilesUploaded($this);
-		$categories = (is_array($categories)) ? implode(',',$categories) : (int)$categories;
-	    $files->setSubquery(' AND `objectId` = ?d AND `categoryId` IN (?s)', $this->id, $categories);
-	    return $files;
-	}
+    public function getFilesByCategory($categories)
+    {
+        $files = new FilesUploaded($this);
+        $categories = is_array($categories) ? implode(',',$categories) : (int)$categories;
+        $files->setSubquery(' AND `objectId` = ?d AND `categoryId` IN (?s) AND `statusId` = ?d ',$this->id,$categories, FileUploadedConfig::STATUS_ACTIVE)
+            ->setOrderBy(' `id` ASC ');
+        return $files;
+    }
 
-	protected function getFiles()
-	{
-	    return new FilesUploaded($this);
-	}
-
+    public function getFiles()
+    {
+        if (empty($this->files))
+            $this->files = new FilesUploaded($this);
+        return $this->files;
+    }
 }

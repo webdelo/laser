@@ -4,8 +4,6 @@
 	<div class="content">
 		<h1><?=$article->getH1()?></h1>
 		<?=$article->getText()?>
-		<br>
-				<p>Вы можете связаться с нами заполнив следующие поля.</p>
 				<form class="contactForm">
 				<input name="msgName" type="text" placeholder="Имя" class="textinput" value="">
 				<input name="email" type="text" placeholder="E-mail" class="textinput" value="">

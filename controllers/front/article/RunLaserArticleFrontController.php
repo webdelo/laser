@@ -63,7 +63,7 @@ class RunLaserArticleFrontController extends \controllers\base\Controller
 			 ->setLevel($article->getH1())
 			 ->includeTemplate('articles/contacts');
 	}
-
+	
 	public function getMainArticleName()
 	{
 		//$articles = new \modules\articles\lib\Articles();
@@ -80,7 +80,12 @@ class RunLaserArticleFrontController extends \controllers\base\Controller
 			$article = $articles->getObjectByAlias($alias);
 			if ($this->checkDomainAlias($article)){
 				if ($article->isValidPath($this->getSERVER()['REQUEST_URI']))
-					return $this->setContent('article', $article)
+					$newArticle = $this->calcPrices($article);
+					//$isGameplay = $alias == 'game-process' ? false : true;
+					$isGameplay = $this->belongsToGameProcessCategory($article);
+				
+					return $this->setContent('article', $newArticle)
+								->setContent('showImages', $isGameplay)
 								->setMetaFromObject($article)
 								->setLevel($article->getH1())
 								->includeTemplate('articles/article');
@@ -89,6 +94,126 @@ class RunLaserArticleFrontController extends \controllers\base\Controller
 		$this->redirect404();
 	}
 
+	private function belongsToGameProcessCategory($article)
+	{
+		$articleCategoryId = $article->categoryId;
+		if ($articleCategoryId == 103) { return true; } else { return false; } //103 - projects category id
+	}
+
+	private function calcPrices($article)
+	{
+		$currency = $article->getCurrency();
+		
+		$pos = strpos($article->getText(), '$s_full_rub');
+		if ($pos === false) {} else {
+			$calc = $article->getEquipmentPrice('s_full');
+			$article->text = str_replace('$s_full_rub',$calc,$article->getText());
+		}
+		
+		$pos = strpos($article->getText(), '$s_minimum_rub');
+		if ($pos === false) {} else {
+			$calc = $article->getEquipmentPrice('s_minimum');
+			$article->text = str_replace('$s_minimum_rub',$calc,$article->getText());
+		}
+		
+		$pos = strpos($article->getText(), '$m_full_rub');
+		if ($pos === false) {} else {
+			$calc = $article->getEquipmentPrice('m_full');
+			$article->text = str_replace('$m_full_rub',$calc,$article->getText());
+		}
+		
+		$pos = strpos($article->getText(), '$m_minimum_rub');
+		if ($pos === false) {} else {
+			$calc = $article->getEquipmentPrice('m_minimum');
+			$article->text = str_replace('$m_minimum_rub',$calc,$article->getText());
+		}
+		
+		$pos = strpos($article->getText(), '$l_full_rub');
+		if ($pos === false) {} else {
+			$calc = $article->getEquipmentPrice('l_full');
+			$article->text = str_replace('$l_full_rub',$calc,$article->getText());
+		}
+		
+		$pos = strpos($article->getText(), '$l_minimum_rub');
+		if ($pos === false) {} else {
+			$calc = $article->getEquipmentPrice('l_minimum');
+			$article->text = str_replace('$l_minimum_rub',$calc,$article->getText());
+		}
+		
+		$pos = strpos($article->getText(), '$xl_full_rub');
+		if ($pos === false) {} else {
+			$calc = $article->getEquipmentPrice('xl_full');
+			$article->text = str_replace('$xl_full_rub',$calc,$article->getText());
+		}
+		
+		$pos = strpos($article->getText(), '$xl_minimum_rub');
+		if ($pos === false) {} else {
+			$calc = $article->getEquipmentPrice('xl_minimum');
+			$article->text = str_replace('$xl_minimum_rub',$calc,$article->getText());
+		}
+		
+		
+		
+		
+		$pos = strpos($article->getText(), '$s_full');
+		if ($pos === false) {} else {
+			$ep = str_replace(' ', '', $article->getEquipmentPrice('s_full'));
+			$calc = round((int)$ep / $currency);
+			$article->text = str_replace('$s_full',$calc,$article->getText());
+		}
+		
+		$pos = strpos($article->getText(), '$s_minimum');
+		if ($pos === false) {} else {
+			$ep = str_replace(' ', '', $article->getEquipmentPrice('s_minimum'));
+			$calc = round((int)$ep / $currency);
+			$article->text = str_replace('$s_minimum',$calc,$article->getText());
+		}
+		
+		$pos = strpos($article->getText(), '$m_full');
+		if ($pos === false) {} else {
+			$ep = str_replace(' ', '', $article->getEquipmentPrice('m_full'));
+			$calc = round((int)$ep / $currency);
+			$article->text = str_replace('$m_full',$calc,$article->getText());
+		}
+		
+		$pos = strpos($article->getText(), '$m_minimum');
+		if ($pos === false) {} else {
+			$ep = str_replace(' ', '', $article->getEquipmentPrice('m_minimum'));
+			$calc = round((int)$ep / $currency);
+			$article->text = str_replace('$m_minimum',$calc,$article->getText());
+		}
+		
+		$pos = strpos($article->getText(), '$l_full');
+		if ($pos === false) {} else {
+			$ep = str_replace(' ', '', $article->getEquipmentPrice('l_full'));
+			$calc = round((int)$ep / $currency);
+			$article->text = str_replace('$l_full',$calc,$article->getText());
+		}
+		
+		$pos = strpos($article->getText(), '$l_minimum');
+		if ($pos === false) {} else {
+			$ep = str_replace(' ', '', $article->getEquipmentPrice('l_minimum'));
+			$calc = round((int)$ep / $currency);
+			$article->text = str_replace('$l_minimum',$calc,$article->getText());
+		}
+		
+		$pos = strpos($article->getText(), '$xl_full');
+		if ($pos === false) {} else {
+			$ep = str_replace(' ', '', $article->getEquipmentPrice('xl_full'));
+			$calc = round((int)$ep / $currency);
+			$article->text = str_replace('$xl_full',$calc,$article->getText());
+		}
+		
+		$pos = strpos($article->getText(), '$xl_minimum');
+		if ($pos === false) {} else {
+			$ep = str_replace(' ', '', $article->getEquipmentPrice('xl_minimum'));
+			$calc = round((int)$ep / $currency);
+			$article->text = str_replace('$xl_minimum',$calc,$article->getText());
+		}
+		
+		return $article;
+	}
+	
 	private function checkArticleAlias($alias)
 	{
 		return $this->getArticleObject()->checkAlias($alias);
@@ -101,7 +226,13 @@ class RunLaserArticleFrontController extends \controllers\base\Controller
 
 	public function viewIndex()
 	{
-		$this->includeTemplate('index');
+		$alias = 'index';
+		$filters = new \core\FilterGenerator();
+		$filters->setSubquery('AND mt.`alias` = \'?s\'',$alias);
+		$articles = new \modules\articles\lib\Articles();
+		$articles->setFilters($filters);
+		$this->setContent('articles', $articles)
+			 ->includeTemplate('index');
 	}
 
 	public function getArticle ($alias) {
@@ -121,6 +252,12 @@ class RunLaserArticleFrontController extends \controllers\base\Controller
 		$this->articleObject = new \modules\articles\lib\Articles();
 	}
 
+	protected function getExchangeRate()
+	{
+		$settings = new \core\Settings();
+		return $settings->getSettings('*',[])['rate'];
+	}
+	
 	public function getTopMenu()
 	{
 		$topMenu = $this->setMenuData(\modules\articles\lib\ArticleConfig::TOP_MENU_CATEGORY_ID, \modules\articles\lib\ArticleConfig::ACTIVE_STATUS_ID);

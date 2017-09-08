@@ -31,6 +31,9 @@ class Settings extends Model
 			'noreply_email, rate' => array(
 				'adapt' => '_adaptChangeName'
 			),
+			's_full, s_minimum, m_full, m_minimum, l_full, l_minimum, xl_full, xl_minimum' => array(
+				'adapt' => '_adaptChangeName'
+			),
 			'metaTitle, metaKeywords, metaDescription, headerText' => array(
 				'adapt' => '_adaptChangeName'
 			)
@@ -76,7 +79,7 @@ class Settings extends Model
 			);
 		$row = $this->getOne('*', $filters);
 		if (empty($row)) return;
-		$out = $this->_outByAlias();
+		$out = $this->_outByName();
 		if (in_array($row['name'], array_keys($out))) {
 			return $this->$out[$row['name']]($row['value']);
 		}
