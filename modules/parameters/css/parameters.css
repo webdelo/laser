@@ -1,0 +1,83 @@
+.parameter .main_param {
+	float: left;
+	margin-right: 5px;
+}
+.parameter .main_param .title {padding-bottom:15px; font-size:17px; font-weight: bold;}
+.parameter .main_param input[type=text] { padding:0 5px; height:25px; line-height:24px; border:1px solid #999999; width:250px;}
+.parameter .main_param td { padding-bottom:15px; line-height:24px; font-weight:bold;}
+.parameter .main_param td.first { text-align:right; padding-right:10px;}
+.parameter .main_param select, .parameter .dop_param select { width:239px; height:25px; line-height:24px; border:1px solid #999999;}
+.parameter .main_param textarea, .parameter .dop_param textarea{width:226px; overflow: auto; max-width:400px; padding:5px; height:50px; font-family: Arial, Helvetica, sans-serif; line-height:125%; border:1px solid #999999;}
+
+.parameter .dop_param {
+	padding-left: 40px;
+	box-shadow: inset 10px 0px 20px -15px rgba(0,0,0,0.5);
+}
+.parameter  .dop_param td {
+	line-height: normal;
+}
+
+
+.parameter .parameterValues {
+	float: left;
+	margin-right: 5px;
+	margin-top: 10px;
+}
+.parameter .parameterValues .title {padding-bottom:15px; font-size:17px; font-weight: bold; width: 400px;}
+.parameter .parameterValues input[type=text] { padding:0 10px; height:15px; line-height:15px; border:1px solid #999999; width:65px; font-size: 14px;}
+.parameter .parameterValues td {  font-weight:normal; padding: 5px 10px;}
+.parameter .parameterValues td.first { text-align:right; padding-right:10px; }
+.parameter .parameterValues select { width:502px; height:25px; line-height:24px; border:1px solid #999999;}
+.parameter .parameterValues textarea {overflow: auto; padding:5px; height:50px; font-family: Arial, Helvetica, sans-serif; line-height:125%; border:1px solid #999999;}
+
+.parameterValuesTable  {
+	width: 100%;
+}
+.parameterValuesTable td { vertical-align: middle; border-top: 1px solid #ededed; }
+.parameterValuesTable tr:first-child td { border-top: none }
+
+.parameterValuesTable tr:hover td {
+	background-color: #edf3ff;
+}
+
+.parameter .parameterValues ul {
+	margin-bottom: 10px;
+}
+
+.sortHandle .ui-icon-arrowthick-2-n-s {
+	margin-left: 15px;
+}
+
+.parameterValuesBlock {
+	width: 400px; 
+}
+
+.parameter .parameterValues .newParameterForm input[type=text]{
+	height: 20px;
+	width: 120px;
+}
+.parameter .parameterValues .newParameterForm textarea {
+	margin-top: 3px;
+	width: 120px;
+}
+.newParameterFormSubmit {
+	float: right;
+	margin-right: 8px;
+}
+
+a.addInContent {
+	display: block;
+	width: 16px;
+	height: 16px;
+	background: url(/admin/images/buttons/save_object.png) no-repeat center top;
+}
+
+a.deleteInContent {
+	display: block;
+	width: 15px;
+	height: 15px;
+	background: url(/admin/images/buttons/edit_del.png) no-repeat center top;
+}
+a.deleteInContent:hover {
+	background-position: center bottom;
+}

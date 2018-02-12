@@ -1,0 +1,16 @@
+#imageMini { 
+	position: absolute;
+	z-index: 2; 
+	width: auto; 
+	height: auto;
+}
+#imageMini img {
+	float: left;
+	display: inline-block;
+}
+.loaderMiniTitle {
+	float: left;
+	color: #000;
+	display: inline-block;
+	line-height: 250%;
+}

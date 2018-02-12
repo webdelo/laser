@@ -1,0 +1,51 @@
+
+.bigTitle p {
+	font-family: lucida sans unicode,lucida grande,sans-serif;
+	color : #D41A1A;
+	font-size: 20px;
+	border-bottom: 1px dashed #D41A1A;
+	margin-bottom: 30px;
+	padding-bottom: 10px;
+}
+
+.bigTitle {
+	padding-top: 5px;
+}
+
+.bigTitle .website{
+	font-size: 15px;
+	color: #2B3338;
+	border: none;
+	margin: 0;
+}
+
+.tech p {
+	font-size: 15px;
+	color: #2B3338;
+}
+
+body {
+	background-repeat:repeat;
+    line-height: 1.6em;
+	font-weight:normal;
+    color: #424E56;
+}
+
+.content table{
+	margin-left: 25px;
+	font-family: "Trebuchet MS";
+}
+
+.content table td{
+	font-size: 14px;	
+}
+
+.logo img{
+	float: right;
+}
+
+.footer {
+	padding-top: 10px;
+	margin-top: 45px;
+	border-top: 1px dashed #3041B9
+}

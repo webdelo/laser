@@ -1,0 +1,154 @@
+#objects-tbl .name, 
+#objects-tbl .category_name, 
+#objects-tbl .sortHandle, 
+#objects-tbl .status {
+	font-size: 14px;
+}
+
+#objects-tbl .actions {
+	position: relative;
+	width: 160px;
+}
+#objects-tbl .viewObject {
+	color: #0072b3;
+	border-bottom: 1px dotted #0072b3;
+	text-decoration: none;
+}
+#objects-tbl .viewObject:hover {
+	color: #025d8e;
+	border-bottom: 1px dotted #025d8e;
+}
+
+#objects-tbl .viewObject:active {
+	color: #a30036;
+	border-bottom: 1px dotted #a30036;
+}
+
+.consoleActionDetails {
+	position: absolute;
+	top: 23px;
+	right: 0px;
+	padding: 10px;
+	display: none;
+	background: #ffffff;
+	width: 152px;
+}
+
+#objects-tbl a.viewObject {
+	display: block;
+	float: none;
+	height: 25px;
+	line-height: 25px;
+}
+
+.itemBlock:hover {
+	background: #F9FCFB;
+}
+.itemBlock:active {
+	box-shadow: none;
+}
+.itemBlock {
+	position: relative;
+	display: block;
+	width: 100%;
+	border-bottom: 1px dotted #ccd0d1;
+	/*background: #f9fbfe;*/
+	border-radius: 5px;
+	margin-top: 0px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.itemBlock .itemHeader {
+	width: 70px;
+	height: 40px;
+	display: inline-block;
+	float: left;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+}
+
+.itemBlock .itemHeader .itemDate {
+	display: inline-block;
+	width: 120px;
+	text-align: center;
+	font-size: 10px;
+	color: #999;
+}
+.itemBlock .itemHeader .categoryName {
+	color: #d8613c;
+	float: left;
+	width: 120px;
+	height: 26px;
+	line-height: 37px;
+	font-size: 11px;
+	text-transform: uppercase;
+	text-align: center;
+}
+
+.itemBlock .itemContent {
+	display: inline-block;
+	font-size: 14px;
+	height: 40px;
+	width: 71%;
+	float: left;
+}
+.itemBlock .itemContent p {
+	line-height: 40px;
+}
+
+.itemBlock .itemActions a.viewObject {
+	display: block;
+	width: 220px;
+	height: 40px;
+	line-height: 40px;
+	background: #005E96;
+	color: #fff;
+	text-decoration: none;
+	font-size: 13px;
+	text-transform: uppercase;
+	text-align: center;
+}
+.itemBlock .itemActions a.viewObject:hover {
+	opacity: .8;
+}
+.itemBlock .itemActions a.viewObject:active {
+	background: #0573b2;
+}
+.viewObjectDetails.viewed a.toVievewed {
+	color: green;
+	float: left;
+}
+.viewObjectDetails a {
+	color: #349963;
+	display: inline-block;
+	width: 108px;
+	height: 40px;
+	line-height: 40px;
+	font-weight: bold;
+	text-decoration: none;
+	float: left;
+}
+.viewObjectDetails {
+	height: auto;
+	float: right;
+	overflow: hidden;
+}
+.toVievewed {
+	background: #F9FCFB;
+}
+.viewed .toVievewed {
+	background: #f9fbfe;
+	display: inline-block;
+	width: 108px;
+	height: 40px;
+	line-height: 40px;
+	cursor: auto;
+}
+.viewObjectDetails a.toArchive {
+	background: #f9f9f9;
+	color: #918A8A;
+	font-weight: bold;
+	float: left;
+	border-right: 4px solid #afacac;
+}

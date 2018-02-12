@@ -1,0 +1,27 @@
+AddType text/x-component .htc
+RewriteEngine On
+RewriteBase /
+
+php_flag magic_quotes_gpc off
+
+RewriteCond %{REQUEST_FILENAME} /admin/(.*)
+RewriteCond %{REQUEST_FILENAME} !/admin/captcha.php
+
+RewriteRule !\.(js|ico|css|png)$ %{DOCUMENT_ROOT}/admin/index.php [L]
+
+RewriteCond %{REQUEST_FILENAME} !/admin/(.*)
+RewriteCond %{REQUEST_FILENAME} !/chat/(.*)
+RewriteCond %{REQUEST_FILENAME} !/files/(.*)
+RewriteCond %{REQUEST_FILENAME} !/cache/(.*)
+RewriteCond %{REQUEST_FILENAME} !/microtest.php
+RewriteCond %{REQUEST_FILENAME} !/microtest.html
+RewriteCond %{REQUEST_FILENAME} !/adminer.php
+RewriteCond %{REQUEST_FILENAME} !/sxd/(.*)
+RewriteCond %{REQUEST_FILENAME} !/images/fonts/(.*)
+RewriteCond %{REQUEST_FILENAME} !/PIE.htc
+RewriteCond %{REQUEST_FILENAME} !/mailru-domaingRXiQk6fpXGTqZ4P.html
+RewriteCond %{REQUEST_FILENAME} !/yandex_6ea9189aa3b415e0.txt
+RewriteCond %{REQUEST_FILENAME} !/googleadcfbe11ccd40184.html
+RewriteCond %{REQUEST_FILENAME} !/google4cbd96bc70fd682a.html
+
+RewriteRule !\.(js|ico|css)$ index.php [L]

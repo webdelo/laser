@@ -1,0 +1,17 @@
+.hint{ position:relative;}
+.hint_in{ position:absolute; top:0px; z-index:150;
+-webkit-border-radius: 6px;
+-moz-border-radius: 6px;
+border-radius: 6px;
+background: #ef8e8e;
+behavior: url(PIE.htc); cursor: pointer;}
+.hint_in .arr2{ position:absolute; width:10px; height:12px; background:url(/admin/js/base/actions/images/left.png) no-repeat center center;}
+.hintxt{ padding:6px;}
+.hint .hintxt p{ font-size:11px; color:#fff; white-space: nowrap;}
+
+.focus .inp_in{ border:1px solid #e79999;}
+.focus .hint_in{ display: block;
+-webkit-box-shadow: #efc4c4 5px 5px 3px;
+-moz-box-shadow: #efc4c4 5px 5px 3px;
+box-shadow: #efc4c4 5px 5px 3px;
+behavior: url(PIE.htc);}
