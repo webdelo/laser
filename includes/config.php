@@ -172,7 +172,7 @@ $config = array(
 		array(
 			'settings' =>
 				array(
-					'host'       => 'db03.hostline.ru',
+					'host'       => '83.69.230.31',
 					'login'      => 'vh88807_new',
 					'pass'       => 'wUKooL9G',
 					'database'   => 'vh88807_release',
