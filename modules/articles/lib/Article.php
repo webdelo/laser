@@ -93,6 +93,7 @@ class Article extends \core\modules\base\ModuleObject implements \interfaces\IOb
 		if ($name == 'bb_desk') return $settings->getSettings('*',[])['bb_desk'];
 		if ($name == 'bb_rocket') return $settings->getSettings('*',[])['bb_rocket'];
 		if ($name == 'climbing_wall') return $settings->getSettings('*',[])['climbing_wall'];
+		if ($name == 'viktorinye_stoiki') return $settings->getSettings('*',[])['viktorinye_stoiki'];
 	}
 
 	/* Start: URL Methods */
