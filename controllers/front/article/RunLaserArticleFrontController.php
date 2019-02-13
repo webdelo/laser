@@ -169,6 +169,12 @@ class RunLaserArticleFrontController extends \controllers\base\Controller
 			$calc = $article->getEquipmentPrice('climbing_wall');
 			$article->text = str_replace('$climbing_wall_rub',$calc,$article->getText());
 		}
+
+		$pos = strpos($article->getText(), '$viktorinye_stoiki_rub');
+		if ($pos === false) {} else {
+			$calc = $article->getEquipmentPrice('viktorinye_stoiki');
+			$article->text = str_replace('$viktorinye_stoiki_rub',$calc,$article->getText());
+		}
 		
 		
 		
