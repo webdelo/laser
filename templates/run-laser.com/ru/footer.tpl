@@ -9,9 +9,12 @@
                     <span>Email:   info@run-laser.com</span>
                 </div>
 				<div class="leftFooterBlock socials">
-					<a href="https://www.instagram.com/lasermaze/" target="_blank"><img src="/images/social/instagram-logo.png" alt=""></a>
-					<a href="https://www.youtube.com/channel/UCZLkd-T3zkNZXlKtWRO0TTQ" target="_blank"><img src="/images/social/youtube_32.png" alt="youtube"> 
-                        <b style="color:#ff0000">Run Laser</b>
+					<a href="https://www.instagram.com/lasermaze/" target="_blank" style="float:left;">
+                        <img src="/images/social/instagram-logo.png" alt="">
+                    </a>
+					<a href="https://www.youtube.com/channel/UCZLkd-T3zkNZXlKtWRO0TTQ" target="_blank" style="float:left;">
+                        <img src="/images/social/youtube_32.png" alt="youtube" style="float:left;"> 
+                        <b style="color:#ff0000;line-height:30px;">Run Laser</b>
                     </a>
 					<!--<a href="http://vk.com/runlaser" target="_blank"><img src="/images/social/vk-logo.png" alt=""></a>-->
 				</div>
