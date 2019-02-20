@@ -29,7 +29,7 @@ $(document).ready(function() {
 		});
 	});
 	$('.bgVideo, .close').click( function(){ 
-		$('.videoModal')
+		$('.videoModal, .YouTubeModal')
 			.animate({opacity: 0, top: '45%'}, 200,  
 				function(){ 
 					$(this).css('display', 'none'); 
@@ -37,6 +37,20 @@ $(document).ready(function() {
 				}
 			);
 	});
+    
+	$('.playYouTube').click( function(event){ 
+		event.preventDefault();
+        playYouTube = $(this).attr('href');
+		$('.bgVideo').fadeIn(400, 
+		 	function(){
+				$('.YouTubeModal')
+					.css('display', 'block')
+					.animate({opacity: 1, top: '50%'}, 200);
+                    
+                $('.YouTubeModal iframe').attr('src', playYouTube)
+		});
+	});
+    //$(a).each(function(){cnt++;$(this).attr('data-img-id',cnt);});
 });
 
 
