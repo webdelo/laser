@@ -31,8 +31,9 @@ $(document).ready(function() {
 	$('.bgVideo, .close').click( function(){ 
 		$('.videoModal, .YouTubeModal')
 			.animate({opacity: 0, top: '45%'}, 200,  
-				function(){ 
-					$(this).css('display', 'none'); 
+				function(){
+                    $('.YouTubeModal iframe').attr('src', '');
+					$(this).css('display', 'none');
 					$('.bgVideo').fadeOut(400); 
 				}
 			);
@@ -47,7 +48,7 @@ $(document).ready(function() {
 					.css('display', 'block')
 					.animate({opacity: 1, top: '50%'}, 200);
                     
-                $('.YouTubeModal iframe').attr('src', playYouTube)
+                $('.YouTubeModal iframe').attr('src', playYouTube);
 		});
 	});
     //$(a).each(function(){cnt++;$(this).attr('data-img-id',cnt);});
