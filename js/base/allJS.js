@@ -40,7 +40,7 @@ $(document).ready(function() {
     
 	$('.playYouTube').click( function(event){ 
 		event.preventDefault();
-        playYouTube = $(this).attr('href');
+        var playYouTube = $(this).attr('href');
 		$('.bgVideo').fadeIn(400, 
 		 	function(){
 				$('.YouTubeModal')

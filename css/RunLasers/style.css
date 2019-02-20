@@ -425,6 +425,7 @@ footer {
     padding-bottom: 12px;
 }
 
+.YouTubeModal,
 .videoModal {
     position: fixed;
     width: 560px;
