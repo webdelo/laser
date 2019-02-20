@@ -200,6 +200,18 @@ header {
     letter-spacing: 1px;
 }
 
+.playYouTube {
+    display: block;
+    background: url(/images/social/youtube_32.png) no-repeat center center;
+    width: 34px;
+    height: 34px;
+    position: absolute;
+    bottom: 27px;
+    right: 5px;
+    font-size: 33px;
+    line-height: 34px;
+}
+
 .infoBlock {
     background-color:  rgba(255, 255, 255, 0.91);
     box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.16);
