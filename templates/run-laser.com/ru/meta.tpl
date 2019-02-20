@@ -33,7 +33,7 @@
 		->add('feedbackHandler.js','/js/feedback/')
 		->add('feedback.class.js','/js/feedback/')
 		->add('ajaxLoader.class.js', '/js/')
-		->add('allJS.js', '/js/base/')
+		->add('allJS.js?v2', '/js/base/')
 		->add('jquery.gradienttext.js', '/js/base/')
 		->add('jquery.measurer.js', '/js/base/')
 		->add('lightbox.js', '/js/lightbox/')

@@ -451,6 +451,7 @@ footer {
     display: none;
 }
 
+.YouTubeModal svg,
 .videoModal svg {
     float: right;
     fill: #ec921d;
