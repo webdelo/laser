@@ -5,7 +5,11 @@
                     <span>Copyright © 2015</span>
                 </div>
                 <div class="leftFooterBlock">
-                    <span>Tel:   +7 (929) 6108708 </span>
+                    <b>
+					Tel:   +7 (929) 6108708
+					<a href="https://wa.me/79296108708?text=Run-Laser.Com"><img src="/images/social/whatsapp_32.png" alt=""></a>
+					<a href="viber://chat?number=79296108708"><img src="/images/social/viber_32.png" alt=""></a>
+					</b>
                     <span>Email:   info@run-laser.com</span>
                 </div>
 				<div class="leftFooterBlock socials">
