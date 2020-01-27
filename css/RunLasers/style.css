@@ -955,4 +955,6 @@ img.center-img {
 	margin: 10px auto;
 }
 
-header .headerCenter .number img {height: 25px;}
+header .headerCenter .number img {
+	height: 25px;
+}
