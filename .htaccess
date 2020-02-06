@@ -23,5 +23,12 @@ RewriteCond %{REQUEST_FILENAME} !/mailru-domaingRXiQk6fpXGTqZ4P.html
 RewriteCond %{REQUEST_FILENAME} !/yandex_6ea9189aa3b415e0.txt
 RewriteCond %{REQUEST_FILENAME} !/googleadcfbe11ccd40184.html
 RewriteCond %{REQUEST_FILENAME} !/google4cbd96bc70fd682a.html
+RewriteCond %{REQUEST_FILENAME} !/yandex_5fde826f1609af6b.html
+RewriteCond %{REQUEST_FILENAME} !/google763a35db9ec5e42e.html
+RewriteCond %{REQUEST_FILENAME} !/robots.txt
+RewriteCond %{REQUEST_FILENAME} !/sitemap.xml
+RewriteCond %{REQUEST_FILENAME} !/sitemap-en.xml
+
+
 
 RewriteRule !\.(js|ico|css)$ index.php [L]
