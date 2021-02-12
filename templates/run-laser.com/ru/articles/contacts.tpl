@@ -4,6 +4,7 @@
 	<div class="content">
 		<h1><?=$article->getH1()?></h1>
 		<?=$article->getText()?>
+		<!--
 		<form class="contactForm">
 			<input name="msgName" type="text" placeholder="Имя" class="textinput" value="">
 			<input name="email" type="text" placeholder="E-mail" class="textinput" value="">
@@ -18,6 +19,7 @@
 				<a href="/politica-confidential/" target="_blank">соглашение</a>.
 			</div>
 		</form>
+		-->
 	</div>
 </main>
 <?$this->includeTemplate('footer')?>
