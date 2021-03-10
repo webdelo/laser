@@ -4,6 +4,7 @@
 	<div class="content">
 		<h1><?=$article->getH1()?></h1>
 		<?=$article->getText()?>
+        <?/*?>
 				<!--
 				<form class="contactForm">
 				<input name="msgName" type="text" placeholder="Name" class="textinput" value="">
@@ -15,6 +16,7 @@
 					</div>
 				</form>
 				-->
+        <?*/?>
 	</div>
 </main>
 <?$this->includeTemplate('footer')?>
