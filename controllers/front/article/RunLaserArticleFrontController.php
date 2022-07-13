@@ -81,6 +81,7 @@ class RunLaserArticleFrontController extends \controllers\base\Controller
 			if ($this->checkDomainAlias($article)){
 				if ($article->isValidPath($this->getSERVER()['REQUEST_URI']))
 					$newArticle = $this->calcPrices($article);
+                    $newArticle ? $newArticle : $this->redirect404();
 					//$isGameplay = $alias == 'game-process' ? false : true;
 					$isGameplay = $this->belongsToGameProcessCategory($article);
 				
