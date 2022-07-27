@@ -172,10 +172,10 @@ $config = array(
 		array(
 			'settings' =>
 				array(
-					'host'       => 'localhost',
-					'login'      => 'root',
-					'pass'       => '',
-					'database'   => 'laser',
+                    'host'       => '83.69.230.31',
+                    'login'      => 'vh88807_new',
+                    'pass'       => 'wUKooL9G',
+                    'database'   => 'vh88807_release',
 					'error_mode' => (TEST_MODE) ? 2 : 1  // 1 - short error ("MySQL Error"); 2 - full error
 				),
 			'tables' =>
