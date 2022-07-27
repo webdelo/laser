@@ -8,6 +8,7 @@
 	<title>404 Page not found</title>
 	<meta name="description" content="404 Page not found" />
 	<meta name="keywords" content="404 Page not found" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<!-- End: Meta Information -->
 	
 		<!-- Start: CSS files -->
@@ -37,13 +38,14 @@
 <script type="text/javascript" src="/admin/js/base/actions/form.class.js"></script>
 <script type="text/javascript" src="/admin/js/jquery/lightbox/jquery.lightbox.js"></script>
 <script type="text/javascript" src="/admin/js/jquery/extensions/jquery.inputmask.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
 	<!-- End: JS files -->
 
 	<script type="text/javascript" src="/js/base/languageHandler.js?v=1.1"></script>
 
 </head>
 <?$this->includeTemplate('header')?>
-	<div style="position: relative;margin: 100px auto;width: 530px;">
-		<span style="font-size: 30px;font-family: 'Trebuchet MS';">404 Page not found</span>
+	<div class="block404">
+		<span>404 Page not found</span>
 	</div>
 <?$this->includeTemplate('footer')?>

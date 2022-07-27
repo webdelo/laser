@@ -8,6 +8,7 @@
 	<title><?=$this->getMetaTitle();?></title>
 	<meta name="description" content="<?=$this->getMetaDescription();?>" />
 	<meta name="keywords" content="<?=$this->getMetaKeywords();?>" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<!-- End: Meta Information -->
 	
 		<!-- Start: CSS files -->
@@ -27,7 +28,8 @@
 	<!-- Start: JS files -->
 	<?
 	$js = $this->getController('imploder')->js();
-	$js->add('jquery.js')
+	$js->add('jquery.js','/js/')
+		->add('index.js','/js/')
 		->add('slides.min.jquery.js')
 		->add('jquery-ui-1.10.1.custom.min.js','/js/extensions/')
 		->add('feedbackHandler.js','/js/feedback/')
@@ -54,5 +56,6 @@
 	<!-- End: JS files -->
 
 	<script type="text/javascript" src="/js/base/languageHandler.js?v=1.1"></script>
+
 
 </head>

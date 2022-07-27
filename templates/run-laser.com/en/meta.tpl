@@ -8,6 +8,7 @@
 	<title><?=$this->getMetaTitle();?></title>
 	<meta name="description" content="<?=$this->getMetaDescription();?>" />
 	<meta name="keywords" content="<?=$this->getMetaKeywords();?>" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<!-- End: Meta Information -->
 	
 		<!-- Start: CSS files -->
@@ -49,6 +50,7 @@
 		->add('form.class.js','/admin/js/base/actions/')
 		->add('jquery.lightbox.js','/admin/js/jquery/lightbox/')
 		->add('jquery.inputmask.js','/admin/js/jquery/extensions/')
+		->add('index.js','/js/')
 		->tagsPrint();
 	?>
 	<!-- End: JS files -->

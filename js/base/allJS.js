@@ -1,23 +1,3 @@
-
-$(document).ready(function(){
-	$('.mainH1,.priceLabel').gradientText({
-		colors: ['#6bc85b', '#2f9773']
-	});
-});
-
-$(document).ready(function(){
-	$('.mainH2').gradientText({
-		colors: ['#6bc85b', '#2f9773']
-	});
-});
-
-$(document).ready(function(){
-	$('.pAsMainH2').gradientText({
-		colors: ['#6bc85b', '#2f9773']
-	});
-});
-
-
 $(document).ready(function() { 
 	$('.playBottom').click( function(event){ 
 		event.preventDefault(); 
@@ -53,5 +33,3 @@ $(document).ready(function() {
 	});
     //$(a).each(function(){cnt++;$(this).attr('data-img-id',cnt);});
 });
-
-
