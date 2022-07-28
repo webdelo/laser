@@ -16,7 +16,8 @@ class FeedbackFrontController extends \controllers\base\Controller
 
 	protected function ajaxSendMessage()
 	{
-	    $feedback = new \modules\mailers\ContactsFeedback($this->getPOST());
+	    die();  // Disable temporary forms
+        $feedback = new \modules\mailers\ContactsFeedback($this->getPOST());
 	    $this->setObject($feedback)
 		    ->ajax($this->modelObject->sendFeedbackMail(), 'ajax');
 	}
@@ -35,6 +36,7 @@ class FeedbackFrontController extends \controllers\base\Controller
 
 	protected function ajaxSendContactMessage()
 	{
+	    die();  // Disable temporary forms
 		$feedback = new \modules\mailers\SendContactMessage($this->getPOST());
 		$res = $feedback->sendMessage();
 		$return = $res   ?   array('result'=>'ok')   :   $feedback->getErrors();
