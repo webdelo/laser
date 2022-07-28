@@ -1,6 +1,7 @@
 .idea
+.vscode
+tmp
 cache
 css/tmp
-tmp
 node_modules/
 includes/config.php
