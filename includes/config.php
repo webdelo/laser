@@ -1,5 +1,5 @@
 <?php
-define('TEST_MODE', true);
+define('TEST_MODE', false);
 date_default_timezone_set('Europe/Moscow');
 define('AMERICAN_DATE', false);
 if (AMERICAN_DATE) {
@@ -18,8 +18,8 @@ else {
 }
 ini_set('magic_quotes_gpc', 0);
 define('DIR', str_replace('includes','',dirname(__FILE__)));
-define('DEFAULT_PROTOCOL','http');
-define('DIR_HTTP',        'http://'.$_SERVER['HTTP_HOST'].'/');
+define('DEFAULT_PROTOCOL','https');
+define('DIR_HTTP',        'https://'.$_SERVER['HTTP_HOST'].'/');
 define('DIR_ADMIN_HTTP',  DEFAULT_PROTOCOL.'://'.$_SERVER['HTTP_HOST'].'/admin/');
 define('DIR_HTTPS',       'https://'.$_SERVER['HTTP_HOST'].'/');
 define('SEND_FROM',       'run-laser');
@@ -87,7 +87,7 @@ $config = array(
 			'csvPath'        => DIR.'redirect/',
 			'csvFile'        => 'redirect.csv',
 			'www'            => 'without',    // 'with', 'without', 'none_redorect'
-			'protocol'       => 'http',      // 'https' OR 'http'
+			'protocol'       => 'https',      // 'https' OR 'http'
 			'http2https'     => array(),      // all redirect patterns in array. May be URI or path pattern with '*' in end
 			'https2http'     => false,        // true - redirect enable, false - redirect disadle
 			'wwwSubdomains'  => 'without',    // 'with', 'without', 'none_redorect'
@@ -172,7 +172,7 @@ $config = array(
 		array(
 			'settings' =>
 				array(
-					'host'       => '83.69.230.31',
+					'host'       => 'localhost',
 					'login'      => 'vh88807_new',
 					'pass'       => 'wUKooL9G',
 					'database'   => 'vh88807_release',

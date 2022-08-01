@@ -264,7 +264,7 @@ header {
 
 .playBottom {
     width: 150px;
-    margin: 32px auto;
+    margin: 2px auto;
     text-align: center;
     cursor: pointer;
 }
@@ -279,8 +279,20 @@ header {
     font-size: 12px;
     font-weight: 400;
     text-transform: uppercase;
-    padding-top: 15px;
+    padding-top: 2px;
     letter-spacing: 1px;
+}
+
+.playYouTube {
+    display: block;
+    background: url(/images/social/youtube_32.png) no-repeat center center;
+    width: 34px;
+    height: 34px;
+    position: absolute;
+    bottom: 27px;
+    right: 5px;
+    font-size: 33px;
+    line-height: 34px;
 }
 
 .infoBlock {
@@ -346,7 +358,7 @@ header {
     margin: 0px auto;
     background-color:  rgba(255, 255, 255, 0.53);
     box-sizing: border-box;
-    padding: 100px 10px 0 10px;
+    padding: 200px 10px 0 10px;
 }
 
 .mainH1 {
@@ -496,6 +508,7 @@ footer {
     padding-bottom: 12px;
 }
 
+.YouTubeModal,
 .videoModal {
     position: fixed;
     width: 560px;
@@ -521,6 +534,7 @@ footer {
     display: none;
 }
 
+.YouTubeModal svg,
 .videoModal svg {
     float: right;
     fill: #ec921d;
@@ -1022,6 +1036,10 @@ border-radius: 4px;
 img.center-img {
 	display: block;
 	margin: 10px auto;
+}
+
+header .headerCenter .number img {
+	height: 25px;
 }
 .subTypePrice {
 	background: #dae2dd;
