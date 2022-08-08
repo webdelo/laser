@@ -3,10 +3,10 @@
 		<div class="topGreenLine"></div>
 		<div class="headerCenter container">
 			<div class="mobile-nav"></div>
-				<a class="logo-blk" href="http://run-laser.com"><img src="/images/bg/logo.png" alt="" class="logo"></a>
+				<a class="logo-blk" href="<?php echo DIR_HTTP; ?>"><img src="/images/bg/logo.png" alt="" class="logo"></a>
 					<div class="lang">
-						<a href="/" data-lng="ru" class="rus active">Ру</a>
-						<a href="/?lang=en" data-lng="en" class="eng">En</a>
+						<a href="https://run-laser.com" data-lng="ru" class="rus active">Ру</a>
+						<a href="https://en.run-laser.com" data-lng="en" class="eng">En</a>
 					</div>
 						<div class="number-blk">
 							<div class="number two">
